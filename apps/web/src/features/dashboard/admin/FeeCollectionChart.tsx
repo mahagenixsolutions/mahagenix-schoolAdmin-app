@@ -2,7 +2,19 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { useGetFeeCollectionTrendQuery } from '../dashboardApi';
 
 export default function FeeCollectionChart() {
-  const { data, isLoading } = useGetFeeCollectionTrendQuery({ range: '6months' });
+  // const { data, isLoading } = useGetFeeCollectionTrendQuery({ range: '6months' });
+  const isLoading = false;
+  const data = {
+    hasEnoughData: true,
+    months: [
+      { label: 'Jan', expected: 500000, collected: 450000 },
+      { label: 'Feb', expected: 500000, collected: 480000 },
+      { label: 'Mar', expected: 500000, collected: 490000 },
+      { label: 'Apr', expected: 550000, collected: 520000 },
+      { label: 'May', expected: 550000, collected: 530000 },
+      { label: 'Jun', expected: 550000, collected: 540000 },
+    ]
+  };
 
   return (
     <div className="card">

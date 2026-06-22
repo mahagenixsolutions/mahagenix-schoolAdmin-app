@@ -7,7 +7,10 @@ export default function ParentGalleryPage() {
   const selectedStudent = useSelector((s: RootState) => s.auth.selected_student);
   const studentId = selectedStudent?.id;
 
-  const { data: photos, isLoading } = useGetParentGalleryQuery({ studentId: studentId! }, { skip: !studentId });
+  const { data: photos, isLoading } = useGetParentGalleryQuery(
+    { studentId: studentId! },
+    { skip: !studentId },
+  );
 
   const [activePhoto, setActivePhoto] = useState<any | null>(null);
   const [filterCategory, setFilterCategory] = useState<string>('ALL');
@@ -25,23 +28,32 @@ export default function ParentGalleryPage() {
   if (isLoading) {
     return (
       <div className="flex-center" style={{ height: '70vh', flexDirection: 'column', gap: 12 }}>
-        <div style={{
-          width: 40, height: 40,
-          border: '3px solid var(--border-color)',
-          borderTopColor: 'var(--color-primary)',
-          borderRadius: '50%',
-          animation: 'spin 0.8s linear infinite',
-        }}/>
-        <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Loading gallery photos...</span>
+        <div
+          style={{
+            width: 40,
+            height: 40,
+            border: '3px solid var(--border-color)',
+            borderTopColor: 'var(--color-primary)',
+            borderRadius: '50%',
+            animation: 'spin 0.8s linear infinite',
+          }}
+        />
+        <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
+          Loading gallery photos...
+        </span>
         <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
     );
   }
 
-  const categories = ['ALL', ...Array.from(new Set((photos || []).map((p: any) => p.category)))];
-  const filteredPhotos = filterCategory === 'ALL'
-    ? (photos || [])
-    : (photos || []).filter((p: any) => p.category === filterCategory);
+  const categories = [
+    'ALL',
+    ...Array.from(new Set((photos || []).map((p: any) => p.category).filter(Boolean))),
+  ];
+  const filteredPhotos =
+    filterCategory === 'ALL'
+      ? photos || []
+      : (photos || []).filter((p: any) => (p.category || '') === filterCategory);
 
   const handleDownload = (photoUrl: string, title: string) => {
     // Standard trigger download by opening image in new window/tab
@@ -53,13 +65,23 @@ export default function ParentGalleryPage() {
       <div className="page-header" style={{ marginBottom: 24 }}>
         <div>
           <h1 className="page-title">Activity Gallery</h1>
-          <p className="page-subtitle">Classroom events and cultural activities photos for {selectedStudent.first_name}</p>
+          <p className="page-subtitle">
+            Classroom events and cultural activities photos for {selectedStudent.first_name}
+          </p>
         </div>
       </div>
 
       {/* Categories Filter list */}
       {photos && photos.length > 0 && (
-        <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 16, marginBottom: 16 }}>
+        <div
+          style={{
+            display: 'flex',
+            gap: 8,
+            overflowX: 'auto',
+            paddingBottom: 16,
+            marginBottom: 16,
+          }}
+        >
           {categories.map((cat: any) => (
             <button
               key={cat}
@@ -72,6 +94,7 @@ export default function ParentGalleryPage() {
                 textTransform: 'capitalize',
               }}
             >
+              {String(cat || 'Unknown').toLowerCase()}
               {cat.toLowerCase()}
             </button>
           ))}
@@ -79,7 +102,13 @@ export default function ParentGalleryPage() {
       )}
 
       {filteredPhotos.length > 0 ? (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 20 }}>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+            gap: 20,
+          }}
+        >
           {filteredPhotos.map((photo: any) => (
             <div
               key={photo.id}
@@ -100,7 +129,14 @@ export default function ParentGalleryPage() {
                 e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
               }}
             >
-              <div style={{ position: 'relative', height: 200, width: '100%', background: 'var(--bg-tertiary)' }}>
+              <div
+                style={{
+                  position: 'relative',
+                  height: 200,
+                  width: '100%',
+                  background: 'var(--bg-tertiary)',
+                }}
+              >
                 <img
                   src={photo.url}
                   alt={photo.title}
@@ -122,7 +158,17 @@ export default function ParentGalleryPage() {
                 </span>
               </div>
               <div style={{ padding: 14 }}>
-                <h3 style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', margin: 0 }}>
+                <h3
+                  style={{
+                    fontSize: 14,
+                    fontWeight: 600,
+                    color: 'var(--text-primary)',
+                    textOverflow: 'ellipsis',
+                    overflow: 'hidden',
+                    whiteSpace: 'nowrap',
+                    margin: 0,
+                  }}
+                >
                   {photo.title}
                 </h3>
                 <p style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 4 }}>
@@ -206,17 +252,22 @@ export default function ParentGalleryPage() {
                 boxShadow: '0 12px 36px rgba(0,0,0,0.6)',
               }}
             />
-            
+
             <div style={{ textAlign: 'center', color: 'white' }}>
               <h2 style={{ fontSize: 18, fontWeight: 700, margin: 0 }}>{activePhoto.title}</h2>
               <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', marginTop: 4 }}>
                 {activePhoto.category} · {new Date(activePhoto.date).toLocaleDateString()}
               </p>
-              
+
               <button
                 className="btn btn-primary btn-sm"
                 onClick={() => handleDownload(activePhoto.url, activePhoto.title)}
-                style={{ marginTop: 12, padding: '8px 20px', borderRadius: 'var(--radius-full)', fontWeight: 600 }}
+                style={{
+                  marginTop: 12,
+                  padding: '8px 20px',
+                  borderRadius: 'var(--radius-full)',
+                  fontWeight: 600,
+                }}
               >
                 📥 Download High-Res Photo
               </button>

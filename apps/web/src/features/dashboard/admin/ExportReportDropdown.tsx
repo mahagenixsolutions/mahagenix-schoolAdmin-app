@@ -7,12 +7,12 @@ export default function ExportReportDropdown() {
   const navigate = useNavigate();
 
   const options = [
-    { label: 'Attendance Summary', link: '/reports/attendance' },
-    { label: 'Fee Collection Report', link: '/reports/fees' },
-    { label: 'Student List', link: '/reports/students' },
-    { label: 'Academic Performance', link: '/reports/performance' },
-    { label: 'Class-wise Report', link: '/reports/classes' },
-    { label: 'Full Dashboard PDF', link: '/reports/dashboard' },
+    { label: 'Attendance Summary', category: 'Attendance' },
+    { label: 'Fee Collection Report', category: 'Finance' },
+    { label: 'Student List', category: 'Operations' },
+    { label: 'Academic Performance', category: 'Academic' },
+    { label: 'Class-wise Report', category: 'Academic' },
+    { label: 'Full Dashboard PDF', category: 'Executive' },
   ];
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export default function ExportReportDropdown() {
             <button
               key={i}
               onClick={() => {
-                navigate(opt.link);
+                navigate('/reports', { state: { category: opt.category } });
                 setIsOpen(false);
               }}
               style={{
@@ -80,3 +80,4 @@ export default function ExportReportDropdown() {
     </div>
   );
 }
+

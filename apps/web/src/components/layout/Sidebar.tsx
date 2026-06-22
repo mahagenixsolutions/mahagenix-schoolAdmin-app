@@ -32,7 +32,7 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
 
       // Teachers cannot access Analytics, Users, Academic Years, Audit Logs, Reports
       if (user?.role === 'TEACHER') {
-        const forbiddenForTeachers = ['/analytics', '/users', '/academic-years', '/audit-logs', '/reports'];
+        const forbiddenForTeachers = ['/analytics', '/users', '/academic-years', '/audit-logs', '/reports', '/subjects'];
         if (forbiddenForTeachers.includes(item.to)) {
           return false;
         }
@@ -181,45 +181,44 @@ const ExpandIcon = () => (
   </svg>
 );
 
+const SparklesIcon = icon('M19.45 6.45L22 5l-2.55-1.45L18 1l-1.45 2.55L14 5l2.55 1.45L18 9l1.45-2.55zM14.59 11.59l-1.83-3.14L11 5l-1.76 3.45L7.41 11.59l-3.14 1.83 3.14 1.83 1.83 3.14L11 21l1.76-3.45 1.83-3.14 3.14-1.83-3.14-1.83z');
+
 const NAV_ITEMS = [
   {
     section: 'Overview',
     items: [
       { to: '/dashboard', icon: DashboardIcon, label: 'Dashboard' },
-      { to: '/analytics', icon: ChartIcon, label: 'Analytics' },
+      { to: '/activity', icon: BellIcon, label: 'School Activity' },
     ],
   },
   {
-    section: 'Academic',
+    section: 'Student Success',
     items: [
-      { to: '/students', icon: UsersIcon, label: 'Students' },
-      { to: '/attendance', icon: CalendarIcon, label: 'Attendance' },
-      { to: '/marks', icon: GradeIcon, label: 'Marks' },
-      { to: '/progress', icon: TrendIcon, label: 'Progress' },
-      { to: '/participation', icon: StarIcon, label: 'Participation' },
+      { to: '/students', icon: UsersIcon, label: 'Directory' },
     ],
   },
   {
-    section: 'Management',
+    section: 'Teacher Workspace',
     items: [
-      { to: '/classes', icon: BuildingIcon, label: 'Classes' },
-      { to: '/subjects', icon: BookIcon, label: 'Subjects' },
+      { to: '/classes', icon: BuildingIcon, label: 'My Classes' },
+      { to: '/quick-actions', icon: TrendIcon, label: 'Quick Actions' },
+    ],
+  },
+  {
+    section: 'Intelligence & Insights',
+    items: [
+      { to: '/analytics', icon: ChartIcon, label: 'Growth Analytics' },
+
+    ],
+  },
+  {
+    section: 'Settings',
+    items: [
       { to: '/academic-years', icon: CalendarIcon2, label: 'Academic Years' },
-      { to: '/users', icon: UserIcon, label: 'Users' },
-    ],
-  },
-  {
-    section: 'Communication',
-    items: [
-      { to: '/events', icon: EventIcon, label: 'Events' },
-      { to: '/notifications', icon: BellIcon, label: 'Notifications' },
-    ],
-  },
-  {
-    section: 'System',
-    items: [
+      { to: '/subjects', icon: BookIcon, label: 'Subjects' },
       { to: '/audit-logs', icon: ShieldIcon, label: 'Audit Logs' },
       { to: '/reports', icon: ReportIcon, label: 'Reports' },
+      { to: '/users', icon: UserIcon, label: 'System Users' },
     ],
   },
 ];

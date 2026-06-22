@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import type { RootState } from '../../../store';
 import { useGetAcademicYearsQuery } from '../../academic-years/academicYearsApi';
+import { useGetKpisQuery } from '../dashboardApi';
+import { useRegisterAIContext } from '../../../hooks/useAIContext';
 import AlertsBanner from './AlertsBanner';
 import KpiRow from './KpiRow';
 import KpiRowSecondary from './KpiRowSecondary';
@@ -43,7 +45,7 @@ export default function AdminDashboard() {
 
   // Fetch academic years to find the active one
   const { data: yearsData, isLoading: isYearsLoading } = useGetAcademicYearsQuery();
-  
+
   const greetingHour = new Date().getHours();
   const greeting =
     greetingHour < 12 ? 'Good morning' : greetingHour < 17 ? 'Good afternoon' : 'Good evening';
@@ -53,8 +55,26 @@ export default function AdminDashboard() {
   const activeYearId = activeYear?.id || '';
 
   if (isYearsLoading) {
-    return <div style={{ display: 'flex', justifyContent: 'center', padding: 48 }}><div className="spinner" /></div>;
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', padding: 48 }}>
+        <div className="spinner" />
+      </div>
+    );
   }
+
+  return (
+    <AdminDashboardInner greeting={greeting} activeYear={activeYear} activeYearId={activeYearId} user={user} timeAgo={timeAgo} navigate={navigate} handleManualRefresh={handleManualRefresh} />
+  );
+}
+
+function AdminDashboardInner({ greeting, activeYear, activeYearId, user, timeAgo, navigate, handleManualRefresh }: any) {
+  // Fetch KPIs for AI context registration
+  const { data: kpis } = useGetKpisQuery({ academicYearId: activeYearId }, { skip: !activeYearId });
+
+  // Push dashboard metrics to AI assistant
+  useRegisterAIContext({
+    dashboardMetrics: kpis ?? {},
+  });
 
   return (
     <div>
@@ -65,15 +85,24 @@ export default function AdminDashboard() {
             {greeting}, {user?.first_name}! 👋
           </h1>
           <p className="page-subtitle">
-            {activeYear?.name ? `Term: ${activeYear.name} • ` : ''}Here's what's happening at your school today.
+            {activeYear?.name ? `Term: ${activeYear.name} • ` : ''}Here's what's happening at your
+            school today.
           </p>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          <div style={{ fontSize: 13, color: 'var(--color-text-secondary)', display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div
+            style={{
+              fontSize: 13,
+              color: 'var(--color-text-secondary)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+            }}
+          >
             <span>Last updated {timeAgo}</span>
-            <button 
+            <button
               onClick={handleManualRefresh}
-              className="btn btn-ghost btn-icon" 
+              className="btn btn-ghost btn-icon"
               style={{ width: 28, height: 28, padding: 0 }}
               title="Refresh Dashboard"
             >

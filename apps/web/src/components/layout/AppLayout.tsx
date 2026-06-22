@@ -3,7 +3,7 @@ import { Outlet, useNavigate, useLocation, NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../../store';
 import Sidebar from './Sidebar';
-import { setSelectedStudent, logout } from '../../store/authSlice';
+import { setSelectedStudent, logout, switchMockRole } from '../../store/authSlice';
 import { useGetLinkedStudentsQuery } from '../../features/parent/parentApi';
 import { useLazyGetStudentsQuery } from '../../features/students/studentsApi';
 
@@ -39,6 +39,7 @@ export default function AppLayout() {
 
   const isParentOrStudent = user?.role === 'PARENT' || user?.role === 'STUDENT';
   const pageTitle = BREADCRUMB_MAP[location.pathname] || 'EduTrack AI';
+
 
   // Fetch linked students if parent or student
   const { data: linkedStudents } = useGetLinkedStudentsQuery(undefined, { skip: !isParentOrStudent });
@@ -341,6 +342,8 @@ export default function AppLayout() {
               </div>
             )}
 
+
+
             {/* Notifications */}
             {!isParentOrStudent && (
               <button
@@ -378,6 +381,23 @@ export default function AppLayout() {
                 <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
               </svg>
             </button>
+
+            {/* User avatar menu */}
+            <select
+              value={user?.role || 'SCHOOL_ADMIN'}
+              onChange={(event) => {
+                dispatch(switchMockRole(event.target.value as any));
+                navigate('/dashboard');
+              }}
+              className="form-select"
+              title="Switch demo role"
+              style={{ height: 38, width: 150, fontSize: 12, fontWeight: 700 }}
+            >
+              <option value="SCHOOL_ADMIN">School Admin</option>
+              <option value="TEACHER">Teacher</option>
+              <option value="PARENT">Parent</option>
+              <option value="STUDENT">Student</option>
+            </select>
 
             {/* User avatar menu */}
             <div style={{ position: 'relative' }}>
@@ -473,6 +493,8 @@ export default function AppLayout() {
           <Outlet />
         </main>
       </div>
+
+
 
       {/* Parent Bottom Navigation (Mobile-first layout) */}
       {isParentOrStudent && (

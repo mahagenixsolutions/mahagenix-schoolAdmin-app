@@ -115,7 +115,7 @@ export default function TeacherProfileDrawer({ teacherId, subjectId, onClose }: 
             </div>
 
             {/* Skills */}
-            {profile.skills.length > 0 && (
+            {profile.skills?.length > 0 && (
               <div>
                 <h4 style={{ margin: '0 0 16px 0', fontSize: 15, fontWeight: 600, color: '#111827', borderBottom: '2px solid #f3f4f6', paddingBottom: 8 }}>Core Skills</h4>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
@@ -132,7 +132,7 @@ export default function TeacherProfileDrawer({ teacherId, subjectId, onClose }: 
             )}
 
             {/* Awards */}
-            {profile.awards.length > 0 && (
+            {profile.awards?.length > 0 && (
               <div>
                 <h4 style={{ margin: '0 0 16px 0', fontSize: 15, fontWeight: 600, color: '#111827', borderBottom: '2px solid #f3f4f6', paddingBottom: 8 }}>Awards & Recognitions</h4>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -150,7 +150,7 @@ export default function TeacherProfileDrawer({ teacherId, subjectId, onClose }: 
             )}
 
             {/* Classes Assigned */}
-            {profile.classesAssigned.length > 0 && (
+            {profile.classesAssigned?.length > 0 && (
               <div style={{ marginBottom: 40 }}>
                 <h4 style={{ margin: '0 0 16px 0', fontSize: 15, fontWeight: 600, color: '#111827', borderBottom: '2px solid #f3f4f6', paddingBottom: 8 }}>Classes Assigned</h4>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>

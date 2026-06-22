@@ -3,7 +3,17 @@ import { useGetSubjectPerformanceQuery } from '../dashboardApi';
 import { useNavigate } from 'react-router-dom';
 
 export default function SubjectPerformanceChart({ academicYearId }: { academicYearId: string }) {
-  const { data, isLoading } = useGetSubjectPerformanceQuery({ academicYearId }, { skip: !academicYearId });
+  // const { data, isLoading } = useGetSubjectPerformanceQuery({ academicYearId }, { skip: !academicYearId });
+  const isLoading = false;
+  const data = {
+    subjects: [
+      { name: 'Mathematics', avgScore: 78, passRate: 85 },
+      { name: 'Science', avgScore: 82, passRate: 90 },
+      { name: 'English', avgScore: 75, passRate: 80 },
+      { name: 'History', avgScore: 88, passRate: 95 },
+      { name: 'Art', avgScore: 92, passRate: 100 },
+    ]
+  };
   const navigate = useNavigate();
 
   return (

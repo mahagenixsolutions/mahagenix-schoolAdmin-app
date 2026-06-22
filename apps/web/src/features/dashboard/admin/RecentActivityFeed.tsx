@@ -2,7 +2,16 @@ import { useGetRecentActivityQuery } from '../dashboardApi';
 import { Link } from 'react-router-dom';
 
 export default function RecentActivityFeed() {
-  const { data, isLoading } = useGetRecentActivityQuery({ limit: 8 });
+  // const { data, isLoading } = useGetRecentActivityQuery({ limit: 8 });
+  const isLoading = false;
+  const data = {
+    activities: [
+      { id: 1, type: 'Attendance', description: 'Marked attendance for Class 10 A', actor: 'Mr. Sharma', createdAt: new Date().toISOString() },
+      { id: 2, type: 'Mark', description: 'Uploaded Science marks for Class 8 B', actor: 'Mrs. Gupta', createdAt: new Date(Date.now() - 3600000).toISOString() },
+      { id: 3, type: 'Student', description: 'Added 3 new students to Class 1', actor: 'Admin', createdAt: new Date(Date.now() - 7200000).toISOString() },
+      { id: 4, type: 'Fee', description: 'Collected term fee for Aarav Patel', actor: 'Accounts', createdAt: new Date(Date.now() - 10800000).toISOString() },
+    ]
+  };
 
   return (
     <div className="card">

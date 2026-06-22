@@ -18,7 +18,7 @@ export default function NewAcademicYearModal({ onClose, onSuccess }: { onClose: 
 
   return (
     <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ background: 'var(--bg-surface)', padding: 32, borderRadius: 12, maxWidth: 500, width: '100%' }}>
+      <div style={{ background: '#fff', padding: 32, borderRadius: 12, maxWidth: 500, width: '100%' }}>
         <h2 style={{ margin: '0 0 24px 0', fontSize: 20 }}>Create Academic Year</h2>
         
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>

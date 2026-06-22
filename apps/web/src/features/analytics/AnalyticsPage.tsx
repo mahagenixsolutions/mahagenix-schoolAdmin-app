@@ -187,15 +187,31 @@ export default function AnalyticsPage() {
     ];
 
     return {
+      ...defaultData,
       ...detailedData,
       totalStudents,
       baseAttendance,
       baseAcademic,
       baseRisk,
+      classExtremes: {
+        best: detailedData.classExtremes?.best ?? [],
+        worst: detailedData.classExtremes?.worst ?? [],
+      },
+      performanceTrend: detailedData.performanceTrend ?? [],
+      subjectComparison: detailedData.subjectComparison ?? [],
+      classComparison: detailedData.classComparison ?? [],
+      attendanceTrendData: detailedData.attendanceTrendData ?? [],
+      heatmapDays: detailedData.heatmapDays ?? [],
       riskStudents,
       growthScatterPoints,
       teachersList,
       classPerformanceList,
+      totalAchievements: detailedData.totalAchievements ?? 0,
+      achievementsCategories: detailedData.achievementsCategories ?? [],
+      achievementTrend: detailedData.achievementTrend ?? [],
+      topImproving: detailedData.topImproving ?? [],
+      requiringIntervention: detailedData.requiringIntervention ?? [],
+      aiRecommendations: detailedData.aiRecommendations ?? [],
       parentLoginFrequency,
       parentPageViews,
       // Add trend placeholders
@@ -1028,7 +1044,7 @@ export default function AnalyticsPage() {
             <div className="extreme-group">
               <span className="group-title text-success">📈 Top Improving Students</span>
               {dashboardData.topImproving.map((item) => (
-                <div key={item.name} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--border-color)', paddingBottom: 6, marginBottom: 6 }}>
+                <div key={item.name} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--border-color)', paddingBottom: 10, marginBottom: 10 }}>
                   <div>
                     <div style={{ fontWeight: 600, fontSize: 13 }}>{item.name}</div>
                     <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{item.class} (Current: {item.current})</div>
@@ -1038,10 +1054,10 @@ export default function AnalyticsPage() {
               ))}
             </div>
 
-            <div className="extreme-group" style={{ marginTop: 14 }}>
+            <div className="extreme-group" style={{ marginTop: 24 }}>
               <span className="group-title text-danger">⚠️ Requiring Intervention</span>
               {dashboardData.requiringIntervention.map((item) => (
-                <div key={item.name} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--border-color)', paddingBottom: 6, marginBottom: 6 }}>
+                <div key={item.name} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--border-color)', paddingBottom: 10, marginBottom: 10 }}>
                   <div>
                     <div style={{ fontWeight: 600, fontSize: 13 }}>{item.name}</div>
                     <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{item.class} (Current: {item.current})</div>
@@ -1498,14 +1514,14 @@ export default function AnalyticsPage() {
         .flex-col-container {
           display: flex;
           flex-direction: column;
-          justify-content: center;
-          height: 100%;
+          justify-content: flex-start;
+          gap: 16px;
         }
 
         .extreme-group {
           display: flex;
           flex-direction: column;
-          gap: 8px;
+          gap: 12px;
         }
 
         .group-title {
@@ -1560,7 +1576,6 @@ export default function AnalyticsPage() {
           background-color: var(--bg-tertiary);
           border-radius: 99px;
           position: relative;
-          overflow: hidden;
           display: flex;
           align-items: center;
         }

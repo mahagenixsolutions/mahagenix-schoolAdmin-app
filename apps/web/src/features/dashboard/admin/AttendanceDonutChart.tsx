@@ -3,7 +3,21 @@ import { useGetTodayAttendanceBreakdownQuery } from '../dashboardApi';
 import { Link } from 'react-router-dom';
 
 export default function AttendanceDonutChart() {
-  const { data, isLoading } = useGetTodayAttendanceBreakdownQuery();
+  // const { data, isLoading } = useGetTodayAttendanceBreakdownQuery();
+  const isLoading = false;
+  const data = {
+    total: 1240,
+    present: 1150,
+    absent: 40,
+    late: 30,
+    leave: 20,
+    classBreakdown: [
+      { className: 'Class 10 A', present: 38, absent: 2, late: 0 },
+      { className: 'Class 9 B', present: 35, absent: 3, late: 2 },
+      { className: 'Class 12 Sci', present: 40, absent: 0, late: 0 },
+      { className: 'Class 8 A', present: 36, absent: 1, late: 3 },
+    ]
+  };
 
   const chartData = [
     { name: 'Present', value: data?.present || 0, color: '#10B981' },

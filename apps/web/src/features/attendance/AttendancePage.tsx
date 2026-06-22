@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useGetMarksClassesQuery, useGetMarksAcademicYearsQuery } from '../marks/marksApi';
 import { useGetClassAttendanceQuery, useBulkMarkAttendanceMutation } from './attendanceApi';
 import { CheckCircle } from 'lucide-react';
+import { useRegisterAIContext } from '../../hooks/useAIContext';
 
 export default function AttendancePage() {
   const today = new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
@@ -86,6 +87,13 @@ export default function AttendancePage() {
     leave: Object.values(attendance).filter(s => s === 'LEAVE').length,
     total: dbRoster?.length ?? 0,
   };
+
+  // Push page context to AI assistant
+  useRegisterAIContext({
+    filters: { classFilter, dateFilter },
+    dashboardMetrics: stats,
+    visibleData: (dbRoster ?? []).map((s: any) => ({ ...s, status: attendance[s.student_id] || s.status })),
+  });
 
   return (
     <div>

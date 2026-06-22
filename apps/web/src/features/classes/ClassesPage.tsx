@@ -1,16 +1,33 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useGetClassesOverviewQuery } from './classesApi';
-import { GraduationCap, Users, Calendar, Award, ChevronRight, School } from 'lucide-react';
+import { Users, Calendar, ChevronRight, School, TrendingUp, TrendingDown, AlertCircle, CheckCircle2 } from 'lucide-react';
+
+// Mock Data for UI Phase
+const mockClasses = [
+  { gradeNum: 1, name: 'Class 1', section: 'A', students: 24, teacher: 'Anita Desai', attendance: 95, performance: 88 },
+  { gradeNum: 2, name: 'Class 2', section: 'A', students: 22, teacher: 'Vikram Singh', attendance: 92, performance: 81 },
+  { gradeNum: 3, name: 'Class 3', section: 'A', students: 26, teacher: 'Priya Patel', attendance: 96, performance: 91 },
+  { gradeNum: 4, name: 'Class 4', section: 'A', students: 25, teacher: 'Rahul Sharma', attendance: 88, performance: 72 }, // Needs attention
+  { gradeNum: 5, name: 'Class 5', section: 'A', students: 28, teacher: 'Neha Gupta', attendance: 94, performance: 85 },
+  { gradeNum: 6, name: 'Class 6', section: 'A', students: 30, teacher: 'Sanjay Kumar', attendance: 91, performance: 78 },
+  { gradeNum: 7, name: 'Class 7', section: 'A', students: 29, teacher: 'Meera Reddy', attendance: 97, performance: 94 },
+  { gradeNum: 8, name: 'Class 8', section: 'A', students: 31, teacher: 'Amit Joshi', attendance: 85, performance: 68 }, // Needs attention
+  { gradeNum: 9, name: 'Class 9', section: 'A', students: 35, teacher: 'Kavita Menon', attendance: 93, performance: 82 },
+  { gradeNum: 10, name: 'Class 10', section: 'A', students: 34, teacher: 'Rajesh Iyer', attendance: 95, performance: 89 },
+  { gradeNum: 11, name: 'Class 11', section: 'Sci', students: 40, teacher: 'Dr. S. Bose', attendance: 98, performance: 96 },
+  { gradeNum: 12, name: 'Class 12', section: 'Sci', students: 38, teacher: 'Dr. M. Roy', attendance: 96, performance: 92 },
+];
 
 export default function ClassesPage() {
   const navigate = useNavigate();
-  const { data: dbOverview = [], isLoading } = useGetClassesOverviewQuery();
+  const [sortBy, setSortBy] = useState<'grade' | 'performance_asc' | 'performance_desc'>('grade');
 
-  // Standard Class 1 to Class 12 cards
-  const grades = Array.from({ length: 12 }, (_, i) => ({
-    gradeNum: i + 1,
-    name: `Class ${i + 1}`,
-  }));
+  // Sorting logic
+  const sortedClasses = [...mockClasses].sort((a, b) => {
+    if (sortBy === 'performance_asc') return a.performance - b.performance;
+    if (sortBy === 'performance_desc') return b.performance - a.performance;
+    return a.gradeNum - b.gradeNum; // default grade order
+  });
 
   const handleCardClick = (gradeNum: number) => {
     navigate(`/classes/${gradeNum}`);
@@ -19,167 +36,174 @@ export default function ClassesPage() {
   return (
     <div className="classes-overview-container">
       {/* Header */}
-      <div className="page-header card border-glow" style={{ marginBottom: 24, padding: '20px 24px' }}>
+      <div className="page-header" style={{ marginBottom: 24, flexWrap: 'wrap', gap: 16 }}>
         <div>
           <h1 className="page-title" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <School className="text-primary" size={28} />
             Classes & Academic Units
           </h1>
           <p className="page-subtitle">
-            Overview of standard school units, section assignments, performance indices, and teacher assignments.
+            Overview of standard school units, performance indices, and teacher assignments.
           </p>
+        </div>
+        
+        {/* Sort Control */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <label style={{ fontSize: 13, color: 'var(--text-secondary)', fontWeight: 500 }}>Sort by:</label>
+          <select 
+            className="form-select" 
+            style={{ width: '200px', fontSize: 14 }}
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value as any)}
+          >
+            <option value="grade">Grade Level (1 to 12)</option>
+            <option value="performance_asc">Performance (Low to High)</option>
+            <option value="performance_desc">Performance (High to Low)</option>
+          </select>
         </div>
       </div>
 
-      {isLoading ? (
-        <div className="flex-center" style={{ height: '50vh', flexDirection: 'column', gap: 12 }}>
-          <div style={{
-            width: 40, height: 40,
-            border: '3px solid var(--border-color)',
-            borderTopColor: 'var(--color-primary)',
-            borderRadius: '50%',
-            animation: 'spin 0.8s linear infinite',
-          }}/>
-          <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Loading academic units...</span>
-          <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-        </div>
-      ) : (
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
-          gap: 20,
-        }}>
-          {grades.map((g) => {
-            // Find corresponding grade data from database overview
-            const dbGrade = dbOverview.find(
-              (o) => o.name.toLowerCase() === g.name.toLowerCase()
-            );
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+        gap: '24px',
+      }}>
+        {sortedClasses.map((cls) => {
+          // Calculate thresholds and status
+          const isCritical = cls.performance < 75;
+          const isWarning = cls.performance >= 75 && cls.performance < 85;
+          const isGood = cls.performance >= 85;
 
-            const studentCount = dbGrade ? dbGrade.students : 0;
-            const sections = dbGrade ? dbGrade.sections : 'None';
-            const teacher = dbGrade ? dbGrade.teacher : 'Not Assigned';
-            const attendance = dbGrade ? dbGrade.attendance : 'N/A';
-            const performance = dbGrade ? dbGrade.performance : 'N/A';
-            const hasData = studentCount > 0;
+          let statusColor = 'var(--color-success)';
+          let statusBg = 'var(--color-success-surface)';
+          let accentHex = '#10B981'; // Green
+          let StatusIcon = CheckCircle2;
+          let statusText = 'On Track';
 
-            return (
-              <div
-                key={g.name}
-                className={`card class-grade-card ${hasData ? 'has-students border-glow-primary' : 'empty-grade'}`}
-                onClick={() => handleCardClick(g.gradeNum)}
-                style={{
-                  cursor: 'pointer',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  transition: 'transform 0.2s, box-shadow 0.2s',
-                }}
-              >
-                {/* Visual Accent for classes with active students */}
-                {hasData && (
-                  <div style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: 4,
-                    height: '100%',
-                    background: 'var(--color-primary)',
-                  }} />
-                )}
+          if (isCritical) {
+            statusColor = 'var(--color-danger)';
+            statusBg = 'var(--color-danger-surface)';
+            accentHex = '#F43F5E'; // Red
+            StatusIcon = AlertCircle;
+            statusText = 'Needs Attention';
+          } else if (isWarning) {
+            statusColor = 'var(--color-warning)';
+            statusBg = 'var(--color-warning-surface)';
+            accentHex = '#F59E0B'; // Amber
+            StatusIcon = TrendingDown;
+            statusText = 'Monitor';
+          } else {
+            StatusIcon = TrendingUp;
+          }
 
-                <div className="card-body" style={{ padding: 20 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
-                    <div>
-                      <h2 style={{ fontSize: 18, fontWeight: 700, margin: 0, color: 'var(--text-primary)' }}>
-                        {g.name}
-                      </h2>
-                      {hasData ? (
-                        <span className="badge badge-primary" style={{ marginTop: 4 }}>
-                          Sections: {sections}
-                        </span>
-                      ) : (
-                        <span className="badge badge-secondary" style={{ marginTop: 4 }}>
-                          Inactive Unit
-                        </span>
-                      )}
-                    </div>
-                    <div style={{
-                      width: 40,
-                      height: 40,
-                      borderRadius: 'var(--radius-md)',
-                      background: hasData ? 'var(--color-primary-surface)' : 'var(--bg-secondary)',
-                      color: hasData ? 'var(--color-primary)' : 'var(--text-muted)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}>
-                      <GraduationCap size={20} />
-                    </div>
+          // Circle Progress Math
+          const radius = 20;
+          const circumference = 2 * Math.PI * radius;
+          const strokeDashoffset = circumference - (cls.performance / 100) * circumference;
+
+          return (
+            <div
+              key={cls.name}
+              className="card hover-scale"
+              onClick={() => handleCardClick(cls.gradeNum)}
+              style={{
+                cursor: 'pointer',
+                borderRadius: '16px',
+                border: '1px solid rgba(0,0,0,0.08)',
+                borderLeft: `4px solid ${accentHex}`,
+                background: isCritical ? 'linear-gradient(to right, rgba(244, 63, 94, 0.02), transparent)' : '#ffffff',
+                display: 'flex',
+                flexDirection: 'column',
+                height: '100%', // Ensures equal height in grid
+              }}
+            >
+              <div className="card-body" style={{ padding: '24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                
+                {/* Top Row: Title & Status Badge */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
+                  <div>
+                    <h2 style={{ fontSize: '18px', fontWeight: 700, margin: 0, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      {cls.name} <span style={{ color: 'var(--text-muted)', fontWeight: 400, fontSize: '14px' }}>· Sec {cls.section}</span>
+                    </h2>
                   </div>
-
-                  {/* Class Stats & Info */}
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 16 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: 13 }}>
-                      <span style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--text-muted)' }}>
-                        <Users size={14} /> Students:
-                      </span>
-                      <strong style={{ marginLeft: 'auto', color: 'var(--text-primary)' }}>{studentCount}</strong>
-                    </div>
-
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: 13 }}>
-                      <span style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--text-muted)' }}>
-                        <School size={14} /> Teacher:
-                      </span>
-                      <strong
-                        style={{
-                          marginLeft: 'auto',
-                          color: 'var(--text-primary)',
-                          maxWidth: 160,
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          whiteSpace: 'nowrap',
-                        }}
-                        title={teacher}
-                      >
-                        {teacher}
-                      </strong>
-                    </div>
-
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: 13 }}>
-                      <span style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--text-muted)' }}>
-                        <Calendar size={14} /> Attendance:
-                      </span>
-                      <strong style={{ marginLeft: 'auto', color: 'var(--text-primary)' }}>{attendance}</strong>
-                    </div>
-
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: 13 }}>
-                      <span style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--text-muted)' }}>
-                        <Award size={14} /> Performance:
-                      </span>
-                      <strong style={{ marginLeft: 'auto', color: 'var(--text-primary)' }}>{performance}</strong>
-                    </div>
-                  </div>
-
-                  {/* Hover Indicator */}
                   <div style={{
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'flex-end',
-                    marginTop: 16,
-                    paddingTop: 12,
-                    borderTop: '1px solid var(--border-color)',
-                    fontSize: 12,
+                    gap: '6px',
+                    padding: '4px 10px',
+                    borderRadius: '20px',
+                    background: statusBg,
+                    color: statusColor,
+                    fontSize: '12px',
                     fontWeight: 600,
-                    color: 'var(--color-primary)',
                   }}>
-                    <span>View Roster</span>
-                    <ChevronRight size={14} style={{ marginLeft: 2 }} />
+                    <StatusIcon size={14} strokeWidth={2.5} />
+                    {statusText}
                   </div>
                 </div>
+
+                {/* Hero Metric: Performance */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
+                  <div style={{ position: 'relative', width: '48px', height: '48px' }}>
+                    {/* Background Circle */}
+                    <svg width="48" height="48" viewBox="0 0 48 48" style={{ transform: 'rotate(-90deg)' }}>
+                      <circle cx="24" cy="24" r={radius} stroke="var(--border-color)" strokeWidth="4" fill="none" />
+                      {/* Progress Circle */}
+                      <circle 
+                        cx="24" cy="24" r={radius} 
+                        stroke={accentHex} 
+                        strokeWidth="4" 
+                        fill="none" 
+                        strokeDasharray={circumference}
+                        strokeDashoffset={strokeDashoffset}
+                        strokeLinecap="round"
+                        style={{ transition: 'stroke-dashoffset 1s ease-out' }}
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '13px', color: 'var(--text-secondary)', fontWeight: 500, marginBottom: '2px' }}>
+                      Overall Performance
+                    </div>
+                    <div style={{ fontSize: '32px', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1, letterSpacing: '-0.02em' }}>
+                      {cls.performance}%
+                    </div>
+                  </div>
+                </div>
+
+                <div style={{ flex: 1 }} /> {/* Spacer to push bottom content down if card heights vary */}
+
+                {/* Secondary Metrics: Compact Chips */}
+                <div style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  flexWrap: 'wrap',
+                  gap: '12px', 
+                  padding: '12px 16px',
+                  background: 'var(--bg-secondary)',
+                  borderRadius: '10px',
+                  fontSize: '13px',
+                  color: 'var(--text-secondary)',
+                  fontWeight: 500
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <Users size={14} className="text-muted" /> {cls.students}
+                  </div>
+                  <span style={{ color: 'var(--border-color)' }}>|</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <Calendar size={14} className="text-muted" /> {cls.attendance}%
+                  </div>
+                  <span style={{ color: 'var(--border-color)' }}>|</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    <School size={14} className="text-muted" /> {cls.teacher}
+                  </div>
+                </div>
+
               </div>
-            );
-          })}
-        </div>
-      )}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

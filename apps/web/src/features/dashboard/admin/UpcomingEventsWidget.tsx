@@ -2,7 +2,16 @@ import { useGetUpcomingEventsQuery } from '../dashboardApi';
 import { Link } from 'react-router-dom';
 
 export default function UpcomingEventsWidget({ academicYearId }: { academicYearId: string }) {
-  const { data, isLoading } = useGetUpcomingEventsQuery({ limit: 4 });
+  // const { data, isLoading } = useGetUpcomingEventsQuery({ limit: 4 });
+  const isLoading = false;
+  const data = {
+    events: [
+      { id: 1, name: 'Quarterly Exams Begin', type: 'EXAM', date: new Date(Date.now() + 86400000 * 3).toISOString(), daysUntil: 'In 3 days' },
+      { id: 2, name: 'Republic Day', type: 'HOLIDAY', date: new Date(Date.now() + 86400000 * 12).toISOString(), daysUntil: 'In 12 days' },
+      { id: 3, name: 'Parent Teacher Meeting', type: 'EVENT', date: new Date(Date.now() + 86400000 * 15).toISOString(), daysUntil: 'In 15 days' },
+      { id: 4, name: 'Annual Sports Day', type: 'EVENT', date: new Date(Date.now() + 86400000 * 25).toISOString(), daysUntil: 'In 25 days' },
+    ]
+  };
 
   return (
     <div className="card">

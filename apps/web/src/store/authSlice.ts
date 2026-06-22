@@ -1,4 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { mockUsers } from '../mock/users';
 
 interface User {
   id: string;
@@ -33,10 +34,10 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-  user: JSON.parse(localStorage.getItem('edutrack_user') || 'null'),
-  access_token: localStorage.getItem('edutrack_token'),
-  refresh_token: localStorage.getItem('edutrack_refresh_token'),
-  is_authenticated: !!localStorage.getItem('edutrack_token'),
+  user: JSON.parse(localStorage.getItem('edutrack_user') || JSON.stringify(mockUsers.admin)),
+  access_token: localStorage.getItem('edutrack_token') || 'mock-access-token',
+  refresh_token: localStorage.getItem('edutrack_refresh_token') || 'mock-refresh-token',
+  is_authenticated: true,
   selected_student: JSON.parse(localStorage.getItem('edutrack_selected_student') || 'null'),
 };
 
@@ -68,18 +69,51 @@ const authSlice = createSlice({
       localStorage.setItem('edutrack_refresh_token', action.payload.refresh_token);
     },
     logout(state) {
-      state.user = null;
-      state.access_token = null;
-      state.refresh_token = null;
-      state.is_authenticated = false;
+      state.user = mockUsers.admin;
+      state.access_token = 'mock-access-token';
+      state.refresh_token = 'mock-refresh-token';
+      state.is_authenticated = true;
       state.selected_student = null;
-      localStorage.removeItem('edutrack_token');
-      localStorage.removeItem('edutrack_refresh_token');
-      localStorage.removeItem('edutrack_user');
+      localStorage.setItem('edutrack_token', 'mock-access-token');
+      localStorage.setItem('edutrack_refresh_token', 'mock-refresh-token');
+      localStorage.setItem('edutrack_user', JSON.stringify(mockUsers.admin));
       localStorage.removeItem('edutrack_selected_student');
+    },
+    switchMockRole(state, action: PayloadAction<'SCHOOL_ADMIN' | 'TEACHER' | 'PARENT' | 'STUDENT'>) {
+      const user =
+        action.payload === 'TEACHER' ? mockUsers.teacher :
+        action.payload === 'PARENT' ? mockUsers.parent :
+        action.payload === 'STUDENT' ? (mockUsers as any).student :
+        mockUsers.admin;
+      state.user = user;
+      state.access_token = 'mock-access-token';
+      state.refresh_token = 'mock-refresh-token';
+      state.is_authenticated = true;
+      if (action.payload === 'STUDENT') {
+        state.selected_student = {
+          id: 'student-001',
+          first_name: 'Aanya',
+          last_name: 'Sharma',
+          student_code: 'STU0001',
+          admission_no: 'ADM-2026-001',
+          photo_url: 'https://api.dicebear.com/8.x/initials/svg?seed=Aanya-Sharma',
+          class: { id: 'class-1-a', name: 'Class 1', section: 'A' },
+          blood_group: 'A+',
+          medical_conditions: 'None',
+          allergies: 'None',
+          emergency_contact: '+91 99887 66000'
+        };
+        localStorage.setItem('edutrack_selected_student', JSON.stringify(state.selected_student));
+      } else {
+        state.selected_student = null;
+        localStorage.removeItem('edutrack_selected_student');
+      }
+      localStorage.setItem('edutrack_token', 'mock-access-token');
+      localStorage.setItem('edutrack_refresh_token', 'mock-refresh-token');
+      localStorage.setItem('edutrack_user', JSON.stringify(user));
     },
   },
 });
 
-export const { setCredentials, setSelectedStudent, updateTokens, logout } = authSlice.actions;
+export const { setCredentials, setSelectedStudent, updateTokens, logout, switchMockRole } = authSlice.actions;
 export default authSlice.reducer;

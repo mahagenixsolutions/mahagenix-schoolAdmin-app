@@ -39,6 +39,48 @@ export default function ParticipationPage() {
   // Table Setup
   const [globalFilter, setGlobalFilter] = useState('');
   
+  // Interactive modal & feedbacks
+  const [showAdd, setShowAdd] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  // Form states
+  const [formStudent, setFormStudent] = useState('Aanya Sharma');
+  const [formActivity, setFormActivity] = useState('');
+  const [formCategory, setFormCategory] = useState('Cultural');
+  const [formLevel, setFormLevel] = useState('Inter-School');
+  const [formPoints, setFormPoints] = useState('50');
+
+  const triggerToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 3000);
+  };
+
+  const handleExportReport = () => {
+    setIsProcessing(true);
+    triggerToast('⏳ Compiling student participation datasets...');
+    setTimeout(() => {
+      setIsProcessing(false);
+      triggerToast('📁 Download complete: participation_master_report.csv');
+    }, 1200);
+  };
+
+  const handleAddRecordSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formActivity.trim()) {
+      triggerToast('⚠️ Activity description is required!');
+      return;
+    }
+    setIsProcessing(true);
+    triggerToast('⏳ Logging record to extracurricular database...');
+    setTimeout(() => {
+      setIsProcessing(false);
+      setShowAdd(false);
+      triggerToast(`🎉 Activity logged successfully! +${formPoints} points assigned to ${formStudent}.`);
+      setFormActivity('');
+    }, 1500);
+  };
+
   const columns = useMemo(() => [
     { accessorKey: 'student.student_code', header: 'Student ID' },
     { 
@@ -83,17 +125,81 @@ export default function ParticipationPage() {
   }
 
   return (
-    <div className="participation-dashboard">
+    <div className="participation-dashboard" style={{ position: 'relative' }}>
+      {/* Dynamic Toast Popup */}
+      {toastMessage && (
+        <div style={{ position: 'fixed', bottom: 24, right: 24, zIndex: 9999 }}>
+          <div style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 10, padding: '12px 20px', display: 'flex', alignItems: 'center', gap: 10, boxShadow: 'var(--shadow-lg)' }}>
+            <span style={{ fontSize: 13, fontWeight: 500, color: 'var(--color-text)' }}>{toastMessage}</span>
+          </div>
+        </div>
+      )}
+
+      {/* Add Record Modal */}
+      {showAdd && (
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(15, 23, 42, 0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }}>
+          <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: 16, width: '90%', maxWidth: 460, padding: 20, boxShadow: 'var(--shadow-lg)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+              <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: 'var(--text-primary)' }}>Log Extracurricular Record</h3>
+              <button onClick={() => setShowAdd(false)} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', fontSize: 18, cursor: 'pointer' }} disabled={isProcessing}>✕</button>
+            </div>
+            <form onSubmit={handleAddRecordSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                <label style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Select Student</label>
+                <select value={formStudent} onChange={e => setFormStudent(e.target.value)} style={{ padding: '8px 12px', border: '1px solid var(--border-color)', borderRadius: 8, background: 'var(--bg-body)', color: 'var(--text-primary)' }}>
+                  <option>Aanya Sharma</option>
+                  <option>Kabir Das</option>
+                  <option>Rohan Das</option>
+                  <option>Diya Singh</option>
+                </select>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                <label style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Activity Details</label>
+                <input type="text" required value={formActivity} onChange={e => setFormActivity(e.target.value)} placeholder="e.g. Winner in Inter-School Debating Cup" style={{ padding: '8px 12px', border: '1px solid var(--border-color)', borderRadius: 8, background: 'var(--bg-body)', color: 'var(--text-primary)' }} />
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                  <label style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Category</label>
+                  <select value={formCategory} onChange={e => setFormCategory(e.target.value)} style={{ padding: '8px 12px', border: '1px solid var(--border-color)', borderRadius: 8, background: 'var(--bg-body)', color: 'var(--text-primary)' }}>
+                    <option value="Cultural">Cultural</option>
+                    <option value="Sports">Sports</option>
+                    <option value="Academic">Academic</option>
+                    <option value="Community">Community</option>
+                  </select>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                  <label style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Level</label>
+                  <select value={formLevel} onChange={e => setFormLevel(e.target.value)} style={{ padding: '8px 12px', border: '1px solid var(--border-color)', borderRadius: 8, background: 'var(--bg-body)', color: 'var(--text-primary)' }}>
+                    <option value="Inter-School">Inter-School</option>
+                    <option value="State">State</option>
+                    <option value="National">National</option>
+                    <option value="Global">Global</option>
+                  </select>
+                </div>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                <label style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Points Assigned</label>
+                <input type="number" required value={formPoints} onChange={e => setFormPoints(e.target.value)} placeholder="50" style={{ padding: '8px 12px', border: '1px solid var(--border-color)', borderRadius: 8, background: 'var(--bg-body)', color: 'var(--text-primary)' }} />
+              </div>
+              <button type="submit" disabled={isProcessing} className="btn btn-primary" style={{ padding: 12, marginTop: 8 }}>
+                {isProcessing ? 'Saving Record...' : 'Log Record'}
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
       <div className="page-header-split">
         <div>
           <h1 className="page-title">Participation & Extracurriculars</h1>
           <p className="page-subtitle" style={{ marginTop: 8 }}>Track student involvement, achievements, leadership, and cultural participation.</p>
         </div>
         <div className="p-header-actions">
-          <button className="btn-outline"><Download size={18}/> Export Report</button>
-          <button className="btn-premium"><Plus size={18}/> Add Record</button>
+          <button className="btn-outline" onClick={handleExportReport} disabled={isProcessing}><Download size={18}/> {isProcessing ? 'Exporting...' : 'Export Report'}</button>
+          <button className="btn-premium" onClick={() => setShowAdd(true)}><Plus size={18}/> Add Record</button>
         </div>
       </div>
+
 
       <div className="kpi-grid">
         <div className="kpi-card">

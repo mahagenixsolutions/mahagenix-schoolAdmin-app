@@ -4,7 +4,19 @@ import { useGetDashboardAttendanceTrendQuery } from '../dashboardApi';
 
 export default function AttendanceTrendChart() {
   const [range, setRange] = useState('6months');
-  const { data, isLoading } = useGetDashboardAttendanceTrendQuery({ range });
+  // const { data, isLoading } = useGetDashboardAttendanceTrendQuery({ range });
+  const isLoading = false;
+  const data = {
+    hasEnoughData: true,
+    months: [
+      { label: 'Jan', rate: 91, count: 200 },
+      { label: 'Feb', rate: 94, count: 210 },
+      { label: 'Mar', rate: 92, count: 200 },
+      { label: 'Apr', rate: 95, count: 215 },
+      { label: 'May', rate: 97, count: 220 },
+      { label: 'Jun', rate: 96, count: 220 },
+    ]
+  };
 
   return (
     <div className="card">

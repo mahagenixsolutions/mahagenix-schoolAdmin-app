@@ -1,10 +1,11 @@
 import { useGetInsightsQuery } from '../dashboardApi';
-import InsightCard, { InsightCardProps } from './InsightCard';
+import InsightCard from './InsightCard';
+import type { InsightCardProps } from './InsightCard';
 
 export default function KeyInsightsStrip({ academicYearId }: { academicYearId: string }) {
   const { data, isLoading } = useGetInsightsQuery({ academicYearId }, { 
     skip: !academicYearId,
-    refetchInterval: 180000 // 3 min
+    pollingInterval: 180000 // 3 min
   });
 
   if (isLoading) {

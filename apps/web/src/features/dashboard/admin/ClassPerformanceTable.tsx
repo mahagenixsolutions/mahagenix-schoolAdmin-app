@@ -4,7 +4,7 @@ import { useGetClassPerformanceQuery } from '../dashboardApi';
 export default function ClassPerformanceTable({ academicYearId }: { academicYearId: string }) {
   const { data, isLoading } = useGetClassPerformanceQuery({ academicYearId }, { 
     skip: !academicYearId,
-    refetchInterval: 600000 // 10 min
+    pollingInterval: 600000 // 10 min
   });
 
   if (isLoading) {

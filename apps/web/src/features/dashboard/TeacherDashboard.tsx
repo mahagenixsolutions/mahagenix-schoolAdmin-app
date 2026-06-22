@@ -1,13 +1,16 @@
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useGetTeacherKPIsQuery } from '../analytics/analyticsApi';
 import type { RootState } from '../../store';
 
 export default function TeacherDashboard() {
   const user = useSelector((s: RootState) => s.auth.user);
+  const navigate = useNavigate();
   const { data: kpis, isLoading } = useGetTeacherKPIsQuery();
 
   const greetingHour = new Date().getHours();
-  const greeting = greetingHour < 12 ? 'Good morning' : greetingHour < 17 ? 'Good afternoon' : 'Good evening';
+  const greeting =
+    greetingHour < 12 ? 'Good morning' : greetingHour < 17 ? 'Good afternoon' : 'Good evening';
 
   const stats = [
     {
@@ -48,7 +51,9 @@ export default function TeacherDashboard() {
     <div>
       <div className="page-header">
         <div>
-          <h1 className="page-title">{greeting}, {user?.first_name}! 👋</h1>
+          <h1 className="page-title">
+            {greeting}, {user?.first_name}! 👋
+          </h1>
           <p className="page-subtitle">Here's your classroom overview for today.</p>
         </div>
       </div>
@@ -60,7 +65,14 @@ export default function TeacherDashboard() {
               <div>
                 <div className="stat-card-label">{stat.label}</div>
                 <div className="stat-card-value">
-                  {isLoading ? <span className="skeleton" style={{ width: 80, height: 36, display: 'block' }} /> : stat.value}
+                  {isLoading ? (
+                    <span
+                      className="skeleton"
+                      style={{ width: 80, height: 36, display: 'block' }}
+                    />
+                  ) : (
+                    stat.value
+                  )}
                 </div>
               </div>
               <div className={`stat-card-icon ${stat.color}`} style={{ fontSize: 24 }}>
@@ -93,11 +105,25 @@ export default function TeacherDashboard() {
                 </thead>
                 <tbody>
                   {kpis?.students_at_risk?.map((risk: any, i: number) => (
-                    <tr key={i} style={{ borderBottom: '1px solid var(--border-color)' }}>
-                      <td style={{ padding: '12px 0' }}>{risk.student?.full_name}</td>
-                      <td style={{ padding: '12px 0', color: 'var(--text-muted)' }}>{risk.risk_factors.join(', ')}</td>
-                      <td style={{ padding: '12px 0' }}>
-                        <span className={`badge badge-${risk.risk_level === 'HIGH' ? 'danger' : 'warning'}`}>
+                    <tr 
+                      key={i} 
+                      onClick={() => navigate(`/students/${risk.student?.id}`)}
+                      style={{ 
+                        borderBottom: '1px solid var(--border-color)',
+                        cursor: 'pointer',
+                        transition: 'background 0.2s',
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.background = 'var(--bg-secondary)'}
+                      onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                    >
+                      <td style={{ padding: '12px 0 12px 8px', fontWeight: 600, color: 'var(--text-primary)' }}>{risk.student?.full_name}</td>
+                      <td style={{ padding: '12px 0', color: 'var(--text-muted)' }}>
+                        {risk.risk_factors.join(', ')}
+                      </td>
+                      <td style={{ padding: '12px 8px 12px 0' }}>
+                        <span
+                          className={`badge badge-${risk.risk_level === 'HIGH' ? 'danger' : 'warning'}`}
+                        >
                           {risk.risk_level}
                         </span>
                       </td>
@@ -112,3 +138,4 @@ export default function TeacherDashboard() {
     </div>
   );
 }
+

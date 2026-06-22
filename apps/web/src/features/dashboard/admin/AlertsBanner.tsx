@@ -4,7 +4,7 @@ import { useGetAlertsQuery } from '../dashboardApi';
 export default function AlertsBanner({ academicYearId }: { academicYearId: string }) {
   const { data, isLoading } = useGetAlertsQuery({ academicYearId }, { 
     skip: !academicYearId,
-    refetchInterval: 120000 // 2 min auto-refresh
+    pollingInterval: 120000 // 2 min auto-refresh
   });
 
   if (isLoading) {

@@ -118,6 +118,29 @@ export default function AcademicYearsPage() {
             badgeBg = 'rgba(59, 130, 246, 0.1)';
           }
 
+          // Dot styles
+          let dotBg = 'var(--bg-body)';
+          let dotBorder = '4px solid var(--border-color)';
+          let dotShadow = 'none';
+
+          if (isActive) {
+            dotBg = 'var(--color-primary)';
+            dotBorder = '4px solid var(--bg-body)';
+            dotShadow = '0 0 0 4px rgba(79, 70, 229, 0.2)';
+          } else if (isUpcoming) {
+            dotBg = 'var(--bg-body)';
+            dotBorder = '3px dashed var(--color-primary)';
+          } else if (isArchived) {
+            dotBg = 'var(--bg-body)';
+            dotBorder = '4px solid var(--border-color)';
+          }
+
+          // Format zero states
+          const formatStat = (val: number | undefined) => {
+            if (!val && isUpcoming) return '—';
+            return val || 0;
+          };
+
           return (
             <div 
               key={year.id} 
@@ -127,68 +150,103 @@ export default function AcademicYearsPage() {
                 position: 'relative', 
                 border: isActive ? '2px solid var(--color-primary)' : '1px solid var(--border-color)',
                 cursor: 'pointer',
-                transition: 'transform 0.2s',
-                opacity: isArchived ? 0.65 : 1
+                transition: 'transform 0.2s, box-shadow 0.2s',
+                opacity: isArchived ? 0.75 : 1,
+                padding: isArchived ? '12px 0' : '0' // Compact padding for archived
               }}
               onClick={() => navigate(`/academic-years/${year.id}`)}
-              onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
-              onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.05)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = 'none';
+              }}
             >
               {/* Timeline Dot */}
               <div style={{ 
                 position: 'absolute', 
                 left: -49, 
-                top: 32, 
+                top: isArchived ? 20 : 32, 
                 width: 18, 
                 height: 18, 
                 borderRadius: '50%', 
-                background: isActive ? 'var(--color-primary)' : (isArchived ? 'var(--text-muted)' : 'var(--bg-surface)'), 
-                border: `4px solid ${isActive ? 'var(--bg-body)' : 'var(--border-color)'}`,
+                background: dotBg, 
+                border: dotBorder,
                 zIndex: 1,
-                boxShadow: isActive ? '0 0 0 4px rgba(79, 70, 229, 0.2)' : 'none'
+                boxShadow: dotShadow
               }} />
 
-              <div className="card-body" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <div className="card-body" style={{ 
+                display: 'flex', 
+                justifyContent: 'space-between', 
+                alignItems: 'center',
+                padding: isArchived ? '0 24px' : '24px' 
+              }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: isArchived ? 4 : 12 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                    <h2 style={{ margin: 0, fontSize: 20, fontWeight: 700, color: isArchived ? 'var(--text-secondary)' : 'var(--text-primary)' }}>{year.name}</h2>
+                    <h2 style={{ margin: 0, fontSize: isArchived ? 16 : 20, fontWeight: 700, color: 'var(--text-primary)' }}>{year.name}</h2>
                     <span className="badge" style={{ background: badgeBg, color: badgeColor, textTransform: 'uppercase', letterSpacing: 0.5, fontSize: 11 }}>
                       {year.status}
                     </span>
                   </div>
-                  <div style={{ display: 'flex', gap: 24, fontSize: 13, color: 'var(--text-muted)' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                      <span>📅</span> Start: {new Date(year.start_date).toLocaleDateString()}
+                  <div style={{ display: 'flex', gap: 16, fontSize: 13, color: 'var(--text-primary)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'var(--bg-secondary)', padding: '4px 10px', borderRadius: 6, fontWeight: 500 }}>
+                      <span style={{ opacity: 0.6 }}>📅 Start:</span> {new Date(year.start_date).toLocaleDateString()}
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                      <span>🏁</span> End: {new Date(year.end_date).toLocaleDateString()}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'var(--bg-secondary)', padding: '4px 10px', borderRadius: 6, fontWeight: 500 }}>
+                      <span style={{ opacity: 0.6 }}>🏁 End:</span> {new Date(year.end_date).toLocaleDateString()}
                     </div>
                   </div>
                 </div>
 
                 <div style={{ display: 'flex', gap: 32, alignItems: 'center' }}>
-                  <div style={{ textAlign: 'center' }}>
-                    <div style={{ fontSize: 24, fontWeight: 700, color: 'var(--text-primary)' }}>{year.studentCount || 0}</div>
-                    <div style={{ fontSize: 12, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Students</div>
-                  </div>
-                  <div style={{ textAlign: 'center' }}>
-                    <div style={{ fontSize: 24, fontWeight: 700, color: 'var(--text-primary)' }}>{year.classCount || 0}</div>
-                    <div style={{ fontSize: 12, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Classes</div>
-                  </div>
-                  <div style={{ textAlign: 'center' }}>
-                    <div style={{ fontSize: 24, fontWeight: 700, color: 'var(--text-primary)' }}>{year.teacherCount || 0}</div>
-                    <div style={{ fontSize: 12, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Teachers</div>
-                  </div>
-                  <div style={{ textAlign: 'center' }}>
-                    <div style={{ fontSize: 24, fontWeight: 700, color: 'var(--text-primary)' }}>{year.termCount || 0}</div>
-                    <div style={{ fontSize: 12, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Terms</div>
-                  </div>
+                  {!isArchived && (
+                    <>
+                      {/* Primary Stat: Students */}
+                      <div style={{ textAlign: 'center' }}>
+                        <div style={{ fontSize: 28, fontWeight: 800, color: 'var(--color-primary)' }}>{formatStat(year.studentCount)}</div>
+                        <div style={{ fontSize: 12, color: 'var(--text-secondary)', fontWeight: 600, textTransform: 'uppercase' }}>Students</div>
+                      </div>
+                      <div style={{ width: 1, height: 40, background: 'var(--border-color)' }} /> {/* Subtle Divider */}
+                      
+                      {/* Secondary Stats */}
+                      <div style={{ textAlign: 'center' }}>
+                        <div style={{ fontSize: 22, fontWeight: 700, color: 'var(--text-primary)' }}>{formatStat(year.classCount)}</div>
+                        <div style={{ fontSize: 12, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Classes</div>
+                      </div>
+                      <div style={{ textAlign: 'center' }}>
+                        <div style={{ fontSize: 22, fontWeight: 700, color: 'var(--text-primary)' }}>{formatStat(year.teacherCount)}</div>
+                        <div style={{ fontSize: 12, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Teachers</div>
+                      </div>
+                      <div style={{ textAlign: 'center' }}>
+                        <div style={{ fontSize: 22, fontWeight: 700, color: 'var(--text-primary)' }}>{formatStat(year.termCount)}</div>
+                        <div style={{ fontSize: 12, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Terms</div>
+                      </div>
+                    </>
+                  )}
                   
                   {/* Kebab Action Menu */}
-                  <div style={{ position: 'relative' }}>
+                  <div style={{ position: 'relative', marginLeft: isArchived ? 0 : 16 }}>
                     <button 
                       onClick={(e) => { e.stopPropagation(); setMenuOpenId(menuOpenId === year.id ? null : year.id); }}
-                      style={{ background: 'none', border: 'none', fontSize: 20, cursor: 'pointer', padding: 8, color: 'var(--text-muted)' }}
+                      onMouseEnter={(e) => e.currentTarget.style.background = 'var(--bg-secondary)'}
+                      onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                      style={{ 
+                        background: 'transparent', 
+                        border: 'none', 
+                        fontSize: 20, 
+                        cursor: 'pointer', 
+                        width: 36,
+                        height: 36,
+                        borderRadius: '50%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: 'var(--text-secondary)',
+                        transition: 'background 0.2s'
+                      }}
                     >
                       ⋮
                     </button>

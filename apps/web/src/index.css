@@ -462,7 +462,7 @@ body {
 }
 
 .stat-card-value {
-  font-size: 32px;
+  font-size: 24px;
   font-weight: 700;
   color: var(--text-primary);
   line-height: 1.2;

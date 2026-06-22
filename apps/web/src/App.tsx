@@ -5,9 +5,15 @@ import AppLayout from './components/layout/AppLayout';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import LoginPage from './features/auth/LoginPage';
 import DashboardPage from './features/dashboard/DashboardPage';
+import AIContextProvider from './context/AIContextProvider';
 
 // Lazy-loaded feature pages
 import { lazy, Suspense } from 'react';
+const ChatWidget = lazy(() => import('./components/ai/ChatWidget'));
+const SchoolActivityPage = lazy(() => import('./features/activity/SchoolActivityPage'));
+const QuickActionsPage = lazy(() => import('./features/workspace/QuickActionsPage'));
+
+
 const StudentsPage = lazy(() => import('./features/students/StudentsPage'));
 const StudentDetailPage = lazy(() => import('./features/students/StudentDetailPage'));
 const AttendancePage = lazy(() => import('./features/attendance/AttendancePage'));
@@ -51,6 +57,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
+      <AIContextProvider>
       <Routes>
         {/* Public Routes */}
         <Route path="/login" element={
@@ -62,6 +69,13 @@ export default function App() {
           <Route element={<AppLayout />}>
             <Route index element={<Navigate to="/dashboard" replace />} />
             <Route path="dashboard" element={<DashboardPage />} />
+            <Route path="activity" element={
+              <Suspense fallback={<PageLoader />}><SchoolActivityPage /></Suspense>
+            } />
+            <Route path="quick-actions" element={
+              <Suspense fallback={<PageLoader />}><QuickActionsPage /></Suspense>
+            } />
+
 
             <Route path="students" element={
               <Suspense fallback={<PageLoader />}><StudentsPage /></Suspense>
@@ -136,6 +150,14 @@ export default function App() {
 
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
+
+      {/* Global AI Chat Widget */}
+      {is_authenticated && (
+        <Suspense fallback={null}>
+          <ChatWidget />
+        </Suspense>
+      )}
+      </AIContextProvider>
     </BrowserRouter>
   );
 }
