@@ -1,5 +1,5 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
-import { useGetFeeCollectionTrendQuery } from '../dashboardApi';
+
 
 export default function FeeCollectionChart() {
   // const { data, isLoading } = useGetFeeCollectionTrendQuery({ range: '6months' });
@@ -29,7 +29,7 @@ export default function FeeCollectionChart() {
         ) : (!data?.hasEnoughData) ? (
           <div style={{ height: 220, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: 24 }}>
             <i className="ti ti-coins" style={{ fontSize: 32, color: 'var(--color-text-secondary)', opacity: 0.5, marginBottom: 12 }} />
-            <div style={{ color: 'var(--color-text-secondary)', fontSize: 14 }}>{data?.dataQualityNote || 'Not enough data yet.'}</div>
+            <div style={{ color: 'var(--color-text-secondary)', fontSize: 14 }}>{(data as any)?.dataQualityNote || 'Not enough data yet.'}</div>
           </div>
         ) : (
           <ResponsiveContainer width="100%" height={220}>

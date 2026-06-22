@@ -24,10 +24,9 @@ export default function SchoolActivityPage() {
     if (search.trim() !== '') {
       const term = search.toLowerCase();
       matchesSearch = 
-        act.title.toLowerCase().includes(term) || 
-        act.description.toLowerCase().includes(term) || 
+        act.content.toLowerCase().includes(term) || 
         act.type.toLowerCase().includes(term) ||
-        (act.user && act.user.toLowerCase().includes(term));
+        (act.actor && act.actor.name && act.actor.name.toLowerCase().includes(term));
     }
 
     return matchesCategory && matchesSearch;

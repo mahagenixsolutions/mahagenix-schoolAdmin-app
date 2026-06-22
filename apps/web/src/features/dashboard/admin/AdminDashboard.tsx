@@ -22,7 +22,7 @@ import ExportReportDropdown from './ExportReportDropdown';
 export default function AdminDashboard() {
   const user = useSelector((s: RootState) => s.auth.user);
   const navigate = useNavigate();
-  const [lastRefreshed, setLastRefreshed] = useState<Date>(new Date());
+  const [lastRefreshed] = useState<Date>(new Date());
   const [timeAgo, setTimeAgo] = useState('just now');
 
   // Auto-refresh timer and last updated display

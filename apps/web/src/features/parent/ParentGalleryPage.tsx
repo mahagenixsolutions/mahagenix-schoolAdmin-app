@@ -55,7 +55,7 @@ export default function ParentGalleryPage() {
       ? photos || []
       : (photos || []).filter((p: any) => (p.category || '') === filterCategory);
 
-  const handleDownload = (photoUrl: string, title: string) => {
+  const handleDownload = (photoUrl: string) => {
     // Standard trigger download by opening image in new window/tab
     window.open(photoUrl, '_blank');
   };
@@ -261,7 +261,7 @@ export default function ParentGalleryPage() {
 
               <button
                 className="btn btn-primary btn-sm"
-                onClick={() => handleDownload(activePhoto.url, activePhoto.title)}
+                onClick={() => handleDownload(activePhoto.url)}
                 style={{
                   marginTop: 12,
                   padding: '8px 20px',

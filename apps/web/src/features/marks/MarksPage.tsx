@@ -202,8 +202,9 @@ export default function MarksPage() {
 
   // Clean up timers on unmount
   useEffect(() => {
+    const timeouts = saveTimeoutRef.current;
     return () => {
-      Object.values(saveTimeoutRef.current).forEach(clearTimeout);
+      Object.values(timeouts).forEach(clearTimeout);
     };
   }, []);
 

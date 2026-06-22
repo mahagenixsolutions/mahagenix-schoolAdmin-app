@@ -33,6 +33,7 @@ const DEFAULT_CONTEXT: AIContextData = {
   userInfo: null,
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const AIContext = createContext<AIContextValue>({
   context: DEFAULT_CONTEXT,
   registerPageContext: () => {},

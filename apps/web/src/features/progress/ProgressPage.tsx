@@ -853,7 +853,6 @@ function ProgressPageContent() {
         <StudentDetailDrawer
           studentId={selectedStudentId}
           onClose={() => setSelectedStudentId(null)}
-          performanceBandCalculator={getPerformanceBand}
         />
       )}
     </div>
@@ -1007,10 +1006,9 @@ function RatingPopover({ row, type, triggerEl, onClose, onChange }: RatingPopove
 interface StudentDetailDrawerProps {
   studentId: string;
   onClose: () => void;
-  performanceBandCalculator: (score: number) => any;
 }
 
-function StudentDetailDrawer({ studentId, onClose, performanceBandCalculator }: StudentDetailDrawerProps) {
+function StudentDetailDrawer({ studentId, onClose }: StudentDetailDrawerProps) {
   const [activeTab, setActiveTab] = useState<'profile' | 'timeline' | 'trends' | 'ai'>('profile');
 
   // Fetch individual details from backend

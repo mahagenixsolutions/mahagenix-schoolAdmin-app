@@ -1,8 +1,9 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
-import { useGetSubjectPerformanceQuery } from '../dashboardApi';
+
 import { useNavigate } from 'react-router-dom';
 
-export default function SubjectPerformanceChart({ academicYearId }: { academicYearId: string }) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export default function SubjectPerformanceChart(_props: { academicYearId?: string }) {
   // const { data, isLoading } = useGetSubjectPerformanceQuery({ academicYearId }, { skip: !academicYearId });
   const isLoading = false;
   const data = {

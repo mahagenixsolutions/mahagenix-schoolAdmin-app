@@ -1,11 +1,11 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid
 } from 'recharts';
 import {
-  ChevronLeft, Award, Calendar, BookOpen, Star, Sparkles, FileText,
-  MessageSquare, Image, Users, Activity, TrendingUp, AlertTriangle, CheckCircle, Clock
+  ChevronLeft, Award, Sparkles,
+  MessageSquare, Image, Activity, CheckCircle, Clock
 } from 'lucide-react';
 
 import { mockStudents, mockTimelineEvents, mockInsights, mockPortfolio } from '../../data/mockData';
@@ -191,7 +191,7 @@ export default function StudentDetailPage() {
           </p>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-            {events.map((event, index) => (
+            {events.map((event) => (
               <div key={event.id} className="card hover-scale" style={{ borderRadius: 16, overflow: 'hidden', borderLeft: `4px solid ${event.color}` }}>
                 <div className="card-body" style={{ padding: 16, display: 'flex', gap: 16 }}>
                   <div style={{ 
@@ -291,7 +291,7 @@ export default function StudentDetailPage() {
 
       {/* Parent Message Modal */}
       {activeModal === 'message' && (
-        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(15, 23, 42, 0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyCenter: 'center', justifyContent: 'center', zIndex: 9999 }}>
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(15, 23, 42, 0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }}>
           <div style={{ background: '#fff', border: '1px solid var(--border-color)', borderRadius: 16, width: '90%', maxWidth: 480, padding: 20, boxShadow: 'var(--shadow-lg)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
               <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: 'var(--text-primary)' }}>Message Parent of {student.first_name}</h3>
@@ -329,7 +329,7 @@ export default function StudentDetailPage() {
 
       {/* Award Badge Modal */}
       {activeModal === 'badge' && (
-        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(15, 23, 42, 0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyCenter: 'center', justifyContent: 'center', zIndex: 9999 }}>
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(15, 23, 42, 0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }}>
           <div style={{ background: '#fff', border: '1px solid var(--border-color)', borderRadius: 16, width: '90%', maxWidth: 500, padding: 20, boxShadow: 'var(--shadow-lg)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
               <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: 'var(--text-primary)' }}>Award Badge to {student.first_name}</h3>

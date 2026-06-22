@@ -277,7 +277,7 @@ export default function ParentMessagingPage() {
               }}
             >
               {activeThread.messages && activeThread.messages.length > 0 ? (
-                activeThread.messages.map((msg: any, index: number) => {
+                activeThread.messages.map((msg: any) => {
                   const isOwn = msg.sender_id === user?.id;
                   return (
                     <div

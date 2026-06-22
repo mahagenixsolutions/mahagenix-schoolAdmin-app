@@ -164,7 +164,7 @@ export default function SubjectsPage() {
                   <div style={{ fontSize: 11, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{sub.code}</div>
                 </div>
               </div>
-              <div style={{ display: 'flex', justifycontent: 'space-between', justifyContent: 'space-between', fontSize: 13, color: 'var(--text-muted)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, color: 'var(--text-muted)' }}>
                 <span>🏫 {sub.classes} classes</span>
                 <span>👩‍🏫 {sub.teachers} teachers</span>
               </div>

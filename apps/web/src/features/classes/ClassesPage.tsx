@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Users, Calendar, ChevronRight, School, TrendingUp, TrendingDown, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Users, Calendar, School, TrendingDown, AlertCircle, CheckCircle2 } from 'lucide-react';
 
 // Mock Data for UI Phase
 const mockClasses = [
@@ -72,7 +72,7 @@ export default function ClassesPage() {
           // Calculate thresholds and status
           const isCritical = cls.performance < 75;
           const isWarning = cls.performance >= 75 && cls.performance < 85;
-          const isGood = cls.performance >= 85;
+
 
           let statusColor = 'var(--color-success)';
           let statusBg = 'var(--color-success-surface)';
@@ -92,8 +92,6 @@ export default function ClassesPage() {
             accentHex = '#F59E0B'; // Amber
             StatusIcon = TrendingDown;
             statusText = 'Monitor';
-          } else {
-            StatusIcon = TrendingUp;
           }
 
           // Circle Progress Math

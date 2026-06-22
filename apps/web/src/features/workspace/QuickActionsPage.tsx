@@ -1,4 +1,4 @@
-import { Zap, Search, ChevronDown, Filter } from 'lucide-react';
+import { Zap, Search, ChevronDown } from 'lucide-react';
 import CommandCenterLeftSidebar from './CommandCenterLeftSidebar';
 import CommandCenterRightSidebar from './CommandCenterRightSidebar';
 import BulkActionSpreadsheet from './BulkActionSpreadsheet';

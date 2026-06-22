@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+
 import {
   ResponsiveContainer,
   BarChart,
@@ -10,35 +10,29 @@ import {
   Tooltip,
   Legend,
 } from 'recharts';
-import type { RootState } from '../../../store';
 import {
   useGetParentStudentProfileQuery,
   useGetParentAttendanceQuery,
   useGetParentMarksQuery,
-  useGetParentHomeworkQuery,
   useGetParentBadgesQuery,
 } from '../../parent/parentApi';
 import {
   Award,
-  BookOpen,
   Calendar,
   CheckSquare,
   Sparkles,
   TrendingUp,
-  FileText,
-  Clock,
-  ThumbsUp,
 } from 'lucide-react';
 
 export default function StudentDashboard() {
-  const user = useSelector((s: RootState) => s.auth.user);
+  
   const studentId = 'student-001';
 
   // Fetch student-specific records
   const { data: profile, isLoading: isProfileLoading } = useGetParentStudentProfileQuery({ studentId });
   const { data: attendanceData } = useGetParentAttendanceQuery({ studentId });
   const { data: marks } = useGetParentMarksQuery({ studentId });
-  const { data: homework } = useGetParentHomeworkQuery({ studentId });
+
   const { data: badges } = useGetParentBadgesQuery({ studentId });
 
   // Stateful Checklist logic

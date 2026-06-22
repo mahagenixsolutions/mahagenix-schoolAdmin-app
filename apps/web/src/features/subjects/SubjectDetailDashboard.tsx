@@ -5,8 +5,8 @@ import {
   useGetSubjectResourcesQuery, 
   useGetSubjectActivityQuery 
 } from './subjectsApi';
-import React, { useState } from 'react';
-import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
+import { useState } from 'react';
+import { ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGrid, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
 import TeacherProfileDrawer from '../teachers/TeacherProfileDrawer';
 
 export default function SubjectDetailDashboard() {
@@ -114,7 +114,7 @@ export default function SubjectDetailDashboard() {
               {gradeData.map((g, i) => (
                 <div key={g.name} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12 }}>
                   <div style={{ width: 10, height: 10, borderRadius: '50%', background: PIE_COLORS[i % PIE_COLORS.length] }} />
-                  {g.name}: {g.value}
+                  {String(g.name)}: {String(g.value)}
                 </div>
               ))}
             </div>

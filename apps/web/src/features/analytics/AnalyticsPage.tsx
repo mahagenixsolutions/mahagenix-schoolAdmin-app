@@ -170,7 +170,7 @@ export default function AnalyticsPage() {
     const baseRisk = riskStudents.length;
 
     // Build parent engagement frequencies dynamically
-    const parentLoginFrequency = detailedData.performanceTrend?.map((pt: any, idx: number) => {
+    const parentLoginFrequency = detailedData.performanceTrend?.map((pt: any) => {
       const mapping: Record<string, number> = { Jun: 620, Jul: 680, Aug: 720, Sep: 800, Oct: 850, Nov: 780, Dec: 520, Jan: 640, Feb: 820, Mar: 890, Apr: 920, May: 450 };
       const val = mapping[pt.month] || 700;
       return {

@@ -75,7 +75,7 @@ export default function AttendancePage() {
         entries,
       }).unwrap();
       triggerToast('📋 Attendance roster successfully updated & saved to database.');
-    } catch (err) {
+    } catch {
       alert('Failed to save attendance. Please try again.');
     }
   };

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
-import { useGetDashboardAttendanceTrendQuery } from '../dashboardApi';
+
 
 export default function AttendanceTrendChart() {
   const [range, setRange] = useState('6months');
@@ -41,7 +41,7 @@ export default function AttendanceTrendChart() {
         ) : (!data?.hasEnoughData) ? (
           <div style={{ height: 220, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: 24 }}>
             <i className="ti ti-chart-area-line" style={{ fontSize: 32, color: 'var(--color-text-secondary)', opacity: 0.5, marginBottom: 12 }} />
-            <div style={{ color: 'var(--color-text-secondary)', fontSize: 14 }}>{data?.dataQualityNote || 'Not enough data yet. Check back after 30 days.'}</div>
+            <div style={{ color: 'var(--color-text-secondary)', fontSize: 14 }}>{(data as any)?.dataQualityNote || 'Not enough data yet. Check back after 30 days.'}</div>
           </div>
         ) : (
           <ResponsiveContainer width="100%" height={220}>
