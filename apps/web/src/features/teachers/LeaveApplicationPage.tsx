@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowLeft, Send, Calendar } from 'lucide-react';
+import { ArrowLeft, Send } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export default function LeaveApplicationPage() {
