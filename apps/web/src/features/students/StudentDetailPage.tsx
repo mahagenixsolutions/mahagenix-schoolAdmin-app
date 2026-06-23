@@ -144,6 +144,30 @@ export default function StudentDetailPage() {
                   <strong>{student.emergency_contact}</strong>
                 </div>
               </div>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, textAlign: 'left', fontSize: 13, background: 'var(--bg-secondary)', padding: 16, borderRadius: 12, marginTop: 12 }}>
+                <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 4 }}>Family & Guardians</div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span className="text-muted">Father</span>
+                  <strong>Robert Doe</strong>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span className="text-muted">Mother</span>
+                  <strong>Sarah Doe</strong>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, textAlign: 'left', fontSize: 13, background: 'var(--bg-secondary)', padding: 16, borderRadius: 12, marginTop: 12 }}>
+                <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 4 }}>Fee Status</div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--color-success)' }}>
+                  <span>Cleared Dues</span>
+                  <strong>$2,400</strong>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--color-danger)' }}>
+                  <span>Pending Dues</span>
+                  <strong>$450</strong>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -285,14 +309,64 @@ export default function StudentDetailPage() {
               </div>
             </div>
           </div>
-        </div>
 
+          {/* Academic Report Cards (Mark Sheets) */}
+          <div className="card" style={{ borderRadius: 16 }}>
+            <div className="card-header" style={{ borderBottom: 'none', paddingBottom: 0 }}>
+              <span className="card-title" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <Award size={16} className="text-primary" /> Academic Report Cards
+              </span>
+            </div>
+            <div className="card-body">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                {/* Current Class Report */}
+                <div style={{ border: '1px solid var(--border-color)', borderRadius: 12, overflow: 'hidden' }}>
+                  <div style={{ background: 'var(--bg-secondary)', padding: '10px 14px', fontWeight: 700, fontSize: 13, borderBottom: '1px solid var(--border-color)' }}>
+                    Grade {student.class_name} - Mid Term Report
+                  </div>
+                  <div style={{ padding: 14 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, paddingBottom: 8, borderBottom: '1px dashed var(--border-color)' }}>
+                      <span style={{ color: 'var(--text-muted)' }}>Mathematics</span>
+                      <strong>92/100 (A+)</strong>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, padding: '8px 0', borderBottom: '1px dashed var(--border-color)' }}>
+                      <span style={{ color: 'var(--text-muted)' }}>Science</span>
+                      <strong>88/100 (A)</strong>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, padding: '8px 0', borderBottom: '1px dashed var(--border-color)' }}>
+                      <span style={{ color: 'var(--text-muted)' }}>English</span>
+                      <strong>95/100 (A+)</strong>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, paddingTop: 8 }}>
+                      <span style={{ color: 'var(--text-muted)' }}>History</span>
+                      <strong>84/100 (B+)</strong>
+                    </div>
+                    <button className="btn btn-secondary btn-sm" style={{ width: '100%', marginTop: 16, borderRadius: 8 }}>View Full Mark Sheet</button>
+                  </div>
+                </div>
+                
+                {/* Previous Class Report */}
+                {parseInt(student.class_name || '10') > 1 && (
+                  <div style={{ border: '1px solid var(--border-color)', borderRadius: 12, overflow: 'hidden', opacity: 0.8 }}>
+                    <div style={{ background: 'var(--bg-secondary)', padding: '10px 14px', fontWeight: 700, fontSize: 13, borderBottom: '1px solid var(--border-color)' }}>
+                      Grade {parseInt(student.class_name || '10') - 1} - Final Report
+                    </div>
+                    <div style={{ padding: 14 }}>
+                      <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 12 }}>Overall Percentage: <strong>89.5%</strong></div>
+                      <button className="btn btn-ghost btn-sm" style={{ width: '100%', borderRadius: 8, border: '1px solid var(--border-color)' }}>Download Previous Report</button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Parent Message Modal */}
       {activeModal === 'message' && (
         <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(15, 23, 42, 0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }}>
-          <div style={{ background: '#fff', border: '1px solid var(--border-color)', borderRadius: 16, width: '90%', maxWidth: 480, padding: 20, boxShadow: 'var(--shadow-lg)' }}>
+          <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-color)', borderRadius: 16, width: '90%', maxWidth: 480, padding: 20, boxShadow: 'var(--shadow-lg)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
               <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: 'var(--text-primary)' }}>Message Parent of {student.first_name}</h3>
               <button onClick={() => setActiveModal(null)} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', fontSize: 18, cursor: 'pointer' }} disabled={isLoading}>✕</button>
@@ -330,7 +404,7 @@ export default function StudentDetailPage() {
       {/* Award Badge Modal */}
       {activeModal === 'badge' && (
         <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(15, 23, 42, 0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }}>
-          <div style={{ background: '#fff', border: '1px solid var(--border-color)', borderRadius: 16, width: '90%', maxWidth: 500, padding: 20, boxShadow: 'var(--shadow-lg)' }}>
+          <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-color)', borderRadius: 16, width: '90%', maxWidth: 500, padding: 20, boxShadow: 'var(--shadow-lg)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
               <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: 'var(--text-primary)' }}>Award Badge to {student.first_name}</h3>
               <button onClick={() => setActiveModal(null)} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', fontSize: 18, cursor: 'pointer' }} disabled={isLoading}>✕</button>

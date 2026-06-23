@@ -6,6 +6,7 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import LoginPage from './features/auth/LoginPage';
 import DashboardPage from './features/dashboard/DashboardPage';
 import AIContextProvider from './context/AIContextProvider';
+import BusTrackingFAB from './features/bus-tracking/BusTrackingFAB';
 
 // Lazy-loaded feature pages
 import { lazy, Suspense } from 'react';
@@ -39,6 +40,9 @@ const ParentMessagingPage = lazy(() => import('./features/parent/ParentMessaging
 const ParentPersonalDetailsPage = lazy(() => import('./features/parent/ParentPersonalDetailsPage'));
 const ParentGalleryPage = lazy(() => import('./features/parent/ParentGalleryPage'));
 
+// Teacher Pages
+const LeaveApplicationPage = lazy(() => import('./features/teachers/LeaveApplicationPage'));
+
 const PageLoader = () => (
   <div className="flex-center" style={{ height: 400 }}>
     <div style={{
@@ -54,6 +58,7 @@ const PageLoader = () => (
 
 export default function App() {
   const is_authenticated = useSelector((s: RootState) => s.auth.is_authenticated);
+  const user = useSelector((s: RootState) => s.auth.user);
 
   return (
     <BrowserRouter>
@@ -131,6 +136,9 @@ export default function App() {
             <Route path="reports" element={
               <Suspense fallback={<PageLoader />}><ReportsPage /></Suspense>
             } />
+            <Route path="leave-application" element={
+              <Suspense fallback={<PageLoader />}><LeaveApplicationPage /></Suspense>
+            } />
             
             {/* Parent-Only Routes */}
             <Route path="timeline" element={
@@ -156,6 +164,11 @@ export default function App() {
         <Suspense fallback={null}>
           <ChatWidget />
         </Suspense>
+      )}
+
+      {/* Global Bus Tracking Widget */}
+      {is_authenticated && (
+        <BusTrackingFAB role={user?.role === 'PARENT' ? 'PARENT' : 'ADMIN'} />
       )}
       </AIContextProvider>
     </BrowserRouter>

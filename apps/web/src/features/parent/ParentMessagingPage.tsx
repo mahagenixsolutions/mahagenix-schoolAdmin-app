@@ -1,388 +1,240 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../store';
 import { useGetParentMessagesQuery, useSendParentMessageMutation } from './parentApi';
+
+const MOCK_CHANNELS = [
+  { id: 'transport', name: 'Transport Coordinator', role: 'School Bus', online: true, lastMessage: 'Bus 4A is running 10 mins late.' },
+  { id: 'accounts', name: 'Accounts Department', role: 'Fees & Admin', online: false, lastMessage: 'Receipt for Q2 fees generated.' },
+  { id: 'principal', name: 'Principal Office', role: 'School Admin', online: true, lastMessage: 'Dear Parents, please note tomorrow is a holiday.' },
+  { id: 'subject_math', name: 'Mr. David (Math)', role: 'Subject Teacher', online: false, lastMessage: 'Homework submitted. Good job!' },
+];
 
 export default function ParentMessagingPage() {
   const selectedStudent = useSelector((s: RootState) => s.auth.selected_student);
   const studentId = selectedStudent?.id;
   const user = useSelector((s: RootState) => s.auth.user);
 
-  const {
-    data: threads,
-    isLoading,
-    refetch,
-  } = useGetParentMessagesQuery({ studentId: studentId! }, { skip: !studentId });
+  const { data: apiThreads = [], refetch } = useGetParentMessagesQuery({ studentId: studentId! }, { skip: !studentId });
   const [sendMessage, { isLoading: isSending }] = useSendParentMessageMutation();
 
-  const [activeThreadIdx, setActiveThreadIdx] = useState<number | null>(null);
+  const [activeThreadId, setActiveThreadId] = useState<string | null>(null);
   const [messageText, setMessageText] = useState('');
   const chatEndRef = useRef<HTMLDivElement>(null);
 
-  // Poll chat messages every 4 seconds to simulate real-time updates (or manual refresh)
-  useEffect(() => {
-    if (!studentId) return;
-    const interval = setInterval(() => {
-      refetch();
-    }, 4000);
-    return () => clearInterval(interval);
-  }, [studentId, refetch]);
-
-  // Set first thread active when threads load
-  useEffect(() => {
-    if (threads && threads.length > 0 && activeThreadIdx === null) {
-      setActiveThreadIdx(0);
+  // Combine API threads (Class Teacher) with Mock Channels for demonstration
+  const threads = useMemo(() => {
+    const combined: any[] = [];
+    if (apiThreads && Array.isArray(apiThreads)) {
+      apiThreads.forEach((t: any) => {
+        if (t?.teacher) {
+          combined.push({
+            id: t.teacher.id,
+            name: `${t.teacher.first_name} ${t.teacher.last_name}`,
+            role: 'Class Teacher',
+            online: true,
+            lastMessage: t.last_message ? t.last_message.content : 'Start a conversation',
+            isApi: true,
+            messages: t.messages || []
+          });
+        }
+      });
     }
-  }, [threads, activeThreadIdx]);
+    MOCK_CHANNELS.forEach(m => {
+      combined.push({
+        id: m.id,
+        name: m.name,
+        role: m.role,
+        online: m.online,
+        lastMessage: m.lastMessage,
+        isApi: false,
+        messages: [
+          { id: 'm1', content: m.lastMessage, sender_id: 'system', created_at: new Date().toISOString() }
+        ]
+      });
+    });
+    return combined;
+  }, [apiThreads]);
 
-  // Scroll to bottom when active thread or messages change
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [activeThreadIdx, threads]);
+    if (threads.length > 0 && !activeThreadId) {
+      setActiveThreadId(threads[0].id);
+    }
+  }, [threads, activeThreadId]);
+
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'auto' });
+  }, [activeThreadId, threads]);
 
   if (!studentId) {
     return (
       <div className="flex-center" style={{ height: '70vh', flexDirection: 'column', gap: 16 }}>
         <div style={{ fontSize: 48 }}>💬</div>
-        <h2 style={{ color: 'var(--text-primary)' }}>Select Child</h2>
-        <p style={{ color: 'var(--text-muted)' }}>Select a child to message their teachers.</p>
+        <h2 style={{ color: '#0f172a', fontWeight: 600 }}>Messaging Center</h2>
+        <p style={{ color: '#64748b' }}>Select a child to message their teachers and school staff.</p>
       </div>
     );
   }
 
-  if (isLoading && !threads) {
-    return (
-      <div className="flex-center" style={{ height: '70vh', flexDirection: 'column', gap: 12 }}>
-        <div
-          style={{
-            width: 40,
-            height: 40,
-            border: '3px solid var(--border-color)',
-            borderTopColor: 'var(--color-primary)',
-            borderRadius: '50%',
-            animation: 'spin 0.8s linear infinite',
-          }}
-        />
-        <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
-          Loading conversations...
-        </span>
-        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-      </div>
-    );
-  }
-
-  const activeThread =
-    activeThreadIdx !== null && threads?.[activeThreadIdx] ? threads[activeThreadIdx] : null;
+  const activeThread = threads.find((t) => t.id === activeThreadId);
 
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!messageText.trim() || !activeThread || isSending) return;
 
-    try {
-      await sendMessage({
-        studentId: studentId!,
-        teacherId: activeThread.teacher.id,
+    if (activeThread.isApi) {
+      try {
+        await sendMessage({
+          studentId: studentId!,
+          teacherId: activeThread.id,
+          content: messageText.trim(),
+        }).unwrap();
+        setMessageText('');
+        refetch();
+      } catch (err) {
+        console.error('Failed to send message:', err);
+      }
+    } else {
+      // Mock sending for non-API channels
+      activeThread.messages.push({
+        id: Math.random().toString(),
         content: messageText.trim(),
-      }).unwrap();
+        sender_id: user?.id,
+        created_at: new Date().toISOString()
+      });
       setMessageText('');
-      refetch();
-    } catch (err) {
-      console.error('Failed to send message:', err);
     }
   };
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        height: 'calc(100vh - 150px)',
-        background: 'var(--bg-primary)',
-        border: '1px solid var(--border-color)',
-        borderRadius: 'var(--radius-lg)',
-        overflow: 'hidden',
-      }}
-    >
-      {/* Sidebar - Threads list */}
-      <div
-        style={{
-          width: '320px',
-          borderRight: '1px solid var(--border-color)',
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        <div style={{ padding: 16, borderBottom: '1px solid var(--border-color)' }}>
-          <h2 style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-primary)' }}>
-            Conversations
-          </h2>
-          <p style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>
-            Chat with {selectedStudent.first_name}'s teachers
-          </p>
+    <div style={{ 
+      display: 'flex', height: 'calc(100vh - 120px)', maxWidth: 1200, margin: '0 auto',
+      background: 'var(--bg-primary)', borderRadius: 24, overflow: 'hidden',
+      boxShadow: 'var(--shadow-md)', border: '1px solid var(--border-color)'
+    }}>
+      {/* SIDEBAR (Channels) */}
+      <div style={{ width: 340, borderRight: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', background: 'var(--bg-secondary)' }}>
+        <div style={{ padding: '20px 24px', background: 'var(--bg-primary)', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>Messages</h2>
+          <button style={{ width: 36, height: 36, borderRadius: '50%', border: 'none', background: 'var(--bg-secondary)', cursor: 'pointer', fontSize: 16 }}>✍️</button>
         </div>
-        <div
-          style={{
-            flex: 1,
-            overflowY: 'auto',
-            padding: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 4,
-          }}
-        >
-          {threads && threads.length > 0 ? (
-            threads.map((t: any, idx: number) => {
-              if (!t?.teacher) return null;
 
-              const initials =
-                `${t.teacher.first_name?.[0] || ''}${t.teacher.last_name?.[0] || ''}`.toUpperCase();
-              const isActive = activeThreadIdx === idx;
-              return (
-                <button
-                  key={t.teacher?.id || idx}
-                  onClick={() => setActiveThreadIdx(idx)}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 12,
-                    padding: 12,
-                    border: 'none',
-                    borderRadius: 'var(--radius-md)',
-                    background: isActive ? 'var(--color-primary-surface)' : 'none',
-                    color: isActive ? 'var(--color-primary)' : 'var(--text-primary)',
-                    cursor: 'pointer',
-                    textAlign: 'left',
-                    width: '100%',
-                    transition: 'var(--transition-fast)',
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!isActive) e.currentTarget.style.background = 'var(--bg-secondary)';
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!isActive) e.currentTarget.style.background = 'none';
-                  }}
-                >
-                  <div
-                    className="avatar-fallback"
-                    style={{
-                      width: 40,
-                      height: 40,
-                      fontSize: 13,
-                      fontWeight: 700,
-                      background:
-                        'linear-gradient(135deg, var(--color-primary), var(--color-primary-light))',
-                      color: 'white',
-                      flexShrink: 0,
-                    }}
-                  >
-                    {initials}
+        <div style={{ flex: 1, overflowY: 'auto', padding: 12 }}>
+          {threads.map((t) => {
+            const isActive = activeThreadId === t.id;
+            return (
+              <button
+                key={t.id}
+                onClick={() => setActiveThreadId(t.id)}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 12, width: '100%', padding: 12,
+                  border: 'none', borderRadius: 16, cursor: 'pointer', textAlign: 'left',
+                  background: isActive ? 'var(--color-primary-surface)' : 'transparent',
+                  transition: 'background 0.2s'
+                }}
+              >
+                <div style={{ position: 'relative' }}>
+                  <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'linear-gradient(135deg, var(--color-primary), var(--color-primary-light))', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontWeight: 700 }}>
+                    {t.name[0]}
                   </div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div
-                      style={{
-                        fontSize: 13,
-                        fontWeight: 600,
-                        color: isActive ? 'var(--color-primary)' : 'var(--text-primary)',
-                        textOverflow: 'ellipsis',
-                        overflow: 'hidden',
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      {t.teacher?.first_name || 'Unknown'} {t.teacher?.last_name || ''}
-                    </div>
-                    <div
-                      style={{
-                        fontSize: 11,
-                        color: 'var(--text-muted)',
-                        marginTop: 2,
-                        textOverflow: 'ellipsis',
-                        overflow: 'hidden',
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      {t.last_message ? t.last_message.content : 'No messages yet'}
-                    </div>
+                  {t.online && <div style={{ position: 'absolute', bottom: 0, right: 0, width: 14, height: 14, background: '#22c55e', border: '2px solid var(--bg-primary)', borderRadius: '50%' }} />}
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+                    <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-primary)', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>{t.name}</div>
+                    <div style={{ fontSize: 11, color: isActive ? 'var(--color-primary)' : 'var(--text-muted)', fontWeight: isActive ? 600 : 500 }}>12:30 PM</div>
                   </div>
-                </button>
-              );
-            })
-          ) : (
-            <div
-              style={{ padding: 20, textAlign: 'center', color: 'var(--text-muted)', fontSize: 12 }}
-            >
-              No teachers linked.
-            </div>
-          )}
+                  <div style={{ fontSize: 12, color: isActive ? 'var(--color-primary)' : 'var(--text-secondary)', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>{t.lastMessage}</div>
+                </div>
+              </button>
+            );
+          })}
         </div>
       </div>
 
-      {/* Chat window */}
-      <div
-        style={{
-          flex: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          background: 'var(--bg-secondary)',
-        }}
-      >
+      {/* CHAT WINDOW */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: 'var(--bg-tertiary)', position: 'relative' }}>
+        {/* Chat Background Pattern */}
+        <div style={{ position: 'absolute', inset: 0, opacity: 0.05, backgroundImage: 'radial-gradient(var(--text-primary) 1px, transparent 1px)', backgroundSize: '20px 20px', pointerEvents: 'none' }} />
+        
         {activeThread ? (
           <>
             {/* Header */}
-            <div
-              style={{
-                padding: 16,
-                background: 'var(--bg-primary)',
-                borderBottom: '1px solid var(--border-color)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 12,
-              }}
-            >
-              <div
-                className="avatar-fallback"
-                style={{
-                  width: 38,
-                  height: 38,
-                  fontSize: 12,
-                  fontWeight: 700,
-                  background:
-                    'linear-gradient(135deg, var(--color-primary), var(--color-primary-light))',
-                  color: 'white',
-                }}
-              >
-                {activeThread.teacher?.first_name?.[0] || ''}
-                {activeThread.teacher?.last_name?.[0] || ''}
+            <div style={{ padding: '16px 24px', background: 'var(--bg-primary)', borderBottom: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', gap: 16, zIndex: 1 }}>
+              <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'linear-gradient(135deg, var(--color-primary), var(--color-primary-light))', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontWeight: 700 }}>
+                {activeThread.name[0]}
               </div>
               <div>
-                <h3
-                  style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)', margin: 0 }}
-                >
-                  {activeThread.teacher?.first_name || 'Unknown'}{' '}
-                  {activeThread.teacher?.last_name || ''}
-                </h3>
-                <p style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>
-                  Class Teacher
-                </p>
+                <h3 style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>{activeThread.name}</h3>
+                <p style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>{activeThread.role} • {activeThread.online ? <span style={{color: '#22c55e', fontWeight: 600}}>Online</span> : 'Offline'}</p>
+              </div>
+              <div style={{ marginLeft: 'auto', display: 'flex', gap: 12 }}>
+                <button style={{ width: 40, height: 40, borderRadius: '50%', border: 'none', background: 'var(--bg-secondary)', cursor: 'pointer', fontSize: 16, color: 'var(--text-primary)' }}>📞</button>
+                <button style={{ width: 40, height: 40, borderRadius: '50%', border: 'none', background: 'var(--bg-secondary)', cursor: 'pointer', fontSize: 16, color: 'var(--text-primary)' }}>📹</button>
               </div>
             </div>
 
-            {/* Message Thread */}
-            <div
-              style={{
-                flex: 1,
-                overflowY: 'auto',
-                padding: 20,
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 12,
-              }}
-            >
-              {activeThread.messages && activeThread.messages.length > 0 ? (
-                activeThread.messages.map((msg: any) => {
-                  const isOwn = msg.sender_id === user?.id;
-                  return (
-                    <div
-                      key={msg.id || `${msg.created_at}-${msg.sender_id}`}
-                      style={{
-                        display: 'flex',
-                        justifyContent: isOwn ? 'flex-end' : 'flex-start',
-                      }}
-                    >
-                      <div
-                        style={{
-                          maxWidth: '70%',
-                          background: isOwn ? 'var(--color-primary)' : 'var(--bg-primary)',
-                          color: isOwn ? 'white' : 'var(--text-primary)',
-                          padding: '10px 14px',
-                          borderRadius: isOwn ? '16px 16px 2px 16px' : '16px 16px 16px 2px',
-                          border: isOwn ? 'none' : '1px solid var(--border-color)',
-                          boxShadow: 'var(--shadow-xs)',
-                        }}
-                      >
-                        <div style={{ fontSize: 13, lineHeight: 1.5, wordBreak: 'break-word' }}>
-                          {msg.content}
-                        </div>
-                        <div
-                          style={{ fontSize: 9, opacity: 0.7, marginTop: 4, textAlign: 'right' }}
-                        >
-                          {new Date(msg.created_at).toLocaleTimeString([], {
-                            hour: '2-digit',
-                            minute: '2-digit',
-                          })}
-                        </div>
+            {/* Messages Area */}
+            <div style={{ flex: 1, overflowY: 'auto', padding: 24, display: 'flex', flexDirection: 'column', gap: 12, zIndex: 1 }}>
+              <div style={{ alignSelf: 'center', background: 'var(--bg-primary)', padding: '6px 12px', borderRadius: 16, fontSize: 11, color: 'var(--text-secondary)', fontWeight: 600, marginBottom: 16, backdropFilter: 'blur(4px)', border: '1px solid var(--border-color)' }}>
+                Today
+              </div>
+              
+              {activeThread.messages.map((msg: any) => {
+                const isOwn = msg.sender_id === user?.id;
+                return (
+                  <div key={msg.id} style={{ display: 'flex', justifyContent: isOwn ? 'flex-end' : 'flex-start' }}>
+                    <div style={{ 
+                      maxWidth: '65%', 
+                      background: isOwn ? 'var(--color-primary-surface)' : 'var(--bg-primary)', 
+                      color: isOwn ? 'var(--color-primary-dark)' : 'var(--text-primary)', 
+                      padding: '8px 12px', 
+                      borderRadius: isOwn ? '12px 0 12px 12px' : '0 12px 12px 12px', 
+                      boxShadow: 'var(--shadow-sm)',
+                      border: '1px solid var(--border-color)',
+                      position: 'relative'
+                    }}>
+                      <div style={{ fontSize: 14, lineHeight: 1.5, wordBreak: 'break-word', paddingRight: 32 }}>
+                        {msg.content}
+                      </div>
+                      <div style={{ fontSize: 10, color: 'var(--text-muted)', position: 'absolute', bottom: 6, right: 8, display: 'flex', alignItems: 'center', gap: 4 }}>
+                        {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        {isOwn && <span style={{ color: 'var(--color-primary)', fontSize: 12 }}>✓✓</span>}
                       </div>
                     </div>
-                  );
-                })
-              ) : (
-                <div
-                  style={{
-                    flex: 1,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexDirection: 'column',
-                    color: 'var(--text-muted)',
-                    fontSize: 13,
-                  }}
-                >
-                  <span>No messages in this chat. Start the conversation below.</span>
-                </div>
-              )}
+                  </div>
+                );
+              })}
               <div ref={chatEndRef} />
             </div>
 
-            {/* Input form */}
-            <form
-              onSubmit={handleSend}
-              style={{
-                padding: 16,
-                background: 'var(--bg-primary)',
-                borderTop: '1px solid var(--border-color)',
-                display: 'flex',
-                gap: 12,
-              }}
-            >
+            {/* Input Form */}
+            <form onSubmit={handleSend} style={{ padding: '16px 24px', background: 'var(--bg-secondary)', display: 'flex', alignItems: 'center', gap: 12, zIndex: 1, borderTop: '1px solid var(--border-color)' }}>
+              <button type="button" style={{ width: 44, height: 44, borderRadius: '50%', border: 'none', background: 'transparent', cursor: 'pointer', fontSize: 20, color: 'var(--text-muted)' }}>😀</button>
+              <button type="button" style={{ width: 44, height: 44, borderRadius: '50%', border: 'none', background: 'transparent', cursor: 'pointer', fontSize: 20, color: 'var(--text-muted)', transform: 'rotate(45deg)' }}>📎</button>
+              
               <input
                 type="text"
-                placeholder="Type your message here..."
+                placeholder="Type a message"
                 value={messageText}
                 onChange={(e) => setMessageText(e.target.value)}
-                className="form-input"
-                style={{ flex: 1, borderRadius: 'var(--radius-md)', height: 40 }}
+                style={{ flex: 1, borderRadius: 24, border: '1px solid var(--border-color)', background: 'var(--bg-primary)', color: 'var(--text-primary)', padding: '12px 20px', fontSize: 14, outline: 'none', boxShadow: 'var(--shadow-xs)' }}
                 disabled={isSending}
               />
-              <button
-                type="submit"
-                className="btn btn-primary"
-                style={{
-                  borderRadius: 'var(--radius-md)',
-                  padding: '0 16px',
-                  height: 40,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 6,
-                }}
-                disabled={!messageText.trim() || isSending}
-              >
-                <span>Send</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
-                </svg>
-              </button>
+              
+              {messageText.trim() ? (
+                <button type="submit" style={{ width: 44, height: 44, borderRadius: '50%', border: 'none', background: 'var(--color-primary)', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 6px rgba(79, 70, 229, 0.3)' }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" /></svg>
+                </button>
+              ) : (
+                <button type="button" style={{ width: 44, height: 44, borderRadius: '50%', border: 'none', background: 'transparent', cursor: 'pointer', fontSize: 20, color: 'var(--text-muted)' }}>🎤</button>
+              )}
             </form>
           </>
         ) : (
-          <div
-            style={{
-              flex: 1,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: 'var(--text-muted)',
-              fontSize: 13,
-            }}
-          >
-            Select a conversation to start chatting.
+          <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', fontSize: 14, zIndex: 1, flexDirection: 'column', gap: 16 }}>
+            <div style={{ width: 120, height: 120, background: 'var(--bg-secondary)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 48, border: '1px solid var(--border-color)' }}>💬</div>
+            Select a chat to start messaging
           </div>
         )}
       </div>

@@ -3,7 +3,13 @@ import KpiCard from './KpiCard';
 import type { StatCardProps } from './KpiCard';
 import { Users, ClipboardCheck, GraduationCap, CreditCard } from 'lucide-react';
 
-export default function KpiRow({ academicYearId }: { academicYearId: string }) {
+export default function KpiRow({
+  academicYearId,
+  onFeeClick,
+}: {
+  academicYearId: string;
+  onFeeClick?: () => void;
+}) {
   const { data, isLoading } = useGetKpisQuery({ academicYearId }, { 
     skip: !academicYearId,
     pollingInterval: 300000 // 5 min auto-refresh
@@ -73,7 +79,8 @@ export default function KpiRow({ academicYearId }: { academicYearId: string }) {
         label: data?.amountDue > 0 ? `of ₹${(data?.amountDue ?? 0).toLocaleString()}` : '',
         isGood: undefined
       },
-      isLoading
+      isLoading,
+      onClick: onFeeClick
     },
   ];
 

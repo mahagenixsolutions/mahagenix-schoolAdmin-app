@@ -18,6 +18,8 @@ import FeeCollectionChart from './FeeCollectionChart';
 import RecentActivityFeed from './RecentActivityFeed';
 import UpcomingEventsWidget from './UpcomingEventsWidget';
 import ExportReportDropdown from './ExportReportDropdown';
+import FeeCollectionModal from '../../../components/modals/FeeCollectionModal';
+import OpenAdmissionsModal from '../../../components/modals/OpenAdmissionsModal';
 
 export default function AdminDashboard() {
   const user = useSelector((s: RootState) => s.auth.user);
@@ -63,11 +65,27 @@ export default function AdminDashboard() {
   }
 
   return (
-    <AdminDashboardInner greeting={greeting} activeYear={activeYear} activeYearId={activeYearId} user={user} timeAgo={timeAgo} navigate={navigate} handleManualRefresh={handleManualRefresh} />
+    <AdminDashboardInner
+      greeting={greeting}
+      activeYear={activeYear}
+      activeYearId={activeYearId}
+      user={user}
+      timeAgo={timeAgo}
+      navigate={navigate}
+      handleManualRefresh={handleManualRefresh}
+    />
   );
 }
 
-function AdminDashboardInner({ greeting, activeYear, activeYearId, user, timeAgo, navigate, handleManualRefresh }: any) {
+function AdminDashboardInner({
+  greeting,
+  activeYear,
+  activeYearId,
+  user,
+  timeAgo,
+  navigate,
+  handleManualRefresh,
+}: any) {
   // Fetch KPIs for AI context registration
   const { data: kpis } = useGetKpisQuery({ academicYearId: activeYearId }, { skip: !activeYearId });
 
@@ -75,6 +93,47 @@ function AdminDashboardInner({ greeting, activeYear, activeYearId, user, timeAgo
   useRegisterAIContext({
     dashboardMetrics: kpis ?? {},
   });
+
+  const [feeModalOpen, setFeeModalOpen] = useState(false);
+  const [admissionsModalOpen, setAdmissionsModalOpen] = useState(false);
+
+  // TODO: Replace with useFeeCollectionQuery() hook
+  const feeCollectionData = {
+    collectedAmount: kpis?.amountCollected ?? 1854000,
+    totalAmount: kpis?.amountDue ?? 2160000,
+    collectionPercent: kpis?.feeCollectionRate ?? 86,
+    pendingAmount: kpis?.pendingFeesAmount ?? 306000,
+    month: 'June 2026',
+    classBreakdown: [
+      { className: 'Class 12 A', totalStudents: 40, paidCount: 38, pendingCount: 2, collectedAmount: 190000, totalAmount: 200000, percent: 95 },
+      { className: 'Class 11 A', totalStudents: 45, paidCount: 41, pendingCount: 4, collectedAmount: 205000, totalAmount: 225000, percent: 91 },
+      { className: 'Class 10 A', totalStudents: 38, paidCount: 33, pendingCount: 5, collectedAmount: 165000, totalAmount: 190000, percent: 86 },
+      { className: 'Class 9 A', totalStudents: 42, paidCount: 34, pendingCount: 8, collectedAmount: 153000, totalAmount: 189000, percent: 80 },
+      { className: 'Class 8 A', totalStudents: 35, paidCount: 24, pendingCount: 11, collectedAmount: 108000, totalAmount: 157500, percent: 68 },
+    ],
+    recentPayments: [
+      { studentName: 'Aarav Mehta', className: 'Class 12 A', amount: 5000, date: '2026-06-23', method: 'Online' as const },
+      { studentName: 'Ishaan Sharma', className: 'Class 11 A', amount: 5000, date: '2026-06-23', method: 'Cash' as const },
+      { studentName: 'Ananya Iyer', className: 'Class 10 A', amount: 5000, date: '2026-06-22', method: 'Cheque' as const },
+      { studentName: 'Kabir Verma', className: 'Class 9 A', amount: 5000, date: '2026-06-22', method: 'Online' as const },
+      { studentName: 'Diya Patel', className: 'Class 8 A', amount: 4500, date: '2026-06-21', method: 'Online' as const },
+    ],
+  };
+
+  // TODO: Replace with useAdmissionsQuery() hook
+  const admissionsData = {
+    totalPending: kpis?.openAdmissions ?? 18,
+    reviewedToday: 5,
+    approvedThisMonth: 24,
+    rejectedThisMonth: 3,
+    applications: [
+      { id: 'APP-001', studentName: 'Rohan Gupta', applyingForClass: 'Class 1', appliedDate: '2026-06-22', parentName: 'Amit Gupta', status: 'Pending' as const, daysWaiting: 1 },
+      { id: 'APP-002', studentName: 'Sanya Malhotra', applyingForClass: 'Class 5', appliedDate: '2026-06-19', parentName: 'Raj Malhotra', status: 'Under Review' as const, daysWaiting: 4 },
+      { id: 'APP-003', studentName: 'Vihaan Shah', applyingForClass: 'Class 9', appliedDate: '2026-06-14', parentName: 'Deepak Shah', status: 'Pending' as const, daysWaiting: 9 },
+      { id: 'APP-004', studentName: 'Prisha Sen', applyingForClass: 'Class 11', appliedDate: '2026-06-20', parentName: 'Sanjay Sen', status: 'Under Review' as const, daysWaiting: 3 },
+      { id: 'APP-005', studentName: 'Aditya Roy', applyingForClass: 'Class 3', appliedDate: '2026-06-12', parentName: 'Vikram Roy', status: 'Pending' as const, daysWaiting: 11 },
+    ],
+  };
 
   return (
     <div>
@@ -122,10 +181,10 @@ function AdminDashboardInner({ greeting, activeYear, activeYearId, user, timeAgo
       <AlertsBanner academicYearId={activeYearId} />
 
       {/* 3. Primary KPI Row */}
-      <KpiRow academicYearId={activeYearId} />
+      <KpiRow academicYearId={activeYearId} onFeeClick={() => setFeeModalOpen(true)} />
 
       {/* 4. Secondary KPI Row */}
-      <KpiRowSecondary academicYearId={activeYearId} />
+      <KpiRowSecondary academicYearId={activeYearId} onAdmissionsClick={() => setAdmissionsModalOpen(true)} />
 
       {/* 5. Key Insights Strip */}
       <KeyInsightsStrip academicYearId={activeYearId} />
@@ -153,6 +212,18 @@ function AdminDashboardInner({ greeting, activeYear, activeYearId, user, timeAgo
         <FeeCollectionChart />
         <UpcomingEventsWidget academicYearId={activeYearId} />
       </div>
+
+      {/* Modals */}
+      <FeeCollectionModal
+        isOpen={feeModalOpen}
+        onClose={() => setFeeModalOpen(false)}
+        data={feeCollectionData}
+      />
+      <OpenAdmissionsModal
+        isOpen={admissionsModalOpen}
+        onClose={() => setAdmissionsModalOpen(false)}
+        data={admissionsData}
+      />
     </div>
   );
 }

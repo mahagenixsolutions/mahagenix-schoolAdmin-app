@@ -49,13 +49,20 @@ export default function TeacherDashboard() {
 
   return (
     <div>
-      <div className="page-header">
+      <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
           <h1 className="page-title">
             {greeting}, {user?.first_name}! 👋
           </h1>
           <p className="page-subtitle">Here's your classroom overview for today.</p>
         </div>
+        <button 
+          onClick={() => navigate('/leave-application')} 
+          className="btn btn-primary"
+          style={{ display: 'flex', alignItems: 'center', gap: 8 }}
+        >
+          <span>Apply for Leave</span>
+        </button>
       </div>
 
       <div className="stats-grid">

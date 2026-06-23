@@ -3,7 +3,13 @@ import KpiCard from './KpiCard';
 import type { StatCardProps } from './KpiCard';
 import { AlertCircle, CalendarClock, BookOpenCheck, UserPlus } from 'lucide-react';
 
-export default function KpiRowSecondary({ academicYearId }: { academicYearId: string }) {
+export default function KpiRowSecondary({
+  academicYearId,
+  onAdmissionsClick,
+}: {
+  academicYearId: string;
+  onAdmissionsClick?: () => void;
+}) {
   const { data, isLoading } = useGetKpisQuery({ academicYearId }, { 
     skip: !academicYearId,
     pollingInterval: 300000 // 5 min auto-refresh
@@ -70,7 +76,8 @@ export default function KpiRowSecondary({ academicYearId }: { academicYearId: st
         label: 'Pending review applications',
         isGood: false // Amber text for attention
       },
-      isLoading
+      isLoading,
+      onClick: onAdmissionsClick
     },
   ];
 

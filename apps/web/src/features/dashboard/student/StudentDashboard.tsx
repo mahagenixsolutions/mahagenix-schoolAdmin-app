@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import {
   ResponsiveContainer,
@@ -25,6 +26,7 @@ import {
 } from 'lucide-react';
 
 export default function StudentDashboard() {
+  const navigate = useNavigate();
   
   const studentId = 'student-001';
 
@@ -116,9 +118,33 @@ export default function StudentDashboard() {
             <h1 style={{ fontSize: 26, fontWeight: 800, margin: '4px 0 0 0' }}>
               Welcome back, {profile?.first_name}! 👋
             </h1>
-            <p style={{ opacity: 0.8, fontSize: 13, marginTop: 4 }}>
-              Class: {profile?.class ? `${profile.class.name} ${profile.class.section}` : 'Unassigned'} · Student ID: {profile?.student_code}
-            </p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginTop: 12 }}>
+              <p style={{ opacity: 0.8, fontSize: 13, margin: 0 }}>
+                Class: {profile?.class ? `${profile.class.name} ${profile.class.section}` : 'Unassigned'} · Student ID: {profile?.student_code}
+              </p>
+              <button 
+                onClick={() => navigate('/leave-application')}
+                style={{ 
+                  background: 'rgba(255, 255, 255, 0.2)', 
+                  border: '1px solid rgba(255, 255, 255, 0.3)', 
+                  color: 'white', 
+                  padding: '6px 14px', 
+                  borderRadius: 20, 
+                  fontSize: 12, 
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  transition: 'all 0.2s',
+                  backdropFilter: 'blur(4px)',
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.3)'}
+                onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)'}
+              >
+                <Calendar size={14} /> Apply for Leave
+              </button>
+            </div>
           </div>
         </div>
 

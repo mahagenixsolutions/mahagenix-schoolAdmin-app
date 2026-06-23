@@ -40,6 +40,12 @@ export default function AppLayout() {
   const isParentOrStudent = user?.role === 'PARENT' || user?.role === 'STUDENT';
   const pageTitle = BREADCRUMB_MAP[location.pathname] || 'EduTrack AI';
 
+  // Sync dark theme state from localStorage on mount
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('edutrack_theme') || '';
+    document.documentElement.dataset.theme = savedTheme;
+  }, []);
+
 
   // Fetch linked students if parent or student
   const { data: linkedStudents } = useGetLinkedStudentsQuery(undefined, { skip: !isParentOrStudent });
@@ -97,15 +103,9 @@ export default function AppLayout() {
     <div className="app-layout" style={isParentOrStudent ? { display: 'block', minHeight: '100vh', background: 'var(--bg-secondary)' } : undefined}>
       {!isParentOrStudent && <Sidebar collapsed={collapsed} onToggle={() => setCollapsed(!collapsed)} />}
 
-      <div
-        className={`main-content${collapsed && !isParentOrStudent ? ' sidebar-collapsed' : ''}`}
-        style={isParentOrStudent ? { marginLeft: 0 } : undefined}
-      >
+      <div className={`main-content${collapsed ? ' sidebar-collapsed' : ''}`} style={isParentOrStudent ? { marginLeft: 0 } : undefined}>
         {/* Topbar */}
-        <header
-          className={`topbar${collapsed && !isParentOrStudent ? ' sidebar-collapsed' : ''}`}
-          style={isParentOrStudent ? { left: 0 } : undefined}
-        >
+        <header className="topbar">
           <div className="topbar-left">
             {isParentOrStudent ? (
               <div style={{ position: 'relative' }}>
@@ -374,7 +374,9 @@ export default function AppLayout() {
               }}
               onClick={() => {
                 const html = document.documentElement;
-                html.dataset.theme = html.dataset.theme === 'dark' ? '' : 'dark';
+                const nextTheme = html.dataset.theme === 'dark' ? '' : 'dark';
+                html.dataset.theme = nextTheme;
+                localStorage.setItem('edutrack_theme', nextTheme);
               }}
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
