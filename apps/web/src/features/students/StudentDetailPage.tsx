@@ -73,11 +73,10 @@ export default function StudentDetailPage() {
 
   return (
     <div className="student-profile-container" style={{ paddingBottom: 40, position: 'relative' }}>
-      {/* Dynamic Toast Popup */}
       {toastMessage && (
         <div style={{ position: 'fixed', bottom: 24, right: 24, zIndex: 9999 }}>
-          <div style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 10, padding: '12px 20px', display: 'flex', alignItems: 'center', gap: 10, boxShadow: 'var(--shadow-lg)' }}>
-            <span style={{ fontSize: 13, fontWeight: 500, color: 'var(--color-text)' }}>{toastMessage}</span>
+          <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: 10, padding: '12px 20px', display: 'flex', alignItems: 'center', gap: 10, boxShadow: 'var(--shadow-lg)' }}>
+            <span style={{ fontSize: 13, fontWeight: 500, color: 'var(--text-primary)' }}>{toastMessage}</span>
           </div>
         </div>
       )}
@@ -115,9 +114,9 @@ export default function StudentDetailPage() {
                 className="avatar-fallback shadow-md"
                 style={{
                   width: 80, height: 80, borderRadius: '50%', fontSize: 32, fontWeight: 800,
-                  background: 'var(--bg-primary)',
+                  background: 'var(--bg-tertiary)',
                   color: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  margin: '0 auto 12px auto', border: '4px solid var(--bg-primary)'
+                  margin: '0 auto 12px auto', border: '4px solid var(--bg-secondary)'
                 }}
               >
                 {initials}
@@ -130,7 +129,7 @@ export default function StudentDetailPage() {
                 </span>
               </div>
               
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, textAlign: 'left', fontSize: 13, background: 'var(--bg-secondary)', padding: 16, borderRadius: 12 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, textAlign: 'left', fontSize: 13, background: 'var(--bg-tertiary)', padding: 16, borderRadius: 12 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <span className="text-muted">Student ID</span>
                   <strong className="text-primary">{student.student_code}</strong>
@@ -145,7 +144,7 @@ export default function StudentDetailPage() {
                 </div>
               </div>
               
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, textAlign: 'left', fontSize: 13, background: 'var(--bg-secondary)', padding: 16, borderRadius: 12, marginTop: 12 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, textAlign: 'left', fontSize: 13, background: 'var(--bg-tertiary)', padding: 16, borderRadius: 12, marginTop: 12 }}>
                 <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 4 }}>Family & Guardians</div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <span className="text-muted">Father</span>
@@ -157,7 +156,7 @@ export default function StudentDetailPage() {
                 </div>
               </div>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, textAlign: 'left', fontSize: 13, background: 'var(--bg-secondary)', padding: 16, borderRadius: 12, marginTop: 12 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, textAlign: 'left', fontSize: 13, background: 'var(--bg-tertiary)', padding: 16, borderRadius: 12, marginTop: 12 }}>
                 <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 4 }}>Fee Status</div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--color-success)' }}>
                   <span>Cleared Dues</span>
@@ -180,11 +179,11 @@ export default function StudentDetailPage() {
             </div>
             <div className="card-body">
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 20 }}>
-                <div style={{ background: 'var(--bg-secondary)', padding: 12, borderRadius: 12, textAlign: 'center' }}>
+                <div style={{ background: 'var(--bg-tertiary)', padding: 12, borderRadius: 12, textAlign: 'center' }}>
                   <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Attendance</div>
                   <div style={{ fontSize: 24, fontWeight: 800, color: 'var(--color-secondary)' }}>{student.attendance_rate}%</div>
                 </div>
-                <div style={{ background: 'var(--bg-secondary)', padding: 12, borderRadius: 12, textAlign: 'center' }}>
+                <div style={{ background: 'var(--bg-tertiary)', padding: 12, borderRadius: 12, textAlign: 'center' }}>
                   <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Avg Marks</div>
                   <div style={{ fontSize: 24, fontWeight: 800, color: 'var(--color-primary)' }}>{student.avg_marks}%</div>
                 </div>
@@ -249,7 +248,7 @@ export default function StudentDetailPage() {
         {/* COLUMN 3: AI Insights & Digital Portfolio */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
           {/* AI Insights Card */}
-          <div className="card border-glow" style={{ borderRadius: 16, background: 'var(--bg-primary)' }}>
+          <div className="card border-glow" style={{ borderRadius: 16, background: 'var(--bg-secondary)' }}>
             <div className="card-header bg-gradient-header" style={{ padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 8 }}>
               <Sparkles size={16} className="text-primary" />
               <span className="card-title text-glow" style={{ fontSize: 14 }}>EduTrack AI Summary</span>
@@ -366,7 +365,7 @@ export default function StudentDetailPage() {
       {/* Parent Message Modal */}
       {activeModal === 'message' && (
         <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(15, 23, 42, 0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }}>
-          <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-color)', borderRadius: 16, width: '90%', maxWidth: 480, padding: 20, boxShadow: 'var(--shadow-lg)' }}>
+          <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: 16, width: '90%', maxWidth: 480, padding: 20, boxShadow: 'var(--shadow-lg)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
               <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: 'var(--text-primary)' }}>Message Parent of {student.first_name}</h3>
               <button onClick={() => setActiveModal(null)} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', fontSize: 18, cursor: 'pointer' }} disabled={isLoading}>✕</button>
@@ -404,7 +403,7 @@ export default function StudentDetailPage() {
       {/* Award Badge Modal */}
       {activeModal === 'badge' && (
         <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(15, 23, 42, 0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }}>
-          <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-color)', borderRadius: 16, width: '90%', maxWidth: 500, padding: 20, boxShadow: 'var(--shadow-lg)' }}>
+          <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: 16, width: '90%', maxWidth: 500, padding: 20, boxShadow: 'var(--shadow-lg)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
               <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: 'var(--text-primary)' }}>Award Badge to {student.first_name}</h3>
               <button onClick={() => setActiveModal(null)} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', fontSize: 18, cursor: 'pointer' }} disabled={isLoading}>✕</button>

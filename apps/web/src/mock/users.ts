@@ -48,8 +48,6 @@ export const classTeachers = [
   ['teacher-008', 'Siddharth', 'Nair', 'Middle School'],
   ['teacher-009', 'Kavita', 'Joshi', 'High School'],
   ['teacher-010', 'Armaan', 'Khan', 'High School'],
-  ['teacher-011', 'Leela', 'Bose', 'Senior Secondary'],
-  ['teacher-012', 'Vikram', 'Pillai', 'Senior Secondary'],
 ] as const;
 
 export const subjectTeachers = [

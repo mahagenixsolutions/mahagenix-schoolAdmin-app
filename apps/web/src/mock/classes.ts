@@ -1,6 +1,6 @@
 import { classTeachers } from './users';
 
-export const mockClasses = Array.from({ length: 12 }, (_, index) => {
+export const mockClasses = Array.from({ length: 10 }, (_, index) => {
   const grade = index + 1;
   const [teacher_id, firstName, lastName] = classTeachers[index];
   const attendance = 89 + ((grade * 3) % 9);

@@ -39,7 +39,7 @@ export default function TeacherProfileDrawer({ teacherId, subjectId, onClose }: 
       <div 
         style={{
           position: 'fixed', top: 0, right: 0, bottom: 0, width: '100%', maxWidth: 480,
-          background: 'var(--bg-primary)', boxShadow: '-4px 0 24px rgba(0,0,0,0.15)',
+          background: 'var(--bg-secondary)', boxShadow: '-4px 0 24px rgba(0,0,0,0.15)',
           zIndex: 1001, overflowY: 'auto', display: 'flex', flexDirection: 'column',
           animation: 'slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
           color: 'var(--text-secondary)',
@@ -51,7 +51,7 @@ export default function TeacherProfileDrawer({ teacherId, subjectId, onClose }: 
           <button 
             onClick={onClose} 
             style={{ 
-              padding: '6px 12px', borderRadius: '20px', background: 'var(--bg-primary)', 
+              padding: '6px 12px', borderRadius: '20px', background: 'var(--bg-tertiary)', 
               border: '1px solid var(--border-color)', cursor: 'pointer', fontWeight: 500, color: 'var(--text-primary)',
               boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
             }}
@@ -88,7 +88,7 @@ export default function TeacherProfileDrawer({ teacherId, subjectId, onClose }: 
 
             {/* Bio */}
             {profile.bio && (
-              <div style={{ background: 'var(--bg-secondary)', padding: 20, borderRadius: '12px', border: '1px solid var(--border-color)' }}>
+              <div style={{ background: 'var(--bg-tertiary)', padding: 20, borderRadius: '12px', border: '1px solid var(--border-color)' }}>
                 <h4 style={{ margin: '0 0 8px 0', fontSize: 12, textTransform: 'uppercase', letterSpacing: 0.5, color: 'var(--text-muted)', fontWeight: 600 }}>About</h4>
                 <p style={{ margin: 0, fontSize: 14, lineHeight: 1.6, color: 'var(--text-secondary)' }}>{profile.bio}</p>
               </div>
@@ -96,15 +96,15 @@ export default function TeacherProfileDrawer({ teacherId, subjectId, onClose }: 
 
             {/* Stats Grid */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-              <div style={{ padding: 20, background: 'var(--bg-secondary)', borderRadius: '12px', border: '1px solid var(--border-color)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+              <div style={{ padding: 20, background: 'var(--bg-tertiary)', borderRadius: '12px', border: '1px solid var(--border-color)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
                 <div style={{ fontSize: 13, color: 'var(--text-muted)', fontWeight: 500 }}>Experience</div>
                 <div style={{ fontSize: 28, fontWeight: 700, marginTop: 6, color: 'var(--text-primary)' }}>{profile.experienceYears} <span style={{fontSize: 14, fontWeight: 500, color: 'var(--text-muted)'}}>Years</span></div>
               </div>
-              <div style={{ padding: 20, background: 'var(--bg-secondary)', borderRadius: '12px', border: '1px solid var(--border-color)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+              <div style={{ padding: 20, background: 'var(--bg-tertiary)', borderRadius: '12px', border: '1px solid var(--border-color)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
                 <div style={{ fontSize: 13, color: 'var(--text-muted)', fontWeight: 500 }}>Leaves Taken</div>
                 <div style={{ fontSize: 28, fontWeight: 700, marginTop: 6, color: profile.leavesTaken > 5 ? '#EF4444' : 'var(--text-primary)' }}>{profile.leavesTaken}</div>
               </div>
-              <div style={{ padding: 20, background: 'var(--bg-secondary)', borderRadius: '12px', border: '1px solid var(--border-color)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)', gridColumn: 'span 2' }}>
+              <div style={{ padding: 20, background: 'var(--bg-tertiary)', borderRadius: '12px', border: '1px solid var(--border-color)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)', gridColumn: 'span 2' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
                   <div style={{ fontSize: 13, color: 'var(--text-muted)', fontWeight: 500 }}>Syllabus Completed</div>
                   <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--color-primary-light)' }}>{profile.syllabusCompleted}%</div>

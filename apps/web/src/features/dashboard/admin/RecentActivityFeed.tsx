@@ -37,14 +37,28 @@ export default function RecentActivityFeed() {
   };
 
   return (
-    <div className="glass-card">
-      <div className="card-header" style={{ borderBottom: '1px solid rgba(255,255,255,0.2)' }}>
-        <span className="card-title" style={{ fontWeight: 700, color: 'var(--text-primary)' }}>⚡ Recent Activity</span>
-        <Link to="/activity-log" className="btn btn-ghost btn-sm" style={{ color: '#4F46E5', fontWeight: 600, background: 'rgba(79,70,229,0.1)' }}>
+    <div style={{ marginBottom: 24, background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)' }}>
+      <div style={{ padding: '16px 20px', borderBottom: '1px solid var(--border-subtle)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h3 style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', margin: 0, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+          Recent Activity
+        </h3>
+        <Link
+          to="/activity-log"
+          style={{ 
+            color: 'var(--text-secondary)', 
+            fontWeight: 600, 
+            fontSize: 12, 
+            textDecoration: 'none',
+            padding: '4px 8px',
+            borderRadius: 'var(--radius-sm)',
+            border: '1px solid var(--border-subtle)',
+            background: 'var(--bg-tertiary)'
+          }}
+        >
           View all
         </Link>
       </div>
-      <div className="card-body" style={{ padding: '8px 12px' }}>
+      <div style={{ padding: '8px 12px' }}>
         {isLoading ? (
           <div
             style={{ height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
@@ -66,9 +80,7 @@ export default function RecentActivityFeed() {
               className="ti ti-activity"
               style={{ fontSize: 32, color: 'var(--text-muted)', opacity: 0.5 }}
             />
-            <div style={{ color: 'var(--text-secondary)', fontSize: 14 }}>
-              No recent activity
-            </div>
+            <div style={{ color: 'var(--text-secondary)', fontSize: 14 }}>No recent activity</div>
             <Link
               to={`/attendance?date=today`}
               className="btn btn-outline btn-sm"
@@ -79,25 +91,20 @@ export default function RecentActivityFeed() {
           </div>
         ) : (
           data?.activities?.map((activity: any, i: number) => {
-            let icon = '⚡';
-            let bg = 'linear-gradient(135deg, #CBD5E1, #94A3B8)';
-            let shadow = '0 4px 12px rgba(148, 163, 184, 0.3)';
+            let icon = 'ti-bolt';
+            let color = 'var(--text-muted)';
             if (activity.type === 'Attendance') {
-              icon = '📋';
-              bg = 'linear-gradient(135deg, #60A5FA, #3B82F6)';
-              shadow = '0 4px 12px rgba(59, 130, 246, 0.3)';
+              icon = 'ti-calendar-check';
+              color = 'var(--accent-primary)';
             } else if (activity.type === 'Mark') {
-              icon = '📝';
-              bg = 'linear-gradient(135deg, #A78BFA, #8B5CF6)';
-              shadow = '0 4px 12px rgba(139, 92, 246, 0.3)';
+              icon = 'ti-file-pencil';
+              color = 'var(--accent-warning)';
             } else if (activity.type === 'Student') {
-              icon = '👨‍🎓';
-              bg = 'linear-gradient(135deg, #FBBF24, #F59E0B)';
-              shadow = '0 4px 12px rgba(245, 158, 11, 0.3)';
+              icon = 'ti-user-plus';
+              color = 'var(--accent-success)';
             } else if (activity.type === 'Fee') {
-              icon = '💳';
-              bg = 'linear-gradient(135deg, #34D399, #10B981)';
-              shadow = '0 4px 12px rgba(16, 185, 129, 0.3)';
+              icon = 'ti-credit-card';
+              color = 'var(--accent-danger)';
             }
 
             const timeStr = new Date(activity.createdAt).toLocaleTimeString([], {
@@ -115,46 +122,55 @@ export default function RecentActivityFeed() {
                   gap: 16,
                   padding: '12px 16px',
                   borderBottom:
-                    i < data.activities.length - 1 ? '1px solid rgba(255,255,255,0.1)' : 'none',
+                    i < data.activities.length - 1 ? '1px solid var(--border-subtle)' : 'none',
                   textDecoration: 'none',
-                  transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
-                  borderRadius: '12px',
+                  transition: 'background 0.2s',
+                  borderRadius: '8px',
                   marginBottom: i < data.activities.length - 1 ? 4 : 0,
                 }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'rgba(255,255,255,0.4)';
-                  e.currentTarget.style.transform = 'scale(1.02)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'transparent';
-                  e.currentTarget.style.transform = 'scale(1)';
-                }}
+                onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--bg-tertiary)')}
+                onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
               >
                 <div
                   style={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: '12px',
-                    background: bg,
+                    width: 32,
+                    height: 32,
+                    borderRadius: '8px',
+                    background: 'var(--bg-tertiary)',
+                    border: '1px solid var(--border-subtle)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: 20,
+                    fontSize: 16,
                     flexShrink: 0,
-                    boxShadow: shadow,
+                    color: color,
                   }}
                 >
-                  {icon}
+                  <i className={icon}></i>
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>
                     {activity.description}
                   </div>
-                  <div style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 2, fontWeight: 500 }}>
+                  <div
+                    style={{
+                      fontSize: 12,
+                      color: 'var(--text-secondary)',
+                      marginTop: 2,
+                      fontWeight: 500,
+                    }}
+                  >
                     By {activity.actor}
                   </div>
                 </div>
-                <div style={{ fontSize: 11, color: 'var(--text-muted)', flexShrink: 0, fontWeight: 600 }}>
+                <div
+                  style={{
+                    fontSize: 11,
+                    color: 'var(--text-muted)',
+                    flexShrink: 0,
+                    fontWeight: 600,
+                  }}
+                >
                   {timeStr}
                 </div>
               </Link>

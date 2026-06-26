@@ -109,12 +109,12 @@ export default function ParentMessagingPage() {
   return (
     <div style={{ 
       display: 'flex', height: 'calc(100vh - 120px)', maxWidth: 1200, margin: '0 auto',
-      background: 'var(--bg-primary)', borderRadius: 24, overflow: 'hidden',
+      background: 'var(--bg-secondary)', borderRadius: 24, overflow: 'hidden',
       boxShadow: 'var(--shadow-md)', border: '1px solid var(--border-color)'
     }}>
       {/* SIDEBAR (Channels) */}
       <div style={{ width: 340, borderRight: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', background: 'var(--bg-secondary)' }}>
-        <div style={{ padding: '20px 24px', background: 'var(--bg-primary)', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{ padding: '20px 24px', background: 'var(--bg-secondary)', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>Messages</h2>
           <button style={{ width: 36, height: 36, borderRadius: '50%', border: 'none', background: 'var(--bg-secondary)', cursor: 'pointer', fontSize: 16 }}>✍️</button>
         </div>
@@ -137,7 +137,7 @@ export default function ParentMessagingPage() {
                   <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'linear-gradient(135deg, var(--color-primary), var(--color-primary-light))', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontWeight: 700 }}>
                     {t.name[0]}
                   </div>
-                  {t.online && <div style={{ position: 'absolute', bottom: 0, right: 0, width: 14, height: 14, background: '#22c55e', border: '2px solid var(--bg-primary)', borderRadius: '50%' }} />}
+                  {t.online && <div style={{ position: 'absolute', bottom: 0, right: 0, width: 14, height: 14, background: '#22c55e', border: '2px solid var(--bg-secondary)', borderRadius: '50%' }} />}
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
@@ -160,7 +160,7 @@ export default function ParentMessagingPage() {
         {activeThread ? (
           <>
             {/* Header */}
-            <div style={{ padding: '16px 24px', background: 'var(--bg-primary)', borderBottom: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', gap: 16, zIndex: 1 }}>
+            <div style={{ padding: '16px 24px', background: 'var(--bg-secondary)', borderBottom: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', gap: 16, zIndex: 1 }}>
               <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'linear-gradient(135deg, var(--color-primary), var(--color-primary-light))', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontWeight: 700 }}>
                 {activeThread.name[0]}
               </div>
@@ -176,7 +176,7 @@ export default function ParentMessagingPage() {
 
             {/* Messages Area */}
             <div style={{ flex: 1, overflowY: 'auto', padding: 24, display: 'flex', flexDirection: 'column', gap: 12, zIndex: 1 }}>
-              <div style={{ alignSelf: 'center', background: 'var(--bg-primary)', padding: '6px 12px', borderRadius: 16, fontSize: 11, color: 'var(--text-secondary)', fontWeight: 600, marginBottom: 16, backdropFilter: 'blur(4px)', border: '1px solid var(--border-color)' }}>
+              <div style={{ alignSelf: 'center', background: 'var(--bg-surface-raised)', padding: '6px 12px', borderRadius: 16, fontSize: 11, color: 'var(--text-secondary)', fontWeight: 600, marginBottom: 16, backdropFilter: 'blur(4px)', border: '1px solid var(--border-color)' }}>
                 Today
               </div>
               
@@ -186,7 +186,7 @@ export default function ParentMessagingPage() {
                   <div key={msg.id} style={{ display: 'flex', justifyContent: isOwn ? 'flex-end' : 'flex-start' }}>
                     <div style={{ 
                       maxWidth: '65%', 
-                      background: isOwn ? 'var(--color-primary-surface)' : 'var(--bg-primary)', 
+                      background: isOwn ? 'var(--color-primary-surface)' : 'var(--bg-secondary)', 
                       color: isOwn ? 'var(--color-primary-dark)' : 'var(--text-primary)', 
                       padding: '8px 12px', 
                       borderRadius: isOwn ? '12px 0 12px 12px' : '0 12px 12px 12px', 
@@ -218,7 +218,7 @@ export default function ParentMessagingPage() {
                 placeholder="Type a message"
                 value={messageText}
                 onChange={(e) => setMessageText(e.target.value)}
-                style={{ flex: 1, borderRadius: 24, border: '1px solid var(--border-color)', background: 'var(--bg-primary)', color: 'var(--text-primary)', padding: '12px 20px', fontSize: 14, outline: 'none', boxShadow: 'var(--shadow-xs)' }}
+                style={{ flex: 1, borderRadius: 24, border: '1px solid var(--border-color)', background: 'var(--bg-surface-raised)', color: 'var(--text-primary)', padding: '12px 20px', fontSize: 14, outline: 'none', boxShadow: 'var(--shadow-xs)' }}
                 disabled={isSending}
               />
               

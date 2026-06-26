@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useGetAlertsQuery } from '../dashboardApi';
 
@@ -7,52 +8,93 @@ export default function AlertsBanner({ academicYearId }: { academicYearId: strin
     pollingInterval: 120000 // 2 min auto-refresh
   });
 
+  const [dismissed, setDismissed] = useState<Set<number>>(new Set());
+
   if (isLoading) {
     return (
-      <div className="skeleton" style={{ width: '100%', height: 40, borderRadius: '99px', marginBottom: 24 }} />
+      <div className="skeleton" style={{ width: '100%', height: 32, borderRadius: '6px', marginBottom: 24, background: 'var(--bg-surface)' }} />
     );
   }
 
   if (!data?.alerts?.length) return null;
 
-  const severityMapping: Record<string, { bg: string; text: string; icon: string }> = {
-    error: { bg: '#fef2f2', text: '#991b1b', icon: '🔴' },
-    warning: { bg: '#fffbeb', text: '#92400e', icon: '🟡' },
-    info: { bg: '#eff6ff', text: '#1e40af', icon: '🔵' },
-    success: { bg: '#ecfdf5', text: '#065f46', icon: '✅' },
+  const severityMapping: Record<string, { dot: string }> = {
+    error: { dot: 'var(--accent-danger)' },
+    warning: { dot: 'var(--accent-warning)' },
+    info: { dot: 'var(--accent-primary)' },
+    success: { dot: 'var(--accent-success)' },
   };
 
+  const activeAlerts = data.alerts.map((a: any, i: number) => ({ ...a, id: i })).filter((a: any) => !dismissed.has(a.id));
+
+  if (activeAlerts.length === 0) return null;
+
   return (
-    <div style={{ display: 'flex', gap: 12, marginBottom: 24, flexWrap: 'wrap' }}>
-      {data.alerts.map((alert: any, i: number) => {
-        const colors = severityMapping[alert.severity] || severityMapping.info;
-        return (
-          <Link
-            key={i}
-            to={alert.link || '#'}
-            style={{
-              padding: '8px 16px',
-              background: colors.bg,
-              color: colors.text,
-              borderRadius: '99px',
-              fontSize: 13,
-              fontWeight: 500,
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-              textDecoration: 'none',
-              transition: 'transform 0.2s',
-              pointerEvents: alert.link ? 'auto' : 'none',
-              boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
-            }}
-            onMouseEnter={(e) => alert.link && (e.currentTarget.style.transform = 'translateY(-2px)')}
-            onMouseLeave={(e) => alert.link && (e.currentTarget.style.transform = 'translateY(0)')}
-          >
-            <span>{colors.icon}</span> {alert.message}
-            {alert.link && <i className="ti ti-arrow-right" style={{ opacity: 0.5, marginLeft: 4 }} />}
-          </Link>
-        );
-      })}
+    <div 
+      style={{ 
+        display: 'flex', 
+        gap: 12, 
+        overflowX: 'auto', 
+        scrollbarWidth: 'none', // Firefox
+        msOverflowStyle: 'none',  // IE 10+
+        paddingBottom: 4,
+      }}
+    >
+      <style>{`
+        .alert-rail::-webkit-scrollbar { display: none; }
+      `}</style>
+      <div className="alert-rail" style={{ display: 'flex', gap: 12, width: '100%' }}>
+        {activeAlerts.map((alert: any) => {
+          const colors = severityMapping[alert.severity] || severityMapping.info;
+          return (
+            <div
+              key={alert.id}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
+                padding: '6px 12px',
+                background: 'var(--bg-surface)',
+                border: '1px solid var(--border-subtle)',
+                borderRadius: 'var(--radius-full)',
+                whiteSpace: 'nowrap',
+                flexShrink: 0,
+                transition: 'border-color 0.2s',
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.borderColor = colors.dot}
+              onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--border-subtle)'}
+            >
+              <div style={{ width: 6, height: 6, borderRadius: '50%', background: colors.dot }} />
+              <Link
+                to={alert.link || '#'}
+                style={{
+                  fontSize: 13,
+                  fontWeight: 500,
+                  color: 'var(--text-secondary)',
+                  textDecoration: 'none',
+                  pointerEvents: alert.link ? 'auto' : 'none',
+                }}
+              >
+                {alert.message}
+              </Link>
+              <button 
+                onClick={(e) => {
+                  e.preventDefault();
+                  setDismissed(prev => new Set(prev).add(alert.id));
+                }}
+                style={{
+                  background: 'none', border: 'none', padding: 0, marginLeft: 4,
+                  color: 'var(--text-muted)', cursor: 'pointer', fontSize: 16,
+                  display: 'flex', alignItems: 'center'
+                }}
+                title="Dismiss"
+              >
+                ×
+              </button>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

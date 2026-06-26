@@ -65,7 +65,7 @@ export default function ActivitySidebarLeft() {
       </div>
 
       {/* Quick Insights */}
-      <div className="card" style={{ background: 'linear-gradient(145deg, rgba(79, 70, 229, 0.05), rgba(79, 70, 229, 0.01))', border: '1px solid rgba(79, 70, 229, 0.15)' }}>
+      <div className="card" style={{ background: 'linear-gradient(145deg, rgba(79, 70, 229, 0.05), rgba(79, 70, 229, 0.01)), var(--bg-secondary)', border: '1px solid rgba(79, 70, 229, 0.15)' }}>
         <div className="card-body" style={{ padding: '20px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px', color: 'var(--color-primary)', fontWeight: 700 }}>
             <Zap size={18} /> AI Summary

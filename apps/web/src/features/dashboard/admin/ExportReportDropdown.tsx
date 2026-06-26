@@ -44,8 +44,8 @@ export default function ExportReportDropdown() {
           top: '100%',
           right: 0,
           marginTop: 4,
-          background: 'var(--color-surface)',
-          border: '1px solid var(--color-border)',
+          background: 'var(--bg-secondary)',
+          border: '1px solid var(--border-color)',
           borderRadius: 'var(--radius-md)',
           boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
           width: 220,
@@ -66,10 +66,10 @@ export default function ExportReportDropdown() {
                 background: 'transparent',
                 border: 'none',
                 fontSize: 13,
-                color: 'var(--color-text)',
+                color: 'var(--text-primary)',
                 cursor: 'pointer',
               }}
-              onMouseEnter={(e) => e.currentTarget.style.background = 'var(--bg-secondary)'}
+              onMouseEnter={(e) => e.currentTarget.style.background = 'var(--bg-primary)'}
               onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
             >
               {opt.label}

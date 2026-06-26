@@ -6,7 +6,7 @@ export default function CommandCenterLeftSidebar() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
       
       {/* AI Suggestions Widget */}
-      <div className="card" style={{ background: 'linear-gradient(145deg, rgba(79, 70, 229, 0.05), rgba(79, 70, 229, 0.01))', border: '1px solid rgba(79, 70, 229, 0.15)' }}>
+      <div className="card" style={{ background: 'linear-gradient(145deg, rgba(79, 70, 229, 0.05), rgba(79, 70, 229, 0.01)), var(--bg-secondary)', border: '1px solid rgba(79, 70, 229, 0.15)' }}>
         <div className="card-header border-b" style={{ padding: '16px' }}>
           <span className="card-title" style={{ fontSize: '14px', color: 'var(--color-primary)' }}>
             <Zap size={16} /> Copilot Insights

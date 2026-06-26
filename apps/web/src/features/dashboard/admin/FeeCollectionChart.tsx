@@ -25,11 +25,13 @@ export default function FeeCollectionChart() {
   };
 
   return (
-    <div className="glass-card">
-      <div className="card-header" style={{ borderBottom: '1px solid rgba(255,255,255,0.2)' }}>
-        <span className="card-title" style={{ fontWeight: 700, color: 'var(--text-primary)' }}>💳 Fee Collection Trend</span>
+    <div style={{ marginBottom: 24, background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)' }}>
+      <div style={{ padding: '16px 20px', borderBottom: '1px solid var(--border-subtle)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h3 style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', margin: 0, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+          Fee Collection Trend
+        </h3>
       </div>
-      <div className="card-body" style={{ paddingTop: 16 }}>
+      <div style={{ paddingTop: 16 }}>
         {isLoading ? (
           <div
             style={{ height: 240, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
@@ -63,22 +65,25 @@ export default function FeeCollectionChart() {
           </div>
         ) : (
           <ResponsiveContainer width="100%" height={240}>
-            <BarChart data={data?.months || []} margin={{ top: 10, right: 10, left: 20, bottom: 5 }}>
+            <BarChart
+              data={data?.months || []}
+              margin={{ top: 10, right: 20, left: 20, bottom: 5 }}
+            >
               <defs>
                 <linearGradient id="gradExpected" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#CBD5E1" />
-                  <stop offset="100%" stopColor="#94A3B8" />
+                  <stop offset="0%" stopColor="var(--text-muted)" opacity={0.5} />
+                  <stop offset="100%" stopColor="var(--text-muted)" opacity={0.5} />
                 </linearGradient>
                 <linearGradient id="gradCollected" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#34D399" />
-                  <stop offset="100%" stopColor="#059669" />
+                  <stop offset="0%" stopColor="var(--accent-success)" />
+                  <stop offset="100%" stopColor="var(--accent-success)" />
                 </linearGradient>
                 <filter id="feePillGlow" x="-20%" y="-20%" width="140%" height="140%">
                   <feGaussianBlur stdDeviation="3" result="blur" />
                   <feComposite in="SourceGraphic" in2="blur" operator="over" />
                 </filter>
               </defs>
-              <CartesianGrid strokeDasharray="4 4" stroke="rgba(0,0,0,0.04)" vertical={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border-subtle)" vertical={false} />
               <XAxis
                 dataKey="label"
                 tick={{ fontSize: 12, fill: 'var(--text-muted)', fontWeight: 600 }}
@@ -95,15 +100,13 @@ export default function FeeCollectionChart() {
               />
               <Tooltip
                 contentStyle={{
-                  background: 'rgba(255, 255, 255, 0.6)',
-                  backdropFilter: 'blur(16px)',
-                  WebkitBackdropFilter: 'blur(16px)',
-                  border: '1px solid rgba(255, 255, 255, 0.8)',
-                  borderRadius: 16,
+                  background: 'var(--bg-surface-raised)',
+                  border: '1px solid var(--border-subtle)',
+                  borderRadius: 8,
                   fontSize: 13,
-                  boxShadow: '0 10px 24px rgba(0,0,0,0.06)',
+                  boxShadow: '0 10px 24px rgba(0,0,0,0.5)',
                   color: 'var(--text-primary)',
-                  fontWeight: 600
+                  fontWeight: 600,
                 }}
                 formatter={(v: number, name: string, props: any) => {
                   if (name === 'Expected') return [`₹${v.toLocaleString()}`, name];
@@ -111,9 +114,26 @@ export default function FeeCollectionChart() {
                   return [`₹${v.toLocaleString()} (Gap: ₹${gap.toLocaleString()})`, name];
                 }}
               />
-              <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: 13, fontWeight: 600, color: 'var(--text-secondary)' }} />
-              <Bar dataKey="expected" name="Expected" fill="url(#gradExpected)" radius={[12, 12, 12, 12]} barSize={12} style={{ filter: 'url(#feePillGlow)' }} />
-              <Bar dataKey="collected" name="Collected" fill="url(#gradCollected)" radius={[12, 12, 12, 12]} barSize={12} style={{ filter: 'url(#feePillGlow)' }} />
+              <Legend
+                iconType="circle"
+                iconSize={8}
+                wrapperStyle={{ fontSize: 12, fontWeight: 600, color: 'var(--text-secondary)' }}
+              />
+              <Bar
+                dataKey="expected"
+                name="Expected"
+                fill="url(#gradExpected)"
+                radius={[4, 4, 4, 4]}
+                barSize={12}
+              />
+              <Bar
+                dataKey="collected"
+                name="Collected"
+                fill="url(#gradCollected)"
+                radius={[4, 4, 4, 4]}
+                barSize={12}
+                style={{ filter: 'url(#feePillGlow)' }}
+              />
             </BarChart>
           </ResponsiveContainer>
         )}

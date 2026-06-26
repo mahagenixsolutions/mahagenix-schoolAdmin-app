@@ -39,6 +39,7 @@ const ParentTimelinePage = lazy(() => import('./features/parent/ParentTimelinePa
 const ParentMessagingPage = lazy(() => import('./features/parent/ParentMessagingPage'));
 const ParentPersonalDetailsPage = lazy(() => import('./features/parent/ParentPersonalDetailsPage'));
 const ParentGalleryPage = lazy(() => import('./features/parent/ParentGalleryPage'));
+const PuzzlesPage = lazy(() => import('./features/puzzles/PuzzlesPage'));
 
 // Teacher Pages
 const LeaveApplicationPage = lazy(() => import('./features/teachers/LeaveApplicationPage'));
@@ -152,6 +153,9 @@ export default function App() {
             } />
             <Route path="gallery" element={
               <Suspense fallback={<PageLoader />}><ParentGalleryPage /></Suspense>
+            } />
+            <Route path="puzzles" element={
+              <Suspense fallback={<PageLoader />}><PuzzlesPage /></Suspense>
             } />
           </Route>
         </Route>

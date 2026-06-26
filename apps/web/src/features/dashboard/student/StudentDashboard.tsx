@@ -174,6 +174,59 @@ export default function StudentDashboard() {
         </div>
       </div>
 
+      {/* Puzzles CTA Banner */}
+      <div
+        className="card"
+        onClick={() => navigate('/puzzles')}
+        style={{
+          background: 'linear-gradient(135deg, var(--bg-surface-raised), var(--bg-surface))',
+          border: '1px solid var(--border-color)',
+          padding: '20px 24px',
+          borderRadius: 'var(--radius-lg)',
+          cursor: 'pointer',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          gap: 16,
+          boxShadow: 'var(--shadow-sm)',
+          transition: 'all 0.2s',
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = 'translateY(-2px)';
+          e.currentTarget.style.boxShadow = 'var(--shadow-md)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = 'none';
+          e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+          <div style={{ fontSize: 32 }}>🧠</div>
+          <div>
+            <h3 style={{ fontSize: 15, fontWeight: 800, margin: 0, color: 'var(--text-primary)' }}>Ready for a Brain Challenge?</h3>
+            <p style={{ fontSize: 13, margin: '4px 0 0 0', color: 'var(--text-secondary)' }}>
+              Play logic games, solve puzzles, and earn stars to level up your brain streak!
+            </p>
+          </div>
+        </div>
+        <button
+          style={{
+            background: 'linear-gradient(135deg, #EC4899, #8B5CF6)',
+            color: 'white',
+            border: 'none',
+            borderRadius: '20px',
+            padding: '8px 18px',
+            fontSize: 12,
+            fontWeight: 700,
+            cursor: 'pointer',
+            whiteSpace: 'nowrap',
+            boxShadow: '0 4px 12px rgba(236, 72, 153, 0.3)',
+          }}
+        >
+          Let's Play &rarr;
+        </button>
+      </div>
+
       {/* KPI Cards Row */}
       <div className="stats-grid">
         {/* Attendance Rate */}
@@ -337,7 +390,7 @@ export default function StudentDashboard() {
                   border: '1px solid var(--border-color)',
                 }}
               >
-                <div style={{ fontSize: 24, padding: 8, background: 'var(--bg-primary)', borderRadius: 10, height: 'fit-content' }}>
+                <div style={{ fontSize: 24, padding: 8, background: 'var(--bg-surface-raised)', borderRadius: 10, height: 'fit-content' }}>
                   {b.badge_icon || '⭐'}
                 </div>
                 <div>

@@ -105,18 +105,70 @@ function AdminDashboardInner({
     pendingAmount: kpis?.pendingFeesAmount ?? 306000,
     month: 'June 2026',
     classBreakdown: [
-      { className: 'Class 12 A', totalStudents: 40, paidCount: 38, pendingCount: 2, collectedAmount: 190000, totalAmount: 200000, percent: 95 },
-      { className: 'Class 11 A', totalStudents: 45, paidCount: 41, pendingCount: 4, collectedAmount: 205000, totalAmount: 225000, percent: 91 },
-      { className: 'Class 10 A', totalStudents: 38, paidCount: 33, pendingCount: 5, collectedAmount: 165000, totalAmount: 190000, percent: 86 },
-      { className: 'Class 9 A', totalStudents: 42, paidCount: 34, pendingCount: 8, collectedAmount: 153000, totalAmount: 189000, percent: 80 },
-      { className: 'Class 8 A', totalStudents: 35, paidCount: 24, pendingCount: 11, collectedAmount: 108000, totalAmount: 157500, percent: 68 },
+      {
+        className: 'Class 10 A',
+        totalStudents: 38,
+        paidCount: 33,
+        pendingCount: 5,
+        collectedAmount: 165000,
+        totalAmount: 190000,
+        percent: 86,
+      },
+      {
+        className: 'Class 9 A',
+        totalStudents: 42,
+        paidCount: 34,
+        pendingCount: 8,
+        collectedAmount: 153000,
+        totalAmount: 189000,
+        percent: 80,
+      },
+      {
+        className: 'Class 8 A',
+        totalStudents: 35,
+        paidCount: 24,
+        pendingCount: 11,
+        collectedAmount: 108000,
+        totalAmount: 157500,
+        percent: 68,
+      },
     ],
     recentPayments: [
-      { studentName: 'Aarav Mehta', className: 'Class 12 A', amount: 5000, date: '2026-06-23', method: 'Online' as const },
-      { studentName: 'Ishaan Sharma', className: 'Class 11 A', amount: 5000, date: '2026-06-23', method: 'Cash' as const },
-      { studentName: 'Ananya Iyer', className: 'Class 10 A', amount: 5000, date: '2026-06-22', method: 'Cheque' as const },
-      { studentName: 'Kabir Verma', className: 'Class 9 A', amount: 5000, date: '2026-06-22', method: 'Online' as const },
-      { studentName: 'Diya Patel', className: 'Class 8 A', amount: 4500, date: '2026-06-21', method: 'Online' as const },
+      {
+        studentName: 'Aarav Mehta',
+        className: 'Class 10 A',
+        amount: 5000,
+        date: '2026-06-23',
+        method: 'Online' as const,
+      },
+      {
+        studentName: 'Ishaan Sharma',
+        className: 'Class 9 A',
+        amount: 5000,
+        date: '2026-06-23',
+        method: 'Cash' as const,
+      },
+      {
+        studentName: 'Ananya Iyer',
+        className: 'Class 10 A',
+        amount: 5000,
+        date: '2026-06-22',
+        method: 'Cheque' as const,
+      },
+      {
+        studentName: 'Kabir Verma',
+        className: 'Class 9 A',
+        amount: 5000,
+        date: '2026-06-22',
+        method: 'Online' as const,
+      },
+      {
+        studentName: 'Diya Patel',
+        className: 'Class 8 A',
+        amount: 4500,
+        date: '2026-06-21',
+        method: 'Online' as const,
+      },
     ],
   };
 
@@ -127,90 +179,143 @@ function AdminDashboardInner({
     approvedThisMonth: 24,
     rejectedThisMonth: 3,
     applications: [
-      { id: 'APP-001', studentName: 'Rohan Gupta', applyingForClass: 'Class 1', appliedDate: '2026-06-22', parentName: 'Amit Gupta', status: 'Pending' as const, daysWaiting: 1 },
-      { id: 'APP-002', studentName: 'Sanya Malhotra', applyingForClass: 'Class 5', appliedDate: '2026-06-19', parentName: 'Raj Malhotra', status: 'Under Review' as const, daysWaiting: 4 },
-      { id: 'APP-003', studentName: 'Vihaan Shah', applyingForClass: 'Class 9', appliedDate: '2026-06-14', parentName: 'Deepak Shah', status: 'Pending' as const, daysWaiting: 9 },
-      { id: 'APP-004', studentName: 'Prisha Sen', applyingForClass: 'Class 11', appliedDate: '2026-06-20', parentName: 'Sanjay Sen', status: 'Under Review' as const, daysWaiting: 3 },
-      { id: 'APP-005', studentName: 'Aditya Roy', applyingForClass: 'Class 3', appliedDate: '2026-06-12', parentName: 'Vikram Roy', status: 'Pending' as const, daysWaiting: 11 },
+      {
+        id: 'APP-001',
+        studentName: 'Rohan Gupta',
+        applyingForClass: 'Class 1',
+        appliedDate: '2026-06-22',
+        parentName: 'Amit Gupta',
+        status: 'Pending' as const,
+        daysWaiting: 1,
+      },
+      {
+        id: 'APP-002',
+        studentName: 'Sanya Malhotra',
+        applyingForClass: 'Class 5',
+        appliedDate: '2026-06-19',
+        parentName: 'Raj Malhotra',
+        status: 'Under Review' as const,
+        daysWaiting: 4,
+      },
+      {
+        id: 'APP-003',
+        studentName: 'Vihaan Shah',
+        applyingForClass: 'Class 9',
+        appliedDate: '2026-06-14',
+        parentName: 'Deepak Shah',
+        status: 'Pending' as const,
+        daysWaiting: 9,
+      },
+      {
+        id: 'APP-004',
+        studentName: 'Prisha Sen',
+        applyingForClass: 'Class 9',
+        appliedDate: '2026-06-20',
+        parentName: 'Sanjay Sen',
+        status: 'Under Review' as const,
+        daysWaiting: 3,
+      },
+      {
+        id: 'APP-005',
+        studentName: 'Aditya Roy',
+        applyingForClass: 'Class 3',
+        appliedDate: '2026-06-12',
+        parentName: 'Vikram Roy',
+        status: 'Pending' as const,
+        daysWaiting: 11,
+      },
     ],
   };
 
   return (
-    <div>
-      {/* 1. Header Bar */}
-      <div className="page-header" style={{ marginBottom: 24, flexWrap: 'wrap', gap: 16 }}>
+    <div className="dashboard-grid">
+      {/* [A] PAGE HEADER */}
+      <div className="col-span-12" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', paddingTop: 24, paddingBottom: 8 }}>
         <div>
-          <h1 className="page-title">
-            {greeting}, {user?.first_name}! 👋
+          <h1 style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: 28, color: 'var(--text-primary)', margin: '0 0 8px 0', display: 'flex', alignItems: 'center', gap: 12 }}>
+            {greeting}, {user?.first_name} 👋
+            <span style={{ 
+              display: 'inline-flex', alignItems: 'center', gap: 6, 
+              padding: '4px 8px', borderRadius: 'var(--radius-sm)', 
+              background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)',
+              fontSize: 11, fontWeight: 700, color: 'var(--accent-success)', letterSpacing: '0.05em'
+            }}>
+              <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--accent-success)', animation: 'pulse-dot 2s infinite' }} />
+              LIVE
+            </span>
           </h1>
-          <p className="page-subtitle">
-            {activeYear?.name ? `Term: ${activeYear.name} • ` : ''}Here's what's happening at your
-            school today.
+          <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, color: 'var(--text-secondary)', margin: 0 }}>
+            {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })} · Academic Year {activeYear?.name || '2026-27'}
           </p>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          <div
-            style={{
-              fontSize: 13,
-              color: 'var(--color-text-secondary)',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-            }}
+        <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+          <ExportReportDropdown />
+          <button 
+            style={{ 
+              background: 'var(--accent-primary)', color: '#fff', border: 'none', 
+              padding: '8px 16px', borderRadius: 'var(--radius-md)', 
+              fontSize: 13, fontWeight: 600, cursor: 'pointer',
+              display: 'flex', alignItems: 'center', gap: 6
+            }} 
+            onClick={() => navigate('/students/new')}
           >
-            <span>Last updated {timeAgo}</span>
-            <button
-              onClick={handleManualRefresh}
-              className="btn btn-ghost btn-icon"
-              style={{ width: 28, height: 28, padding: 0 }}
-              title="Refresh Dashboard"
-            >
-              <i className="ti ti-refresh" />
-            </button>
-          </div>
-          <div style={{ display: 'flex', gap: 8 }}>
-            <ExportReportDropdown />
-            <button className="btn btn-primary btn-sm" onClick={() => navigate('/students/new')}>
-              + Add Student
-            </button>
-          </div>
+            + Add Student
+          </button>
         </div>
       </div>
 
-      {/* 2. Alerts Banner */}
-      <AlertsBanner academicYearId={activeYearId} />
+      {/* [B] SMART ALERT RAIL */}
+      <div className="col-span-12">
+        <AlertsBanner academicYearId={activeYearId} />
+      </div>
 
-      {/* 3. Primary KPI Row */}
-      <KpiRow academicYearId={activeYearId} onFeeClick={() => setFeeModalOpen(true)} />
+      {/* [C] PRIMARY KPI ROW */}
+      <div className="col-span-12">
+        <KpiRow academicYearId={activeYearId} onFeeClick={() => setFeeModalOpen(true)} />
+      </div>
 
-      {/* 4. Secondary KPI Row */}
-      <KpiRowSecondary academicYearId={activeYearId} onAdmissionsClick={() => setAdmissionsModalOpen(true)} />
+      {/* [D] SECONDARY KPI ROW */}
+      <div className="col-span-12">
+        <KpiRowSecondary academicYearId={activeYearId} onAdmissionsClick={() => setAdmissionsModalOpen(true)} />
+      </div>
 
-      {/* 5. Key Insights Strip */}
-      <KeyInsightsStrip academicYearId={activeYearId} />
+      {/* [E] KEY INSIGHTS PANEL */}
+      <div className="col-span-12">
+        <KeyInsightsStrip academicYearId={activeYearId} />
+      </div>
 
-      {/* 6. Quick Actions Grid */}
-      <QuickActionsGrid />
+      {/* [F] QUICK ACTIONS STRIP */}
+      <div className="col-span-12">
+        <QuickActionsGrid />
+      </div>
 
-      {/* 7. Class Performance Table (Above charts) */}
-      <ClassPerformanceTable academicYearId={activeYearId} />
+      {/* [G] CLASS PERFORMANCE TABLE */}
+      <div className="col-span-12">
+        <ClassPerformanceTable academicYearId={activeYearId} />
+      </div>
 
-      {/* 8. Charts Row 1 */}
-      <div className="grid-2" style={{ marginBottom: 24 }}>
+      {/* [H] CHARTS ROW 1 (2 col: 6-6) */}
+      <div className="col-span-6">
         <AttendanceTrendChart />
+      </div>
+      <div className="col-span-6">
         <SubjectPerformanceChart academicYearId={activeYearId} />
       </div>
 
-      {/* 9. Charts Row 2 */}
-      <div className="grid-2" style={{ marginBottom: 24 }}>
+      {/* [I] CHARTS ROW 2 (3 col: 5-4-3) */}
+      <div className="col-span-5">
         <AttendanceDonutChart />
+      </div>
+      <div className="col-span-4">
         <RecentActivityFeed />
       </div>
-
-      {/* 10. Charts Row 3 */}
-      <div className="grid-2">
-        <FeeCollectionChart />
+      <div className="col-span-3">
         <UpcomingEventsWidget academicYearId={activeYearId} />
+      </div>
+
+      {/* [J] FEE TREND (full width) */}
+      <div className="col-span-12">
+        <FeeCollectionChart />
       </div>
 
       {/* Modals */}

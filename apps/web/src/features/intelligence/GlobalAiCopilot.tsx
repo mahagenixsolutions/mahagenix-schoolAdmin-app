@@ -36,7 +36,7 @@ export default function GlobalAiCopilot({
           right: 0,
           bottom: 0,
           width: '400px',
-          background: 'var(--bg-primary)',
+          background: 'var(--bg-secondary)',
           zIndex: 2000,
           boxShadow: '-8px 0 24px rgba(0,0,0,0.1)',
           display: 'flex',

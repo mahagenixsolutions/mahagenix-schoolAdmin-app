@@ -37,18 +37,28 @@ export default function UpcomingEventsWidget({ academicYearId }: { academicYearI
   };
 
   return (
-    <div className="glass-card">
-      <div className="card-header" style={{ borderBottom: '1px solid rgba(255,255,255,0.2)' }}>
-        <span className="card-title" style={{ fontWeight: 700, color: 'var(--text-primary)' }}>📅 Upcoming Events</span>
+    <div style={{ marginBottom: 24, background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)' }}>
+      <div style={{ padding: '16px 20px', borderBottom: '1px solid var(--border-subtle)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h3 style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', margin: 0, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+          Upcoming Events
+        </h3>
         <Link
           to={`/academic-years/${academicYearId}?section=calendar`}
-          className="btn btn-ghost btn-sm"
-          style={{ color: '#4F46E5', fontWeight: 600, background: 'rgba(79,70,229,0.1)' }}
+          style={{ 
+            color: 'var(--text-secondary)', 
+            fontWeight: 600, 
+            fontSize: 12, 
+            textDecoration: 'none',
+            padding: '4px 8px',
+            borderRadius: 'var(--radius-sm)',
+            border: '1px solid var(--border-subtle)',
+            background: 'var(--bg-tertiary)'
+          }}
         >
           Full Calendar
         </Link>
       </div>
-      <div className="card-body" style={{ padding: '8px 12px' }}>
+      <div style={{ padding: '8px 12px' }}>
         {isLoading ? (
           <div
             style={{ height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
@@ -87,14 +97,11 @@ export default function UpcomingEventsWidget({ academicYearId }: { academicYearI
             const month = dateObj.toLocaleString('default', { month: 'short' });
             const day = dateObj.getDate();
 
-            let color = '#4F46E5';
-            let bg = 'rgba(79,70,229,0.15)';
+            let color = 'var(--accent-primary)';
             if (event.type === 'HOLIDAY') {
-              color = '#059669';
-              bg = 'rgba(16, 185, 129, 0.15)';
+              color = 'var(--accent-success)';
             } else if (event.type === 'EXAM') {
-              color = '#E11D48';
-              bg = 'rgba(244, 63, 94, 0.15)';
+              color = 'var(--accent-danger)';
             }
 
             return (
@@ -106,34 +113,28 @@ export default function UpcomingEventsWidget({ academicYearId }: { academicYearI
                   gap: 16,
                   padding: '12px 16px',
                   borderBottom:
-                    i < data.events.length - 1 ? '1px solid rgba(255,255,255,0.1)' : 'none',
-                  transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
-                  borderRadius: '12px',
+                    i < data.events.length - 1 ? '1px solid var(--border-subtle)' : 'none',
+                  transition: 'background 0.2s',
+                  borderRadius: '8px',
                   marginBottom: i < data.events.length - 1 ? 4 : 0,
-                  cursor: 'pointer'
+                  cursor: 'pointer',
                 }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'rgba(255,255,255,0.4)';
-                  e.currentTarget.style.transform = 'scale(1.02)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'transparent';
-                  e.currentTarget.style.transform = 'scale(1)';
-                }}
+                onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--bg-tertiary)')}
+                onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
               >
                 <div
                   style={{
                     width: 48,
                     height: 48,
-                    borderRadius: '12px',
-                    background: bg,
+                    borderRadius: '8px',
+                    background: 'var(--bg-tertiary)',
+                    border: '1px solid var(--border-subtle)',
                     color: color,
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
                     flexShrink: 0,
-                    boxShadow: `0 4px 12px ${bg.replace('0.15)', '0.3)')}`
                   }}
                 >
                   <span style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase' }}>
@@ -142,19 +143,19 @@ export default function UpcomingEventsWidget({ academicYearId }: { academicYearI
                   <span style={{ fontSize: 18, fontWeight: 800 }}>{day}</span>
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>
                     {event.name}
                   </div>
                   <div style={{ display: 'flex', gap: 8, marginTop: 4 }}>
                     <span
                       style={{
-                        fontSize: 11,
-                        padding: '2px 8px',
-                        background: 'rgba(255,255,255,0.5)',
-                        border: '1px solid rgba(255,255,255,0.8)',
-                        borderRadius: 8,
-                        color: 'var(--text-secondary)',
-                        fontWeight: 600
+                        fontSize: 10,
+                        padding: '2px 6px',
+                        background: 'var(--bg-tertiary)',
+                        border: '1px solid var(--border-subtle)',
+                        borderRadius: 4,
+                        color: color,
+                        fontWeight: 700,
                       }}
                     >
                       {event.type}
@@ -163,9 +164,9 @@ export default function UpcomingEventsWidget({ academicYearId }: { academicYearI
                 </div>
                 <div
                   style={{
-                    fontSize: 12,
+                    fontSize: 11,
                     fontWeight: 600,
-                    color: event.daysUntil === 'Today' ? '#E11D48' : 'var(--text-secondary)',
+                    color: event.daysUntil === 'Today' ? 'var(--accent-danger)' : 'var(--text-muted)',
                   }}
                 >
                   {event.daysUntil}

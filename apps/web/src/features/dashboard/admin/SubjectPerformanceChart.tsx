@@ -27,12 +27,26 @@ export default function SubjectPerformanceChart(_props: { academicYearId?: strin
   const navigate = useNavigate();
 
   return (
-    <div className="glass-card">
-      <div className="card-header" style={{ borderBottom: '1px solid rgba(255,255,255,0.2)' }}>
-        <span className="card-title" style={{ fontWeight: 700, color: 'var(--text-primary)' }}>📚 Subject Performance</span>
-        <span className="badge" style={{ background: 'rgba(79,70,229,0.15)', color: '#4F46E5', backdropFilter: 'blur(10px)' }}>Current Term</span>
+    <div style={{ marginBottom: 24, background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)' }}>
+      <div style={{ padding: '16px 20px', borderBottom: '1px solid var(--border-subtle)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h3 style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', margin: 0, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+          Subject Performance
+        </h3>
+        <span
+          style={{
+            fontSize: 11,
+            fontWeight: 700,
+            padding: '4px 8px',
+            background: 'var(--bg-tertiary)',
+            color: 'var(--text-secondary)',
+            borderRadius: 'var(--radius-sm)',
+            border: '1px solid var(--border-subtle)',
+          }}
+        >
+          Current Term
+        </span>
       </div>
-      <div className="card-body" style={{ paddingTop: 16 }}>
+      <div style={{ paddingTop: 16 }}>
         {isLoading ? (
           <div
             style={{ height: 240, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
@@ -73,35 +87,31 @@ export default function SubjectPerformanceChart(_props: { academicYearId?: strin
             >
               <defs>
                 <linearGradient id="barGrad0" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#818CF8" />
-                  <stop offset="100%" stopColor="#4F46E5" />
+                  <stop offset="0%" stopColor="var(--accent-primary)" />
+                  <stop offset="100%" stopColor="var(--accent-primary)" />
                 </linearGradient>
                 <linearGradient id="barGrad1" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#34D399" />
-                  <stop offset="100%" stopColor="#059669" />
+                  <stop offset="0%" stopColor="var(--accent-success)" />
+                  <stop offset="100%" stopColor="var(--accent-success)" />
                 </linearGradient>
                 <linearGradient id="barGrad2" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#FBBF24" />
-                  <stop offset="100%" stopColor="#D97706" />
+                  <stop offset="0%" stopColor="var(--accent-warning)" />
+                  <stop offset="100%" stopColor="var(--accent-warning)" />
                 </linearGradient>
                 <linearGradient id="barGrad3" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#67E8F9" />
-                  <stop offset="100%" stopColor="#0891B2" />
+                  <stop offset="0%" stopColor="var(--accent-primary)" opacity={0.8} />
+                  <stop offset="100%" stopColor="var(--accent-primary)" opacity={0.8} />
                 </linearGradient>
                 <linearGradient id="barGrad4" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#A78BFA" />
-                  <stop offset="100%" stopColor="#7C3AED" />
+                  <stop offset="0%" stopColor="var(--accent-success)" opacity={0.8} />
+                  <stop offset="100%" stopColor="var(--accent-success)" opacity={0.8} />
                 </linearGradient>
                 <filter id="pillGlow" x="-20%" y="-20%" width="140%" height="140%">
                   <feGaussianBlur stdDeviation="3" result="blur" />
                   <feComposite in="SourceGraphic" in2="blur" operator="over" />
                 </filter>
               </defs>
-              <CartesianGrid
-                strokeDasharray="4 4"
-                stroke="rgba(0,0,0,0.04)"
-                horizontal={false}
-              />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border-subtle)" horizontal={false} />
               <XAxis
                 type="number"
                 domain={[0, 100]}
@@ -121,15 +131,13 @@ export default function SubjectPerformanceChart(_props: { academicYearId?: strin
               />
               <Tooltip
                 contentStyle={{
-                  background: 'rgba(255, 255, 255, 0.6)',
-                  backdropFilter: 'blur(16px)',
-                  WebkitBackdropFilter: 'blur(16px)',
-                  border: '1px solid rgba(255, 255, 255, 0.8)',
-                  borderRadius: 16,
+                  background: 'var(--bg-surface-raised)',
+                  border: '1px solid var(--border-subtle)',
+                  borderRadius: 8,
                   fontSize: 13,
-                  boxShadow: '0 10px 24px rgba(0,0,0,0.06)',
+                  boxShadow: '0 10px 24px rgba(0,0,0,0.5)',
                   color: 'var(--text-primary)',
-                  fontWeight: 600
+                  fontWeight: 600,
                 }}
                 formatter={(v: number, name: string, props: any) => [
                   `${v}% (Pass: ${props.payload.passRate}%)`,
@@ -138,13 +146,13 @@ export default function SubjectPerformanceChart(_props: { academicYearId?: strin
               />
               <Bar
                 dataKey="avgScore"
-                radius={[12, 12, 12, 12]}
-                barSize={16}
+                radius={[4, 4, 4, 4]}
+                barSize={12}
                 label={{
                   position: 'right',
                   fill: 'var(--text-primary)',
                   fontSize: 12,
-                  fontWeight: 700,
+                  fontWeight: 600,
                   formatter: (v: number) => `${v}%`,
                   dx: 5,
                 }}
@@ -155,10 +163,7 @@ export default function SubjectPerformanceChart(_props: { academicYearId?: strin
               >
                 {(data?.subjects?.filter((s: any) => s.avgScore > 0) || []).map(
                   (_: any, i: number) => (
-                    <Cell
-                      key={i}
-                      fill={`url(#barGrad${i % 5})`}
-                    />
+                    <Cell key={i} fill={`url(#barGrad${i % 5})`} />
                   ),
                 )}
               </Bar>

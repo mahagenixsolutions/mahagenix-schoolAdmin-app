@@ -83,54 +83,65 @@ export default function QuickActionsGrid() {
       {/* Dynamic Toast Popup */}
       {toastMessage && (
         <div style={{ position: 'fixed', bottom: 24, right: 24, zIndex: 99999 }}>
-          <div style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 10, padding: '12px 20px', display: 'flex', alignItems: 'center', gap: 10, boxShadow: 'var(--shadow-lg)' }}>
-            <span style={{ fontSize: 13, fontWeight: 500, color: 'var(--color-text)' }}>{toastMessage}</span>
+          <div style={{ background: 'var(--bg-surface-raised)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', padding: '12px 20px', display: 'flex', alignItems: 'center', gap: 10, boxShadow: 'var(--shadow-lg)' }}>
+            <span style={{ fontSize: 13, fontWeight: 500, color: 'var(--text-primary)' }}>{toastMessage}</span>
           </div>
         </div>
       )}
 
-      <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 16, color: 'var(--text-primary)' }}>Quick Actions</h3>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12 }}>
-        {ACTIONS.map(action => (
-          <button
-            key={action.label}
-            onClick={() => handleAction(action)}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 12,
-              padding: '12px 16px',
-              background: 'var(--bg-primary)',
-              border: '1px solid var(--border-color)',
-              borderRadius: 'var(--radius-md)',
-              cursor: 'pointer',
-              textAlign: 'left',
-              transition: 'all 0.2s',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = action.color;
-              e.currentTarget.style.transform = 'translateY(-2px)';
-              e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = 'var(--border-color)';
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = 'none';
-            }}
-          >
-            <div style={{ 
-              width: 32, height: 32, 
-              borderRadius: 8, 
-              background: `${action.color}15`, 
-              color: action.color,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 18
-            }}>
-              {action.icon}
-            </div>
-            <span style={{ fontSize: 13, fontWeight: 500, color: 'var(--text-secondary)' }}>{action.label}</span>
-          </button>
-        ))}
+      <h3 style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 16 }}>Quick Actions</h3>
+      
+      <div 
+        style={{ 
+          display: 'flex', 
+          gap: 16, 
+          overflowX: 'auto', 
+          scrollbarWidth: 'none', 
+          msOverflowStyle: 'none', 
+          paddingBottom: 4 
+        }}
+      >
+        <style>{`.quick-actions-strip::-webkit-scrollbar { display: none; }`}</style>
+        <div className="quick-actions-strip" style={{ display: 'flex', gap: 16, width: '100%' }}>
+          {ACTIONS.slice(0, 4).map(action => (
+            <button
+              key={action.label}
+              onClick={() => handleAction(action)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 12,
+                padding: '12px 16px',
+                background: 'var(--bg-secondary)',
+                border: '1px solid var(--border-color)',
+                borderRadius: 'var(--radius-md)',
+                cursor: 'pointer',
+                textAlign: 'left',
+                transition: 'all 0.2s',
+                flex: '1 1 0',
+                minWidth: '220px'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = 'var(--color-primary)';
+                e.currentTarget.style.background = 'var(--bg-primary)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'var(--border-color)';
+                e.currentTarget.style.background = 'var(--bg-secondary)';
+              }}
+            >
+              <span style={{ 
+                color: 'var(--text-secondary)',
+                fontSize: 16,
+                display: 'flex',
+                alignItems: 'center'
+              }}>
+                {action.icon}
+              </span>
+              <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>{action.label}</span>
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Modal Dialog */}

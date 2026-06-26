@@ -356,7 +356,7 @@ export function resolveMockRequest(input: any) {
   if (path === 'dashboard/alerts') return ok({ alerts: [
     { severity: 'warning', message: 'Class 8 A attendance needs follow-up this week', link: '/classes/class-8-a' },
     { severity: 'info', message: 'Quarterly marks draft is 84% complete', link: '/marks' },
-    { severity: 'success', message: 'Class 12 A completed all mock exam entries', link: '/classes/class-12-a' },
+    { severity: 'success', message: 'Class 10 A completed all mock exam entries', link: '/classes/class-10-a' },
   ] });
   if (path === 'dashboard/attendance-trend') return ok(mockAttendanceTrend);
   if (path === 'dashboard/subject-performance') return ok(mockSubjectAverages);
@@ -365,7 +365,7 @@ export function resolveMockRequest(input: any) {
   if (path === 'dashboard/recent-activity') return ok(mockNotifications.map((item) => ({ id: item.id, action: item.title, actor: 'EduTrack Demo', created_at: item.created_at })));
   if (path === 'dashboard/upcoming-events') return ok(mockEvents);
   if (path === 'dashboard/insights') return ok({ insights: [
-    { id: 'insight-1', title: 'Class 12 A leads academic performance', value: '94%', tone: 'success', icon: 'ti ti-trophy' },
+    { id: 'insight-1', title: 'Class 10 A leads academic performance', value: '94%', tone: 'success', icon: 'ti ti-trophy' },
     { id: 'insight-2', title: 'Class 8 A attendance needs attention', value: '89%', tone: 'warning', icon: 'ti ti-alert-circle' },
     { id: 'insight-3', title: 'Science scores improved across middle school', value: '+6%', tone: 'info', icon: 'ti ti-chart-line' },
   ] });
@@ -412,7 +412,7 @@ export function resolveMockRequest(input: any) {
         classesAssigned: [
             { id: 'c1', name: 'Grade 10 - Mathematics (Section A)' },
             { id: 'c2', name: 'Grade 10 - Mathematics (Section B)' },
-            { id: 'c3', name: 'Grade 11 - Advanced Algebra' }
+            { id: 'c3', name: 'Grade 9 - Algebra' }
         ]
     });
   }

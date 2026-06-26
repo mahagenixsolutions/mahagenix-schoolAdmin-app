@@ -206,10 +206,11 @@
 .tanstack-table {
   width: 100%;
   border-collapse: collapse;
+  background: var(--bg-surface);
 }
 
 .tanstack-table th {
-  background: #f8fafc;
+  background: var(--bg-secondary);
   padding: 14px 16px;
   text-align: left;
   font-weight: 600;
@@ -225,8 +226,13 @@
   font-size: 14px;
 }
 
+.tanstack-table tbody tr {
+  background: var(--bg-surface);
+  transition: background var(--transition-fast);
+}
+
 .tanstack-table tbody tr:hover {
-  background: #f1f5f9;
+  background: var(--bg-surface-raised);
 }
 
 .status-badge {

@@ -122,7 +122,7 @@ export default function SubjectDetailDashboard() {
         </div>
 
         {/* AI INSIGHTS */}
-        <div className="card" style={{ gridColumn: 'span 12', background: 'linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(139, 92, 246, 0.1))', border: '1px solid rgba(79, 70, 229, 0.2)' }}>
+        <div className="card" style={{ gridColumn: 'span 12', background: 'linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(139, 92, 246, 0.1)), var(--bg-secondary)', border: '1px solid rgba(79, 70, 229, 0.2)' }}>
           <div className="card-body">
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
               <span style={{ fontSize: 20 }}>✨</span>

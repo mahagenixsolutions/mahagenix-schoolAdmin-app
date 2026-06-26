@@ -15,24 +15,26 @@ export default function AttendanceDonutChart() {
     classBreakdown: [
       { className: 'Class 10 A', present: 38, absent: 2, late: 0 },
       { className: 'Class 9 B', present: 35, absent: 3, late: 2 },
-      { className: 'Class 12 Sci', present: 40, absent: 0, late: 0 },
+      { className: 'Class 7 A', present: 40, absent: 0, late: 0 },
       { className: 'Class 8 A', present: 36, absent: 1, late: 3 },
     ],
   };
 
   const chartData = [
-    { name: 'Leave', value: data?.leave || 0, fill: 'url(#gradLeave)' },
-    { name: 'Late', value: data?.late || 0, fill: 'url(#gradLate)' },
-    { name: 'Absent', value: data?.absent || 0, fill: 'url(#gradAbsent)' },
-    { name: 'Present', value: data?.present || 0, fill: 'url(#gradPresent)' },
+    { name: 'Leave', value: data?.leave || 0, fill: 'var(--text-muted)' },
+    { name: 'Late', value: data?.late || 0, fill: 'var(--accent-warning)' },
+    { name: 'Absent', value: data?.absent || 0, fill: 'var(--accent-danger)' },
+    { name: 'Present', value: data?.present || 0, fill: 'var(--accent-success)' },
   ];
 
   return (
-    <div className="glass-card">
-      <div className="card-header" style={{ borderBottom: '1px solid rgba(255,255,255,0.2)' }}>
-        <span className="card-title" style={{ fontWeight: 700, color: 'var(--text-primary)' }}>🗂️ Today's Attendance Breakdown</span>
+    <div style={{ marginBottom: 24, background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)' }}>
+      <div style={{ padding: '16px 20px', borderBottom: '1px solid var(--border-subtle)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h3 style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', margin: 0, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+          Today's Attendance Breakdown
+        </h3>
       </div>
-      <div className="card-body" style={{ padding: '16px' }}>
+      <div style={{ padding: '16px' }}>
         {isLoading ? (
           <div
             style={{ height: 240, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
@@ -85,22 +87,6 @@ export default function AttendanceDonutChart() {
                     data={chartData}
                   >
                     <defs>
-                      <linearGradient id="gradPresent" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%" stopColor="#34D399" />
-                        <stop offset="100%" stopColor="#059669" />
-                      </linearGradient>
-                      <linearGradient id="gradAbsent" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%" stopColor="#FB7185" />
-                        <stop offset="100%" stopColor="#E11D48" />
-                      </linearGradient>
-                      <linearGradient id="gradLate" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%" stopColor="#FBBF24" />
-                        <stop offset="100%" stopColor="#D97706" />
-                      </linearGradient>
-                      <linearGradient id="gradLeave" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%" stopColor="#CBD5E1" />
-                        <stop offset="100%" stopColor="#64748B" />
-                      </linearGradient>
                       <filter id="ringGlow" x="-20%" y="-20%" width="140%" height="140%">
                         <feGaussianBlur stdDeviation="3" result="blur" />
                         <feComposite in="SourceGraphic" in2="blur" operator="over" />
@@ -108,7 +94,7 @@ export default function AttendanceDonutChart() {
                     </defs>
                     <RadialBarAny
                       minAngle={15}
-                      background={{ fill: 'rgba(0,0,0,0.03)' }}
+                      background={{ fill: 'var(--border-subtle)' }}
                       clockWise
                       dataKey="value"
                       cornerRadius={10}
@@ -120,15 +106,13 @@ export default function AttendanceDonutChart() {
                         return [`${v} (${perc}%)`, name];
                       }}
                       contentStyle={{
-                        background: 'rgba(255, 255, 255, 0.6)',
-                        backdropFilter: 'blur(16px)',
-                        WebkitBackdropFilter: 'blur(16px)',
-                        border: '1px solid rgba(255, 255, 255, 0.8)',
-                        borderRadius: 16,
+                        background: 'var(--bg-surface-raised)',
+                        border: '1px solid var(--border-subtle)',
+                        borderRadius: 8,
                         fontSize: 13,
-                        boxShadow: '0 10px 24px rgba(0,0,0,0.06)',
+                        boxShadow: '0 10px 24px rgba(0,0,0,0.5)',
                         color: 'var(--text-primary)',
-                        fontWeight: 600
+                        fontWeight: 600,
                       }}
                     />
                   </RadialBarChart>
@@ -148,72 +132,217 @@ export default function AttendanceDonutChart() {
                   pointerEvents: 'none',
                 }}
               >
-                <div style={{ fontSize: 24, fontWeight: 800, color: 'var(--text-primary)' }}>
+                <div style={{ fontSize: 24, fontWeight: 700, color: 'var(--text-primary)' }}>
                   {data?.total || 0}
                 </div>
-                <div style={{ fontSize: 12, color: 'var(--text-muted)', fontWeight: 600 }}>Students</div>
+                <div style={{ fontSize: 12, color: 'var(--text-muted)', fontWeight: 600 }}>
+                  Students
+                </div>
               </div>
             </div>
 
             {/* Legend rendered manually because rotation breaks built-in legend */}
-            <div style={{ display: 'flex', justifyContent: 'center', gap: 16, marginBottom: 16, flexWrap: 'wrap' }}>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                gap: 16,
+                marginBottom: 16,
+                flexWrap: 'wrap',
+              }}
+            >
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                <span style={{ width: 10, height: 10, borderRadius: '50%', background: 'linear-gradient(135deg, #34D399, #059669)' }} />
-                <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Present <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{data.present}</span></span>
+                <span
+                  style={{
+                    width: 8,
+                    height: 8,
+                    borderRadius: '50%',
+                    background: 'var(--accent-success)',
+                  }}
+                />
+                <span style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
+                  Present{' '}
+                  <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>
+                    {data.present}
+                  </span>
+                </span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                <span style={{ width: 10, height: 10, borderRadius: '50%', background: 'linear-gradient(135deg, #FB7185, #E11D48)' }} />
-                <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Absent <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{data.absent}</span></span>
+                <span
+                  style={{
+                    width: 8,
+                    height: 8,
+                    borderRadius: '50%',
+                    background: 'var(--accent-danger)',
+                  }}
+                />
+                <span style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
+                  Absent{' '}
+                  <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>
+                    {data.absent}
+                  </span>
+                </span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                <span style={{ width: 10, height: 10, borderRadius: '50%', background: 'linear-gradient(135deg, #FBBF24, #D97706)' }} />
-                <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Late <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{data.late}</span></span>
+                <span
+                  style={{
+                    width: 8,
+                    height: 8,
+                    borderRadius: '50%',
+                    background: 'var(--accent-warning)',
+                  }}
+                />
+                <span style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
+                  Late{' '}
+                  <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{data.late}</span>
+                </span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                <span style={{ width: 10, height: 10, borderRadius: '50%', background: 'linear-gradient(135deg, #CBD5E1, #64748B)' }} />
-                <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Leave <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{data.leave}</span></span>
+                <span
+                  style={{
+                    width: 8,
+                    height: 8,
+                    borderRadius: '50%',
+                    background: 'var(--text-muted)',
+                  }}
+                />
+                <span style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
+                  Leave{' '}
+                  <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>
+                    {data.leave}
+                  </span>
+                </span>
               </div>
             </div>
 
             {/* Class Breakdown Table */}
             {data?.classBreakdown?.length > 0 && (
-              <div style={{ borderTop: '1px solid rgba(255,255,255,0.2)', paddingTop: 16 }}>
-                <table className="table" style={{ fontSize: 13, margin: 0, background: 'transparent' }}>
+              <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: 16 }}>
+                <table
+                  style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}
+                >
                   <thead>
                     <tr>
-                      <th style={{ padding: '8px 4px', background: 'transparent', borderBottom: '1px solid rgba(255,255,255,0.2)' }}>Class</th>
-                      <th style={{ padding: '8px 4px', textAlign: 'center', background: 'transparent', borderBottom: '1px solid rgba(255,255,255,0.2)' }}>Present</th>
-                      <th style={{ padding: '8px 4px', textAlign: 'center', background: 'transparent', borderBottom: '1px solid rgba(255,255,255,0.2)' }}>Absent</th>
-                      <th style={{ padding: '8px 4px', textAlign: 'center', background: 'transparent', borderBottom: '1px solid rgba(255,255,255,0.2)' }}>Late</th>
-                      <th style={{ padding: '8px 4px', textAlign: 'right', background: 'transparent', borderBottom: '1px solid rgba(255,255,255,0.2)' }}>Action</th>
+                      <th
+                        style={{
+                          padding: '8px 4px',
+                          fontSize: 11,
+                          fontWeight: 700,
+                          color: 'var(--text-muted)',
+                          textTransform: 'uppercase',
+                          borderBottom: '1px solid var(--border-subtle)',
+                        }}
+                      >
+                        Class
+                      </th>
+                      <th
+                        style={{
+                          padding: '8px 4px',
+                          textAlign: 'center',
+                          fontSize: 11,
+                          fontWeight: 700,
+                          color: 'var(--text-muted)',
+                          textTransform: 'uppercase',
+                          borderBottom: '1px solid var(--border-subtle)',
+                        }}
+                      >
+                        Present
+                      </th>
+                      <th
+                        style={{
+                          padding: '8px 4px',
+                          textAlign: 'center',
+                          fontSize: 11,
+                          fontWeight: 700,
+                          color: 'var(--text-muted)',
+                          textTransform: 'uppercase',
+                          borderBottom: '1px solid var(--border-subtle)',
+                        }}
+                      >
+                        Absent
+                      </th>
+                      <th
+                        style={{
+                          padding: '8px 4px',
+                          textAlign: 'center',
+                          fontSize: 11,
+                          fontWeight: 700,
+                          color: 'var(--text-muted)',
+                          textTransform: 'uppercase',
+                          borderBottom: '1px solid var(--border-subtle)',
+                        }}
+                      >
+                        Late
+                      </th>
+                      <th
+                        style={{
+                          padding: '8px 4px',
+                          textAlign: 'right',
+                          fontSize: 11,
+                          fontWeight: 700,
+                          color: 'var(--text-muted)',
+                          textTransform: 'uppercase',
+                          borderBottom: '1px solid var(--border-subtle)',
+                        }}
+                      >
+                        Action
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     {data?.classBreakdown?.slice(0, 4).map((c: any, i: number) => (
-                      <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                        <td style={{ padding: '8px 4px', fontWeight: 600, border: 'none' }}>{c.className}</td>
-                        <td style={{ padding: '8px 4px', textAlign: 'center', color: '#059669', fontWeight: 600, border: 'none' }}>
+                      <tr key={i} style={{ borderBottom: i < 3 ? '1px solid var(--border-subtle)' : 'none' }}>
+                        <td style={{ padding: '12px 4px', fontWeight: 600, color: 'var(--text-primary)', fontSize: 13 }}>
+                          {c.className}
+                        </td>
+                        <td
+                          style={{
+                            padding: '12px 4px',
+                            textAlign: 'center',
+                            color: 'var(--accent-success)',
+                            fontWeight: 600,
+                            fontSize: 13
+                          }}
+                        >
                           {c.present}
                         </td>
-                        <td style={{ padding: '8px 4px', textAlign: 'center', color: '#E11D48', fontWeight: 600, border: 'none' }}>
+                        <td
+                          style={{
+                            padding: '12px 4px',
+                            textAlign: 'center',
+                            color: 'var(--accent-danger)',
+                            fontWeight: 600,
+                            fontSize: 13
+                          }}
+                        >
                           {c.absent}
                         </td>
-                        <td style={{ padding: '8px 4px', textAlign: 'center', color: '#D97706', fontWeight: 600, border: 'none' }}>
+                        <td
+                          style={{
+                            padding: '12px 4px',
+                            textAlign: 'center',
+                            color: 'var(--accent-warning)',
+                            fontWeight: 600,
+                            fontSize: 13
+                          }}
+                        >
                           {c.late}
                         </td>
-                        <td style={{ padding: '8px 4px', textAlign: 'right', border: 'none' }}>
+                        <td style={{ padding: '12px 4px', textAlign: 'right' }}>
                           <Link
                             to={`/attendance?class=${c.className}`}
                             style={{
-                              color: '#4F46E5',
+                              color: 'var(--text-secondary)',
                               textDecoration: 'none',
                               fontWeight: 600,
-                              background: 'rgba(79,70,229,0.1)',
+                              fontSize: 12,
                               padding: '4px 8px',
-                              borderRadius: '8px'
+                              borderRadius: 'var(--radius-sm)',
+                              border: '1px solid var(--border-subtle)',
+                              background: 'var(--bg-tertiary)'
                             }}
                           >
-                            View →
+                            View
                           </Link>
                         </td>
                       </tr>

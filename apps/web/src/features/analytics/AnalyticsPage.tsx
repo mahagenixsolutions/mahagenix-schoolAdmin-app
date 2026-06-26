@@ -623,7 +623,7 @@ export default function AnalyticsPage() {
       <div className="card dashboard-row">
         <div className="card-header">
           <span className="card-title">🏫 Class Comparison Index</span>
-          <span className="badge badge-primary">Class 1 → Class 12 Overview</span>
+          <span className="badge badge-primary">Class 1 → Class 10 Overview</span>
         </div>
         <div className="card-body">
           <div style={{ width: '100%', height: 280 }}>

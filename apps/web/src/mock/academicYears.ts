@@ -7,7 +7,7 @@ export const mockAcademicYears = [
     status: 'ACTIVE',
     is_current: true,
     students: 72,
-    classes: 12,
+    classes: 10,
   },
   {
     id: 'ay-2025',
@@ -17,6 +17,6 @@ export const mockAcademicYears = [
     status: 'CLOSED',
     is_current: false,
     students: 72,
-    classes: 12,
+    classes: 10,
   },
 ];

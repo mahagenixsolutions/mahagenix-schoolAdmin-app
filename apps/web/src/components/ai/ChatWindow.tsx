@@ -156,7 +156,7 @@ export default function ChatWindow({ isOpen, onClose, onUnreadChange }: ChatWind
           right: 24,
           width: 380,
           height: 540,
-          background: 'var(--bg-primary)',
+          background: 'var(--bg-secondary)',
           border: '1px solid var(--border-color)',
           borderRadius: 'var(--radius-xl)',
           boxShadow: '0 20px 60px rgba(0, 0, 0, 0.15), 0 8px 20px rgba(0, 0, 0, 0.08)',

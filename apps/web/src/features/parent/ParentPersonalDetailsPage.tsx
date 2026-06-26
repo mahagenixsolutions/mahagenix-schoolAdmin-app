@@ -50,7 +50,7 @@ export default function ParentPersonalDetailsPage() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 24 }}>
         
         {/* 1. PERSONAL INFORMATION */}
-        <div style={{ background: 'var(--bg-primary)', borderRadius: 24, padding: 24, border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+        <div style={{ background: 'var(--bg-secondary)', borderRadius: 24, padding: 24, border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-md)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 24 }}>
             <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'linear-gradient(135deg, var(--color-primary), var(--color-primary-light))', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, fontWeight: 700 }}>
               {initials}
@@ -73,7 +73,7 @@ export default function ParentPersonalDetailsPage() {
         </div>
 
         {/* 2. ACADEMIC DETAILS */}
-        <div style={{ background: 'var(--bg-primary)', borderRadius: 24, padding: 24, border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+        <div style={{ background: 'var(--bg-secondary)', borderRadius: 24, padding: 24, border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-md)' }}>
           <h3 style={{ fontSize: 15, fontWeight: 800, color: 'var(--text-primary)', margin: '0 0 20px 0', display: 'flex', alignItems: 'center', gap: 8 }}><span>🎓</span> Academic Info</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <div>
@@ -94,7 +94,7 @@ export default function ParentPersonalDetailsPage() {
         </div>
 
         {/* 3. HEALTH & MEDICAL */}
-        <div style={{ background: 'var(--bg-primary)', borderRadius: 24, padding: 24, border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+        <div style={{ background: 'var(--bg-secondary)', borderRadius: 24, padding: 24, border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-md)' }}>
           <h3 style={{ fontSize: 15, fontWeight: 800, color: 'var(--text-primary)', margin: '0 0 20px 0', display: 'flex', alignItems: 'center', gap: 8 }}><span>🩺</span> Medical Records</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
@@ -119,7 +119,7 @@ export default function ParentPersonalDetailsPage() {
         </div>
 
         {/* 4. EMERGENCY & TRANSPORT */}
-        <div style={{ background: 'var(--bg-primary)', borderRadius: 24, padding: 24, border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+        <div style={{ background: 'var(--bg-secondary)', borderRadius: 24, padding: 24, border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-md)' }}>
           <h3 style={{ fontSize: 15, fontWeight: 800, color: 'var(--text-primary)', margin: '0 0 20px 0', display: 'flex', alignItems: 'center', gap: 8 }}><span>🚌</span> Transport & Emergency</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <div>
@@ -139,7 +139,7 @@ export default function ParentPersonalDetailsPage() {
         </div>
 
         {/* 5. ATTENDANCE & BEHAVIOR SUMMARY */}
-        <div style={{ background: 'var(--bg-primary)', borderRadius: 24, padding: 24, border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+        <div style={{ background: 'var(--bg-secondary)', borderRadius: 24, padding: 24, border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-md)' }}>
           <h3 style={{ fontSize: 15, fontWeight: 800, color: 'var(--text-primary)', margin: '0 0 20px 0', display: 'flex', alignItems: 'center', gap: 8 }}><span>📊</span> Term Summary</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--border-color)', paddingBottom: 12 }}>
@@ -160,7 +160,7 @@ export default function ParentPersonalDetailsPage() {
         </div>
 
         {/* 6. FEES & DOCUMENTS */}
-        <div style={{ background: 'var(--bg-primary)', borderRadius: 24, padding: 24, border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+        <div style={{ background: 'var(--bg-secondary)', borderRadius: 24, padding: 24, border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-md)' }}>
           <h3 style={{ fontSize: 15, fontWeight: 800, color: 'var(--text-primary)', margin: '0 0 20px 0', display: 'flex', alignItems: 'center', gap: 8 }}><span>📁</span> Fee History & Docs</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             <div style={{ fontSize: 11, color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.05em', marginBottom: 4 }}>Recent Invoices</div>

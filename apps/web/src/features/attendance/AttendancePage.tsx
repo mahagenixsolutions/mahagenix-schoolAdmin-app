@@ -97,10 +97,9 @@ export default function AttendancePage() {
 
   return (
     <div>
-      {/* Dynamic Toast Popup */}
       {toastMessage && (
         <div className="toast-overlay animate-fadeIn" style={{ position: 'fixed', top: 20, right: 20, zIndex: 9999 }}>
-          <div className="toast-card" style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-color)', borderRadius: 10, padding: '12px 20px', display: 'flex', alignItems: 'center', gap: 10, boxShadow: 'var(--shadow-lg)' }}>
+          <div className="toast-card" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: 10, padding: '12px 20px', display: 'flex', alignItems: 'center', gap: 10, boxShadow: 'var(--shadow-lg)' }}>
             <CheckCircle size={18} color="var(--color-secondary)" />
             <span style={{ fontSize: 13, fontWeight: 500, color: 'var(--text-primary)' }}>{toastMessage}</span>
           </div>

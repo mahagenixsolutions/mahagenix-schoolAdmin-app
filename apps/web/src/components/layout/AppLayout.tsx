@@ -27,6 +27,7 @@ const BREADCRUMB_MAP: Record<string, string> = {
   '/messages': 'Messages',
   '/profile': 'Profile',
   '/gallery': 'Gallery',
+  '/puzzles': 'Logic & Puzzles',
 };
 
 export default function AppLayout() {
@@ -154,7 +155,7 @@ export default function AppLayout() {
                         top: '100%',
                         left: 0,
                         marginTop: 8,
-                        background: 'var(--bg-primary)',
+                        background: 'var(--bg-secondary)',
                         border: '1px solid var(--border-color)',
                         borderRadius: 'var(--radius-md)',
                         boxShadow: 'var(--shadow-lg)',
@@ -192,7 +193,7 @@ export default function AppLayout() {
                           }}
                           onMouseEnter={(e) => {
                             if (selectedStudent?.id !== student.id) {
-                              e.currentTarget.style.background = 'var(--bg-secondary)';
+                              e.currentTarget.style.background = 'var(--bg-primary)';
                             }
                           }}
                           onMouseLeave={(e) => {
@@ -265,7 +266,7 @@ export default function AppLayout() {
                         left: 0,
                         right: 0,
                         marginTop: 8,
-                        background: 'var(--bg-primary)',
+                        background: 'var(--bg-secondary)',
                         border: '1px solid var(--border-color)',
                         borderRadius: 'var(--radius-md)',
                         boxShadow: 'var(--shadow-lg)',
@@ -311,7 +312,7 @@ export default function AppLayout() {
                               cursor: 'pointer',
                               textAlign: 'left',
                             }}
-                            onMouseEnter={(e) => e.currentTarget.style.background = 'var(--bg-secondary)'}
+                            onMouseEnter={(e) => e.currentTarget.style.background = 'var(--bg-primary)'}
                             onMouseLeave={(e) => e.currentTarget.style.background = 'none'}
                           >
                             <div
@@ -440,7 +441,7 @@ export default function AppLayout() {
                       top: '100%',
                       right: 0,
                       marginTop: 8,
-                      background: 'var(--bg-primary)',
+                      background: 'var(--bg-secondary)',
                       border: '1px solid var(--border-color)',
                       borderRadius: 'var(--radius-md)',
                       boxShadow: 'var(--shadow-lg)',
@@ -472,7 +473,7 @@ export default function AppLayout() {
                         fontSize: 13,
                         fontWeight: 500,
                       }}
-                      onMouseEnter={(e) => e.currentTarget.style.background = 'var(--bg-secondary)'}
+                      onMouseEnter={(e) => e.currentTarget.style.background = 'var(--bg-primary)'}
                       onMouseLeave={(e) => e.currentTarget.style.background = 'none'}
                     >
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -490,7 +491,7 @@ export default function AppLayout() {
         {/* Page Content */}
         <main
           className="page-container"
-          style={isParentOrStudent ? { padding: '16px', marginTop: 'var(--header-height)', paddingBottom: '90px', maxWidth: '100%' } : undefined}
+          style={isParentOrStudent ? { padding: '16px', paddingBottom: '90px', maxWidth: '100%' } : undefined}
         >
           <Outlet />
         </main>
@@ -508,7 +509,7 @@ export default function AppLayout() {
             left: 0,
             right: 0,
             height: 64,
-            background: 'var(--bg-primary)',
+            background: 'var(--bg-secondary)',
             borderTop: '1px solid var(--border-color)',
             display: 'flex',
             justifyContent: 'space-around',
@@ -581,27 +582,51 @@ export default function AppLayout() {
             </svg>
             <span>Messages</span>
           </NavLink>
-          <NavLink
-            to="/gallery"
-            style={({ isActive }) => ({
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: isActive ? 'var(--color-primary)' : 'var(--text-muted)',
-              textDecoration: 'none',
-              fontSize: 10,
-              fontWeight: 600,
-              gap: 4,
-              flex: 1,
-              height: '100%',
-            })}
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
-            </svg>
-            <span>Gallery</span>
-          </NavLink>
+          {user?.role === 'STUDENT' ? (
+            <NavLink
+              to="/puzzles"
+              style={({ isActive }) => ({
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: isActive ? 'var(--color-primary)' : 'var(--text-muted)',
+                textDecoration: 'none',
+                fontSize: 10,
+                fontWeight: 600,
+                gap: 4,
+                flex: 1,
+                height: '100%',
+              })}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5c0-1.38-1.12-2.5-2.5-2.5S8 2.12 8 3.5V5H4c-1.1 0-2 .9-2 2v4h1.5c1.38 0 2.5 1.12 2.5 2.5S4.88 16 3.5 16H2v4c0 1.1.9 2 2 2h4v-1.5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5V22h4c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z"/>
+              </svg>
+              <span>Puzzles</span>
+            </NavLink>
+          ) : (
+            <NavLink
+              to="/gallery"
+              style={({ isActive }) => ({
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: isActive ? 'var(--color-primary)' : 'var(--text-muted)',
+                textDecoration: 'none',
+                fontSize: 10,
+                fontWeight: 600,
+                gap: 4,
+                flex: 1,
+                height: '100%',
+              })}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+              </svg>
+              <span>Gallery</span>
+            </NavLink>
+          )}
           <NavLink
             to="/profile"
             style={({ isActive }) => ({

@@ -81,7 +81,7 @@ export default function OpenAdmissionsModal({ isOpen, onClose, data }: OpenAdmis
   };
 
   // Class list options
-  const classOptions = ['Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'Class 6', 'Class 7', 'Class 8', 'Class 9', 'Class 10', 'Class 11', 'Class 12'];
+  const classOptions = ['Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'Class 6', 'Class 7', 'Class 8', 'Class 9', 'Class 10'];
 
   // Handle adding new applicant
   const handleAddApplicantSubmit = (e: React.FormEvent) => {

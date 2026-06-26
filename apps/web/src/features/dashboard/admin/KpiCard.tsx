@@ -13,7 +13,7 @@ export interface StatCardProps {
     delta: number | string;
     direction: 'up' | 'down' | 'neutral';
     label: string;
-    isGood?: boolean; // semantic: if true, trend is green. if false, red. if undefined, neutral.
+    isGood?: boolean; 
   };
   setupCta?: {
     label: string;
@@ -23,56 +23,17 @@ export interface StatCardProps {
   onClick?: () => void;
 }
 
-const getThemeCardStyles = (accentHex: string) => {
-  const hex = (accentHex || '').toLowerCase();
-  switch (hex) {
-    case '#4f46e5':
-      return {
-        gradient: 'linear-gradient(135deg, #8B5CF6 0%, #6366F1 50%, #4F46E5 100%)',
-        glowColor: '#8b5cf6',
-      };
-    case '#10b981':
-      return {
-        gradient: 'linear-gradient(135deg, #10B981 0%, #06B6D4 50%, #00F5D4 100%)',
-        glowColor: '#10b981',
-      };
-    case '#f59e0b':
-      return {
-        gradient: 'linear-gradient(135deg, #F59E0B 0%, #D97706 50%, #FFB703 100%)',
-        glowColor: '#f59e0b',
-      };
-    case '#f43f5e':
-      return {
-        gradient: 'linear-gradient(135deg, #F43F5E 0%, #EC4899 50%, #F97316 100%)',
-        glowColor: '#f43f5e',
-      };
-    case '#0ea5e9':
-    case '#06b6d4':
-      return {
-        gradient: 'linear-gradient(135deg, #0EA5E9 0%, #3B82F6 50%, #2563EB 100%)',
-        glowColor: '#0ea5e9',
-      };
-    default:
-      return {
-        gradient: 'linear-gradient(135deg, #8B5CF6 0%, #6366F1 50%, #4F46E5 100%)',
-        glowColor: '#8b5cf6',
-      };
-  }
-};
-
 const getHexColor = (color: string, hex: string) => {
   if (hex) return hex;
   switch (color) {
-    case 'primary': return '#4f46e5';
-    case 'info': return '#06b6d4';
-    case 'success': return '#10b981';
-    case 'warning': return '#a855f7';
-    case 'danger': return '#f43f5e';
-    default: return '#64748b';
+    case 'primary': return 'var(--accent-primary)';
+    case 'info': return 'var(--accent-primary)';
+    case 'success': return 'var(--accent-success)';
+    case 'warning': return 'var(--accent-warning)';
+    case 'danger': return 'var(--accent-danger)';
+    default: return 'var(--accent-primary)';
   }
 };
-
-const wavePattern = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cpath d='M-10 80 Q 30 50 70 80 T 150 80 T 230 80 M-10 100 Q 30 70 70 100 T 150 100 T 230 100 M-10 120 Q 30 90 70 120 T 150 120 T 230 120 M-10 140 Q 30 110 70 140 T 150 140 T 230 140 M-10 60 Q 30 30 70 60 T 150 60 T 230 60 M-10 40 Q 30 10 70 40 T 150 40 T 230 40 M-10 20 Q 30 -10 70 20 T 150 20 T 230 20 M-10 0 Q 30 -30 70 0 T 150 0 T 230 0' fill='none' stroke='rgba(255,255,255,0.065)' stroke-width='1.5'/%3E%3C/svg%3E")`;
 
 export default function KpiCard({
   label,
@@ -104,11 +65,13 @@ export default function KpiCard({
   };
 
   const colorHex = getHexColor(accentColor, accentHex);
-  const { gradient: cardGradient, glowColor } = getThemeCardStyles(accentHex || colorHex);
+  // Using explicit hex logic for text-shadow since CSS vars in text-shadow can be tricky if opacity is needed, 
+  // but we can just use the variable if we use a solid shadow or fallback to hex if provided.
+  // Actually, we'll construct a clean glow using the color string directly if it's a hex, otherwise fallback to the var.
+  const glowShadow = `0 0 24px ${colorHex}40`;
 
   return (
     <div
-      className="kpi-stat-card"
       onClick={handleClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -117,58 +80,20 @@ export default function KpiCard({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        cursor: (onClick || (link && state !== 'setup_required')) ? 'pointer' : 'default',
-        transform: isHovered ? 'translateY(-6px) scale(1.02)' : 'none',
-        border: isHovered ? '1px solid rgba(255, 255, 255, 0.28)' : '1px solid rgba(255, 255, 255, 0.12)',
-        background: `${wavePattern}, ${cardGradient}`,
-        backgroundSize: '160px 160px, cover',
-        backgroundRepeat: 'repeat, no-repeat',
-        boxShadow: isHovered
-          ? `0 16px 32px ${glowColor}4d, 0 4px 12px rgba(0,0,0,0.15)`
-          : `0 8px 20px ${glowColor}1c, 0 2px 6px rgba(0,0,0,0.08)`,
-        transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
-        minHeight: '180px'
+        cursor: onClick || (link && state !== 'setup_required') ? 'pointer' : 'default',
+        background: isHovered ? 'var(--bg-surface-raised)' : 'var(--bg-surface)',
+        border: `1px solid ${isHovered ? 'var(--border-subtle)' : 'var(--border-subtle)'}`,
+        borderColor: isHovered ? colorHex : 'var(--border-subtle)',
+        borderTop: `3px solid ${colorHex}`,
+        borderRadius: 'var(--radius-lg)',
+        transition: 'all 0.2s ease',
+        minHeight: '160px',
+        position: 'relative',
+        overflow: 'hidden',
       }}
     >
-      {/* Ambient Glow behind the card */}
       <div
         style={{
-          position: 'absolute',
-          top: '-15%',
-          right: '-15%',
-          width: '120px',
-          height: '120px',
-          background: glowColor,
-          filter: 'blur(45px)',
-          opacity: isHovered ? 0.35 : 0.2,
-          borderRadius: '50%',
-          zIndex: 0,
-          transition: 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
-          transform: isHovered ? 'scale(1.3)' : 'scale(1)',
-        }}
-      />
-      
-      {/* Secondary glow - bottom left */}
-      <div
-        style={{
-          position: 'absolute',
-          bottom: '-15%',
-          left: '-10%',
-          width: '80px',
-          height: '80px',
-          background: glowColor,
-          filter: 'blur(35px)',
-          opacity: isHovered ? 0.25 : 0.12,
-          borderRadius: '50%',
-          zIndex: 0,
-          transition: 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
-        }}
-      />
-
-      <div
-        style={{
-          position: 'relative',
-          zIndex: 1,
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'flex-start',
@@ -177,25 +102,37 @@ export default function KpiCard({
         <div style={{ flex: 1, minWidth: 0 }}>
           <div
             style={{
-              fontSize: '14px',
+              fontSize: '13px',
               fontWeight: 600,
-              color: 'rgba(255, 255, 255, 0.85)',
-              textShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
-              marginBottom: '8px',
-              minHeight: '40px',
-              display: 'flex',
-              alignItems: 'flex-start',
+              color: 'var(--text-secondary)',
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em',
+              marginBottom: '12px',
             }}
           >
             {label}
           </div>
 
           {isLoading ? (
-            <div className="skeleton" style={{ width: 100, height: 40, marginTop: 4, background: 'rgba(255, 255, 255, 0.2)' }} />
+            <div
+              className="skeleton"
+              style={{
+                width: 100,
+                height: 40,
+                marginTop: 4,
+                background: 'var(--border-subtle)',
+              }}
+            />
           ) : state === 'setup_required' ? (
             <div style={{ marginTop: 8, display: 'flex', alignItems: 'center', gap: 8 }}>
               <span style={{ fontSize: 20 }}>⚠️</span>
-              <span style={{ fontSize: 14, color: '#ffffff', fontWeight: 600, textShadow: '0 1px 2px rgba(0, 0, 0, 0.1)' }}>
+              <span
+                style={{
+                  fontSize: 14,
+                  color: 'var(--text-primary)',
+                  fontWeight: 600,
+                }}
+              >
                 Not configured
               </span>
             </div>
@@ -204,9 +141,8 @@ export default function KpiCard({
               style={{
                 marginTop: 8,
                 fontSize: 14,
-                color: 'rgba(255, 255, 255, 0.65)',
+                color: 'var(--text-muted)',
                 fontWeight: 600,
-                textShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
               }}
             >
               No data yet
@@ -214,18 +150,15 @@ export default function KpiCard({
           ) : (
             <div
               style={{
-                fontSize: /^[0-9₹$%.,+\- ]+$/.test(value.toString()) ? '34px' : '22px',
-                fontWeight: /^[0-9₹$%.,+\- ]+$/.test(value.toString()) ? 800 : 600,
-                color: '#ffffff',
-                textShadow: '0 2px 4px rgba(0, 0, 0, 0.15)',
-                lineHeight: 1.2,
-                letterSpacing: /^[0-9₹$%.,+\- ]+$/.test(value.toString()) ? '-0.02em' : 'normal',
-                whiteSpace: /^[0-9₹$%.,+\- ]+$/.test(value.toString()) ? 'nowrap' : 'normal',
+                fontSize: /^[0-9₹$%.,+\- ]+$/.test(value.toString()) ? '36px' : '24px',
+                fontWeight: 700,
+                color: 'var(--text-primary)',
+                lineHeight: 1.1,
+                letterSpacing: '-0.02em',
+                whiteSpace: 'nowrap',
                 textOverflow: 'ellipsis',
                 overflow: 'hidden',
-                display: '-webkit-box',
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: 'vertical',
+                textShadow: glowShadow,
               }}
             >
               {value}
@@ -235,73 +168,100 @@ export default function KpiCard({
 
         <div
           style={{
-            color: '#ffffff',
-            opacity: 0.9,
+            color: 'var(--text-muted)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             flexShrink: 0,
             marginLeft: '16px',
-            transform: isHovered ? 'scale(1.15) rotate(6deg)' : 'none',
-            transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
-            filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15))',
+            width: 40,
+            height: 40,
+            borderRadius: 'var(--radius-md)',
+            background: 'var(--bg-tertiary)',
           }}
         >
           {React.isValidElement(icon)
-            ? React.cloneElement(icon as React.ReactElement<any>, { size: 36, strokeWidth: 2 })
+            ? React.cloneElement(icon as React.ReactElement<any>, { size: 22, strokeWidth: 1.5, color: colorHex })
             : icon}
         </div>
       </div>
 
-      <div style={{ position: 'relative', zIndex: 1, marginTop: '24px', minHeight: '20px' }}>
-        {!isLoading && state === 'normal' && trend && (
-          <div
-            style={{
-              fontSize: '13px',
-              fontWeight: 600,
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-            }}
-          >
-            <span
+      <div style={{ marginTop: '20px' }}>
+        {!isLoading && state === 'normal' && trend && (() => {
+          const isUp = trend.direction === 'up';
+          const isDown = trend.direction === 'down';
+          
+          let pillBg = 'var(--bg-tertiary)';
+          let pillColor = 'var(--text-secondary)';
+          let arrowColor = 'var(--text-muted)';
+          
+          if (trend.isGood === true) {
+            pillBg = 'var(--color-secondary-surface)';
+            pillColor = 'var(--accent-success)';
+            arrowColor = 'var(--accent-success)';
+          } else if (trend.isGood === false) {
+            pillBg = 'var(--color-danger-surface)';
+            pillColor = 'var(--accent-danger)';
+            arrowColor = 'var(--accent-danger)';
+          } else if (isUp) {
+            pillBg = 'var(--color-secondary-surface)';
+            pillColor = 'var(--accent-success)';
+            arrowColor = 'var(--accent-success)';
+          } else if (isDown) {
+            pillBg = 'var(--color-danger-surface)';
+            pillColor = 'var(--accent-danger)';
+            arrowColor = 'var(--accent-danger)';
+          }
+
+          return (
+            <div
               style={{
-                display: 'inline-flex',
+                fontSize: '12px',
+                display: 'flex',
                 alignItems: 'center',
-                padding: '3px 8px',
-                borderRadius: '8px',
-                background: 'rgba(255, 255, 255, 0.2)',
-                color: '#ffffff',
-                textShadow: '0 1px 1px rgba(0, 0, 0, 0.1)',
-                backdropFilter: 'blur(4px)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
+                gap: '8px',
               }}
             >
-              {trend.direction === 'up' && '↑'}
-              {trend.direction === 'down' && '↓'}
-              <span style={{ marginLeft: trend.direction !== 'neutral' ? 4 : 0 }}>{trend.delta}</span>
-            </span>
-            <span style={{ color: 'rgba(255, 255, 255, 0.85)', fontWeight: 500, textShadow: '0 1px 2px rgba(0, 0, 0, 0.1)' }}>{trend.label}</span>
-          </div>
-        )}
+              <span
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  padding: '4px 8px',
+                  borderRadius: '99px',
+                  background: pillBg,
+                  color: pillColor,
+                  fontWeight: 600,
+                  gap: 4
+                }}
+              >
+                <span style={{ color: arrowColor }}>
+                  {trend.direction === 'up' ? '↑' : trend.direction === 'down' ? '↓' : '→'}
+                </span>
+                {trend.delta && <span>{trend.delta}</span>}
+              </span>
+              <span style={{ color: 'var(--text-muted)' }}>
+                {trend.label}
+              </span>
+            </div>
+          );
+        })()}`
 
         {!isLoading && state === 'setup_required' && setupCta && (
           <button
             style={{
               padding: '6px 14px',
-              fontSize: '13px',
-              fontWeight: 700,
-              color: colorHex,
-              backgroundColor: '#ffffff',
+              fontSize: '12px',
+              fontWeight: 600,
+              color: 'var(--bg-canvas)',
+              backgroundColor: 'var(--text-primary)',
               border: 'none',
-              borderRadius: '8px',
+              borderRadius: 'var(--radius-sm)',
               cursor: 'pointer',
-              transition: 'all 0.2s',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+              transition: 'opacity 0.2s',
             }}
             onClick={handleSetupClick}
           >
-            {setupCta.label} &rarr;
+            {setupCta.label}
           </button>
         )}
       </div>
