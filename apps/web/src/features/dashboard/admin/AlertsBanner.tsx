@@ -1,18 +1,30 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useGetAlertsQuery } from '../dashboardApi';
 
 export default function AlertsBanner({ academicYearId }: { academicYearId: string }) {
-  const { data, isLoading } = useGetAlertsQuery({ academicYearId }, { 
-    skip: !academicYearId,
-    pollingInterval: 120000 // 2 min auto-refresh
-  });
+  const { data, isLoading } = useGetAlertsQuery(
+    { academicYearId },
+    {
+      skip: !academicYearId,
+      pollingInterval: 120000, // 2 min auto-refresh
+    },
+  );
 
   const [dismissed, setDismissed] = useState<Set<number>>(new Set());
 
   if (isLoading) {
     return (
-      <div className="skeleton" style={{ width: '100%', height: 32, borderRadius: '6px', marginBottom: 24, background: 'var(--bg-surface)' }} />
+      <div
+        className="skeleton"
+        style={{
+          width: '100%',
+          height: 32,
+          borderRadius: '6px',
+          marginBottom: 24,
+          background: 'var(--bg-surface)',
+        }}
+      />
     );
   }
 
@@ -25,18 +37,20 @@ export default function AlertsBanner({ academicYearId }: { academicYearId: strin
     success: { dot: 'var(--accent-success)' },
   };
 
-  const activeAlerts = data.alerts.map((a: any, i: number) => ({ ...a, id: i })).filter((a: any) => !dismissed.has(a.id));
+  const activeAlerts = data.alerts
+    .map((a: any, i: number) => ({ ...a, id: i }))
+    .filter((a: any) => !dismissed.has(a.id));
 
   if (activeAlerts.length === 0) return null;
 
   return (
-    <div 
-      style={{ 
-        display: 'flex', 
-        gap: 12, 
-        overflowX: 'auto', 
+    <div
+      style={{
+        display: 'flex',
+        gap: 12,
+        overflowX: 'auto',
         scrollbarWidth: 'none', // Firefox
-        msOverflowStyle: 'none',  // IE 10+
+        msOverflowStyle: 'none', // IE 10+
         paddingBottom: 4,
       }}
     >
@@ -61,8 +75,8 @@ export default function AlertsBanner({ academicYearId }: { academicYearId: strin
                 flexShrink: 0,
                 transition: 'border-color 0.2s',
               }}
-              onMouseEnter={(e) => e.currentTarget.style.borderColor = colors.dot}
-              onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--border-subtle)'}
+              onMouseEnter={(e) => (e.currentTarget.style.borderColor = colors.dot)}
+              onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border-subtle)')}
             >
               <div style={{ width: 6, height: 6, borderRadius: '50%', background: colors.dot }} />
               <Link
@@ -77,15 +91,21 @@ export default function AlertsBanner({ academicYearId }: { academicYearId: strin
               >
                 {alert.message}
               </Link>
-              <button 
+              <button
                 onClick={(e) => {
                   e.preventDefault();
-                  setDismissed(prev => new Set(prev).add(alert.id));
+                  setDismissed((prev) => new Set(prev).add(alert.id));
                 }}
                 style={{
-                  background: 'none', border: 'none', padding: 0, marginLeft: 4,
-                  color: 'var(--text-muted)', cursor: 'pointer', fontSize: 16,
-                  display: 'flex', alignItems: 'center'
+                  background: 'none',
+                  border: 'none',
+                  padding: 0,
+                  marginLeft: 4,
+                  color: 'var(--text-muted)',
+                  cursor: 'pointer',
+                  fontSize: 16,
+                  display: 'flex',
+                  alignItems: 'center',
                 }}
                 title="Dismiss"
               >

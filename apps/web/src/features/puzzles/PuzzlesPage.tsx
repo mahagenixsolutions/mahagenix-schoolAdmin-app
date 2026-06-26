@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../store';
-import { Award, Zap, Star, Trophy, ArrowLeft, RefreshCw } from 'lucide-react';
+import { Trophy, ArrowLeft } from 'lucide-react';
 
 interface PuzzleCategory {
   id: string;
@@ -24,7 +24,7 @@ interface PuzzleCategory {
 
 export default function PuzzlesPage() {
   const user = useSelector((s: RootState) => s.auth.user);
-  
+
   // Game states in localStorage/state
   const [stars, setStars] = useState(120);
   const [streak, setStreak] = useState(5);
@@ -41,20 +41,20 @@ export default function PuzzlesPage() {
       const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
-      
+
       osc.connect(gain);
       gain.connect(ctx.destination);
-      
+
       if (isSuccess) {
         // Success: double beep (high pitch)
         osc.frequency.setValueAtTime(587.33, ctx.currentTime); // D5
         gain.gain.setValueAtTime(0.1, ctx.currentTime);
         osc.start();
-        
+
         setTimeout(() => {
           osc.frequency.setValueAtTime(880, ctx.currentTime); // A5
         }, 150);
-        
+
         setTimeout(() => {
           osc.stop();
           ctx.close();
@@ -65,7 +65,7 @@ export default function PuzzlesPage() {
         osc.frequency.setValueAtTime(150, ctx.currentTime);
         gain.gain.setValueAtTime(0.1, ctx.currentTime);
         osc.start();
-        
+
         setTimeout(() => {
           osc.stop();
           ctx.close();
@@ -108,7 +108,8 @@ export default function PuzzlesPage() {
       textDark: '#C084FC',
       difficulty: 'Medium',
       status: 'New',
-      question: 'What has keys but no locks, space but no room, and you can enter but not go outside?',
+      question:
+        'What has keys but no locks, space but no room, and you can enter but not go outside?',
       options: ['A Clock', 'A Keyboard', 'A Map'],
       answer: 'A Keyboard',
       hint: 'Think about a device you use to type code!',
@@ -153,12 +154,20 @@ export default function PuzzlesPage() {
 
   const [activeCategory, setActiveCategory] = useState<PuzzleCategory | null>(null);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  const [feedback, setFeedback] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+  const [feedback, setFeedback] = useState<{ type: 'success' | 'error'; message: string } | null>(
+    null,
+  );
   const [showHint, setShowHint] = useState(false);
 
   // Badge status list
   const [badges, setBadges] = useState([
-    { id: 'b1', name: 'Pattern Detective', emoji: '🔍', desc: 'Solve pattern match', unlocked: false },
+    {
+      id: 'b1',
+      name: 'Pattern Detective',
+      emoji: '🔍',
+      desc: 'Solve pattern match',
+      unlocked: false,
+    },
     { id: 'b2', name: 'Riddle Master', emoji: '🧙‍♂️', desc: 'Crack a brain teaser', unlocked: false },
     { id: 'b3', name: 'Grid Wizard', emoji: '🧙', desc: 'Solve a number grid', unlocked: false },
     { id: 'b4', name: 'Shape Ranger', emoji: '🪐', desc: 'Complete shape sort', unlocked: false },
@@ -175,7 +184,7 @@ export default function PuzzlesPage() {
     if (selectedOption === activeCategory.answer) {
       playSoundChime(true);
       setFeedback({ type: 'success', message: 'Hooray! That is correct! ⭐ +20 Stars' });
-      
+
       // Update stats
       setStars((prev) => prev + 20);
       setSolvedCount((prev) => prev + 1);
@@ -188,12 +197,12 @@ export default function PuzzlesPage() {
           if (activeCategory.id === 'sudoku' && b.id === 'b3') return { ...b, unlocked: true };
           if (activeCategory.id === 'shapes' && b.id === 'b4') return { ...b, unlocked: true };
           return b;
-        })
+        }),
       );
 
       // Mark card category solved
       setCategories((prev) =>
-        prev.map((c) => (c.id === activeCategory.id ? { ...c, status: 'Solved' } : c))
+        prev.map((c) => (c.id === activeCategory.id ? { ...c, status: 'Solved' } : c)),
       );
 
       // Level up progress check
@@ -258,11 +267,17 @@ export default function PuzzlesPage() {
         <span id="theme-detector" />
       </div>
 
-      <div className="grid-12" style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '24px', alignItems: 'start' }}>
-        
+      <div
+        className="grid-12"
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(12, 1fr)',
+          gap: '24px',
+          alignItems: 'start',
+        }}
+      >
         {/* Main Content Area */}
         <div style={{ gridColumn: 'span 8' }} className="col-span-12 lg-span-8">
-          
           {/* Header welcoming banner */}
           <div
             style={{
@@ -280,10 +295,40 @@ export default function PuzzlesPage() {
             }}
           >
             {/* Background design elements */}
-            <div style={{ position: 'absolute', width: '200px', height: '200px', background: 'rgba(255,255,255,0.2)', borderRadius: '50%', top: '-80px', right: '-40px', pointerEvents: 'none' }} />
-            <div style={{ position: 'absolute', width: '100px', height: '100px', background: 'rgba(255,255,255,0.15)', borderRadius: '50%', bottom: '-40px', left: '20%', pointerEvents: 'none' }} />
+            <div
+              style={{
+                position: 'absolute',
+                width: '200px',
+                height: '200px',
+                background: 'rgba(255,255,255,0.2)',
+                borderRadius: '50%',
+                top: '-80px',
+                right: '-40px',
+                pointerEvents: 'none',
+              }}
+            />
+            <div
+              style={{
+                position: 'absolute',
+                width: '100px',
+                height: '100px',
+                background: 'rgba(255,255,255,0.15)',
+                borderRadius: '50%',
+                bottom: '-40px',
+                left: '20%',
+                pointerEvents: 'none',
+              }}
+            />
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '24px', position: 'relative', zIndex: 1 }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '24px',
+                position: 'relative',
+                zIndex: 1,
+              }}
+            >
               <img
                 src="/puzzles_mascot.png"
                 alt="Mascot"
@@ -299,13 +344,39 @@ export default function PuzzlesPage() {
                 }}
               />
               <div>
-                <span style={{ background: '#EA580C', color: 'white', padding: '4px 12px', borderRadius: '12px', fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                <span
+                  style={{
+                    background: '#EA580C',
+                    color: 'white',
+                    padding: '4px 12px',
+                    borderRadius: '12px',
+                    fontSize: '11px',
+                    fontWeight: 800,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em',
+                  }}
+                >
                   Brain Gym
                 </span>
-                <h1 style={{ fontSize: '28px', fontWeight: 800, margin: '8px 0 4px 0', color: '#7C2D12' }}>
+                <h1
+                  style={{
+                    fontSize: '28px',
+                    fontWeight: 800,
+                    margin: '8px 0 4px 0',
+                    color: '#7C2D12',
+                  }}
+                >
                   Hi, {user?.first_name || 'Explorer'}! 🦊
                 </h1>
-                <p style={{ fontSize: '14px', color: '#9A3412', margin: 0, opacity: 0.9, fontWeight: 500 }}>
+                <p
+                  style={{
+                    fontSize: '14px',
+                    color: '#9A3412',
+                    margin: 0,
+                    opacity: 0.9,
+                    fontWeight: 500,
+                  }}
+                >
                   Ready to train your brain? Solved exercises build your streaks!
                 </p>
               </div>
@@ -331,7 +402,14 @@ export default function PuzzlesPage() {
               }}
               className="md-visible-flex"
             >
-              <span style={{ fontSize: '11px', color: '#7C2D12', fontWeight: 700, textTransform: 'uppercase' }}>
+              <span
+                style={{
+                  fontSize: '11px',
+                  color: '#7C2D12',
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                }}
+              >
                 Logic Level
               </span>
               <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -340,8 +418,24 @@ export default function PuzzlesPage() {
                   Lvl {logicLevel}
                 </span>
               </div>
-              <div style={{ width: '100%', height: '6px', background: 'rgba(0,0,0,0.05)', borderRadius: '3px', marginTop: '6px', overflow: 'hidden' }}>
-                <div style={{ width: `${(solvedCount % 3) * 33.3 + 20}%`, height: '100%', background: '#EA580C', borderRadius: '3px' }} />
+              <div
+                style={{
+                  width: '100%',
+                  height: '6px',
+                  background: 'rgba(0,0,0,0.05)',
+                  borderRadius: '3px',
+                  marginTop: '6px',
+                  overflow: 'hidden',
+                }}
+              >
+                <div
+                  style={{
+                    width: `${(solvedCount % 3) * 33.3 + 20}%`,
+                    height: '100%',
+                    background: '#EA580C',
+                    borderRadius: '3px',
+                  }}
+                />
               </div>
               <span style={{ fontSize: '9px', color: '#9A3412', marginTop: '4px' }}>
                 {solvedCount % 3}/3 puzzles solved to Lvl {logicLevel + 1}
@@ -365,10 +459,23 @@ export default function PuzzlesPage() {
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <div style={{ fontSize: '24px', background: '#FEF3C7', padding: '8px', borderRadius: '12px' }}>🔥</div>
+              <div
+                style={{
+                  fontSize: '24px',
+                  background: '#FEF3C7',
+                  padding: '8px',
+                  borderRadius: '12px',
+                }}
+              >
+                🔥
+              </div>
               <div>
-                <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 600 }}>STREAK</div>
-                <div style={{ fontSize: '16px', fontWeight: 800, color: 'var(--text-primary)' }}>{streak} Days</div>
+                <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 600 }}>
+                  STREAK
+                </div>
+                <div style={{ fontSize: '16px', fontWeight: 800, color: 'var(--text-primary)' }}>
+                  {streak} Days
+                </div>
               </div>
             </div>
 
@@ -378,10 +485,24 @@ export default function PuzzlesPage() {
             />
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <div style={{ fontSize: '24px', background: '#FEE2E2', padding: '8px', borderRadius: '12px' }} className="pulse-star">⭐</div>
+              <div
+                style={{
+                  fontSize: '24px',
+                  background: '#FEE2E2',
+                  padding: '8px',
+                  borderRadius: '12px',
+                }}
+                className="pulse-star"
+              >
+                ⭐
+              </div>
               <div>
-                <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 600 }}>STARS COLLECTED</div>
-                <div style={{ fontSize: '16px', fontWeight: 800, color: 'var(--text-primary)' }}>{stars} Stars</div>
+                <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 600 }}>
+                  STARS COLLECTED
+                </div>
+                <div style={{ fontSize: '16px', fontWeight: 800, color: 'var(--text-primary)' }}>
+                  {stars} Stars
+                </div>
               </div>
             </div>
 
@@ -391,9 +512,20 @@ export default function PuzzlesPage() {
             />
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <div style={{ fontSize: '24px', background: '#D1FAE5', padding: '8px', borderRadius: '12px' }}>🧩</div>
+              <div
+                style={{
+                  fontSize: '24px',
+                  background: '#D1FAE5',
+                  padding: '8px',
+                  borderRadius: '12px',
+                }}
+              >
+                🧩
+              </div>
               <div>
-                <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 600 }}>TODAY'S MISSION</div>
+                <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 600 }}>
+                  TODAY'S MISSION
+                </div>
                 <div style={{ fontSize: '16px', fontWeight: 800, color: 'var(--text-primary)' }}>
                   {solvedCount >= 1 ? 'Complete! 🎉' : '0 / 1 Puzzles Solved'}
                 </div>
@@ -430,7 +562,13 @@ export default function PuzzlesPage() {
           </div>
 
           {/* Puzzle Categories Grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '20px' }}>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+              gap: '20px',
+            }}
+          >
             {categories.map((cat) => {
               const isDark = document.documentElement.dataset.theme === 'dark';
               const cardBg = isDark ? cat.colorDark : cat.colorLight;
@@ -459,7 +597,14 @@ export default function PuzzlesPage() {
                 >
                   <div>
                     {/* Card Top: Icon & Difficulty badge */}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginBottom: '16px',
+                      }}
+                    >
                       <span style={{ fontSize: '36px' }}>{cat.emoji}</span>
                       <span
                         style={{
@@ -477,16 +622,37 @@ export default function PuzzlesPage() {
                     </div>
 
                     {/* Card Body */}
-                    <h3 style={{ fontSize: '18px', fontWeight: 800, color: cardText, margin: '0 0 6px 0' }}>
+                    <h3
+                      style={{
+                        fontSize: '18px',
+                        fontWeight: 800,
+                        color: cardText,
+                        margin: '0 0 6px 0',
+                      }}
+                    >
                       {cat.name}
                     </h3>
-                    <p style={{ fontSize: '13px', color: 'var(--text-secondary)', margin: '0 0 16px 0', lineHeight: 1.4, opacity: 0.9 }}>
+                    <p
+                      style={{
+                        fontSize: '13px',
+                        color: 'var(--text-secondary)',
+                        margin: '0 0 16px 0',
+                        lineHeight: 1.4,
+                        opacity: 0.9,
+                      }}
+                    >
                       {cat.description}
                     </p>
                   </div>
 
                   {/* Card Action footer */}
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                    }}
+                  >
                     <span
                       style={{
                         fontSize: '11px',
@@ -526,7 +692,6 @@ export default function PuzzlesPage() {
 
         {/* Sidebar Rewards and progress */}
         <div style={{ gridColumn: 'span 4' }} className="col-span-12 lg-span-4">
-          
           {/* Daily Quests Widget */}
           <div
             style={{
@@ -537,11 +702,20 @@ export default function PuzzlesPage() {
               marginBottom: '24px',
             }}
           >
-            <h3 style={{ fontSize: '16px', fontWeight: 800, margin: '0 0 16px 0', display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-primary)' }}>
+            <h3
+              style={{
+                fontSize: '16px',
+                fontWeight: 800,
+                margin: '0 0 16px 0',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                color: 'var(--text-primary)',
+              }}
+            >
               🎯 Daily Quests
             </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              
               {/* Quest 1 */}
               <div
                 style={{
@@ -556,8 +730,12 @@ export default function PuzzlesPage() {
               >
                 <div style={{ fontSize: '20px' }}>{solvedCount >= 1 ? '✅' : '⏳'}</div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-primary)' }}>Solve 1 Puzzle</div>
-                  <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Reward: +20 Stars</div>
+                  <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-primary)' }}>
+                    Solve 1 Puzzle
+                  </div>
+                  <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+                    Reward: +20 Stars
+                  </div>
                 </div>
               </div>
 
@@ -575,11 +753,14 @@ export default function PuzzlesPage() {
               >
                 <div style={{ fontSize: '20px' }}>{solvedCount >= 3 ? '✅' : '⏳'}</div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-primary)' }}>Level up Logic Level</div>
-                  <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Reward: +1 Streak Day</div>
+                  <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-primary)' }}>
+                    Level up Logic Level
+                  </div>
+                  <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+                    Reward: +1 Streak Day
+                  </div>
                 </div>
               </div>
-
             </div>
           </div>
 
@@ -592,22 +773,41 @@ export default function PuzzlesPage() {
               padding: '24px',
             }}
           >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-              <h3 style={{ fontSize: '16px', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-primary)' }}>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: '16px',
+              }}
+            >
+              <h3
+                style={{
+                  fontSize: '16px',
+                  fontWeight: 800,
+                  margin: 0,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  color: 'var(--text-primary)',
+                }}
+              >
                 🏅 Earned Badges
               </h3>
               <span style={{ fontSize: '12px', color: 'var(--color-primary)', fontWeight: 700 }}>
                 {badges.filter((b) => b.unlocked).length} / {badges.length}
               </span>
             </div>
-            
+
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px' }}>
               {badges.map((b) => (
                 <div
                   key={b.id}
                   style={{
                     background: b.unlocked ? 'var(--bg-secondary)' : 'transparent',
-                    border: b.unlocked ? '1.5px solid var(--color-primary-surface)' : '1.5px dashed var(--border-subtle)',
+                    border: b.unlocked
+                      ? '1.5px solid var(--color-primary-surface)'
+                      : '1.5px dashed var(--border-subtle)',
                     borderRadius: '16px',
                     padding: '16px 8px',
                     display: 'flex',
@@ -619,20 +819,42 @@ export default function PuzzlesPage() {
                     transition: 'all 0.3s ease',
                   }}
                 >
-                  <div style={{ fontSize: '32px', marginBottom: '8px', filter: b.unlocked ? 'none' : 'grayscale(1)' }}>
+                  <div
+                    style={{
+                      fontSize: '32px',
+                      marginBottom: '8px',
+                      filter: b.unlocked ? 'none' : 'grayscale(1)',
+                    }}
+                  >
                     {b.emoji}
                   </div>
-                  <div style={{ fontSize: '12px', fontWeight: 800, color: 'var(--text-primary)', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', width: '100%' }}>
+                  <div
+                    style={{
+                      fontSize: '12px',
+                      fontWeight: 800,
+                      color: 'var(--text-primary)',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      width: '100%',
+                    }}
+                  >
                     {b.name}
                   </div>
-                  <div style={{ fontSize: '9px', color: 'var(--text-muted)', marginTop: '2px', lineHeight: 1.2 }}>
+                  <div
+                    style={{
+                      fontSize: '9px',
+                      color: 'var(--text-muted)',
+                      marginTop: '2px',
+                      lineHeight: 1.2,
+                    }}
+                  >
                     {b.desc}
                   </div>
                 </div>
               ))}
             </div>
           </div>
-
         </div>
       </div>
 
@@ -672,7 +894,17 @@ export default function PuzzlesPage() {
           >
             {/* Confetti container for success answers */}
             {feedback?.type === 'success' && (
-              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, overflow: 'hidden', pointerEvents: 'none' }}>
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  overflow: 'hidden',
+                  pointerEvents: 'none',
+                }}
+              >
                 {[...Array(20)].map((_, i) => {
                   const colors = ['#FFC700', '#FF0000', '#2E93F3', '#FF4E00', '#A1E533', '#E3197E'];
                   const randColor = colors[Math.floor(Math.random() * colors.length)];
@@ -721,8 +953,24 @@ export default function PuzzlesPage() {
             </div>
 
             {/* Puzzle Question */}
-            <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-subtle)', borderRadius: '20px', padding: '24px', textAlign: 'center' }}>
-              <p style={{ fontSize: '16px', fontWeight: 700, color: 'var(--text-primary)', margin: 0, lineHeight: 1.5 }}>
+            <div
+              style={{
+                background: 'var(--bg-secondary)',
+                border: '1px solid var(--border-subtle)',
+                borderRadius: '20px',
+                padding: '24px',
+                textAlign: 'center',
+              }}
+            >
+              <p
+                style={{
+                  fontSize: '16px',
+                  fontWeight: 700,
+                  color: 'var(--text-primary)',
+                  margin: 0,
+                  lineHeight: 1.5,
+                }}
+              >
                 {activeCategory.question}
               </p>
             </div>
@@ -739,8 +987,12 @@ export default function PuzzlesPage() {
                       width: '100%',
                       padding: '16px 20px',
                       borderRadius: '16px',
-                      border: isSelected ? '2px solid var(--color-primary)' : '1px solid var(--border-subtle)',
-                      background: isSelected ? 'var(--color-primary-surface)' : 'var(--bg-secondary)',
+                      border: isSelected
+                        ? '2px solid var(--color-primary)'
+                        : '1px solid var(--border-subtle)',
+                      background: isSelected
+                        ? 'var(--color-primary-surface)'
+                        : 'var(--bg-secondary)',
                       color: isSelected ? 'var(--color-primary)' : 'var(--text-primary)',
                       fontSize: '15px',
                       fontWeight: 700,
@@ -761,8 +1013,21 @@ export default function PuzzlesPage() {
 
             {/* Hints Section */}
             {showHint ? (
-              <div style={{ background: 'rgba(254, 243, 199, 0.05)', border: '1px solid #FEF3C720', borderRadius: '16px', padding: '12px 16px', fontSize: '12px', color: '#FBBF24', display: 'flex', gap: '8px' }}>
-                <span>💡 <strong>Hint:</strong> {activeCategory.hint}</span>
+              <div
+                style={{
+                  background: 'rgba(254, 243, 199, 0.05)',
+                  border: '1px solid #FEF3C720',
+                  borderRadius: '16px',
+                  padding: '12px 16px',
+                  fontSize: '12px',
+                  color: '#FBBF24',
+                  display: 'flex',
+                  gap: '8px',
+                }}
+              >
+                <span>
+                  💡 <strong>Hint:</strong> {activeCategory.hint}
+                </span>
               </div>
             ) : (
               <button
@@ -787,8 +1052,14 @@ export default function PuzzlesPage() {
             {feedback && (
               <div
                 style={{
-                  background: feedback.type === 'success' ? 'rgba(34, 197, 94, 0.08)' : 'rgba(239, 68, 68, 0.08)',
-                  border: feedback.type === 'success' ? '1px solid rgba(34, 197, 94, 0.2)' : '1px solid rgba(239, 68, 68, 0.2)',
+                  background:
+                    feedback.type === 'success'
+                      ? 'rgba(34, 197, 94, 0.08)'
+                      : 'rgba(239, 68, 68, 0.08)',
+                  border:
+                    feedback.type === 'success'
+                      ? '1px solid rgba(34, 197, 94, 0.2)'
+                      : '1px solid rgba(239, 68, 68, 0.2)',
                   color: feedback.type === 'success' ? '#22C55E' : '#EF4444',
                   borderRadius: '16px',
                   padding: '16px',
@@ -823,7 +1094,7 @@ export default function PuzzlesPage() {
               >
                 Quit Game
               </button>
-              
+
               <button
                 onClick={checkAnswer}
                 disabled={!selectedOption}
@@ -844,11 +1115,9 @@ export default function PuzzlesPage() {
                 Check Answer
               </button>
             </div>
-
           </div>
         </div>
       )}
-
     </div>
   );
 }

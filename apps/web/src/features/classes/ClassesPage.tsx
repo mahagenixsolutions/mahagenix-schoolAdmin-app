@@ -609,9 +609,9 @@ export default function ClassesPage() {
               cardClass = 'card-monitor';
             }
 
-            const radius = 24;
-            const circumference = 2 * Math.PI * radius;
-            const strokeDashoffset = circumference - (cls.overallScore / 100) * circumference;
+            // const radius = 24;
+            // const circumference = 2 * Math.PI * radius;
+            // const strokeDashoffset = circumference - (cls.overallScore / 100) * circumference;
 
             return (
               <div
@@ -620,9 +620,23 @@ export default function ClassesPage() {
                 onClick={() => handleCardClick(cls.grade)}
                 style={{ animationDelay: `${index * 60}ms` }}
               >
-                <div style={{ padding: '32px', flex: 1, display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                <div
+                  style={{
+                    padding: '32px',
+                    flex: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '24px',
+                  }}
+                >
                   {/* Header Row: Title & Section, Status Tag */}
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'flex-start',
+                    }}
+                  >
                     <div>
                       <h2
                         style={{
@@ -636,7 +650,9 @@ export default function ClassesPage() {
                         }}
                       >
                         Class {cls.grade}{' '}
-                        <span style={{ color: 'var(--text-muted)', fontWeight: 400, fontSize: '14px' }}>
+                        <span
+                          style={{ color: 'var(--text-muted)', fontWeight: 400, fontSize: '14px' }}
+                        >
                           • Sec {cls.section}
                         </span>
                       </h2>
@@ -679,7 +695,10 @@ export default function ClassesPage() {
                     >
                       Overall Performance
                       <div className="tooltip-container">
-                        <i className="ti ti-info-circle" style={{ fontSize: '13px', opacity: 0.6 }} />
+                        <i
+                          className="ti ti-info-circle"
+                          style={{ fontSize: '13px', opacity: 0.6 }}
+                        />
                         <span className="tooltip-text">
                           Attendance 40% · Avg Marks 40% · Syllabus 20%
                         </span>
@@ -697,7 +716,7 @@ export default function ClassesPage() {
                       >
                         {cls.overallScore}%
                       </span>
-                      
+
                       {/* Subtle status indicator next to it */}
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                         <span
@@ -733,7 +752,9 @@ export default function ClassesPage() {
                       }}
                     >
                       <span style={{ color: 'var(--text-secondary)' }}>Syllabus:</span>
-                      <span style={{ fontWeight: 600, color: '#4F8EF7' }}>{cls.syllabusCompletion}%</span>
+                      <span style={{ fontWeight: 600, color: '#4F8EF7' }}>
+                        {cls.syllabusCompletion}%
+                      </span>
                     </div>
 
                     {/* Avg Marks */}
@@ -796,7 +817,14 @@ export default function ClassesPage() {
                       color: 'var(--text-muted)',
                     }}
                   >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '14px',
+                        flexWrap: 'wrap',
+                      }}
+                    >
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                         <Users size={12} style={{ opacity: 0.5 }} />
                         <span>{cls.studentCount} students</span>
@@ -812,7 +840,10 @@ export default function ClassesPage() {
                         <span>{cls.teacherName}</span>
                       </div>
                     </div>
-                    <div className="view-details-reveal" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <div
+                      className="view-details-reveal"
+                      style={{ display: 'flex', alignItems: 'center', gap: '4px' }}
+                    >
                       <span>Details</span>
                       <span style={{ fontSize: '14px', lineHeight: 1 }}>&rarr;</span>
                     </div>
