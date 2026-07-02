@@ -397,7 +397,19 @@ export default function AppLayout() {
               style={{ height: 38, width: 150, fontSize: 12, fontWeight: 700 }}
             >
               <option value="SCHOOL_ADMIN">School Admin</option>
+              <option value="SUPER_ADMIN">Super Admin</option>
+              <option value="PRINCIPAL">Principal</option>
+              <option value="VICE_PRINCIPAL">Vice Principal</option>
               <option value="TEACHER">Teacher</option>
+              <option value="ACCOUNTANT">Accountant</option>
+              <option value="LIBRARIAN">Librarian</option>
+              <option value="HR">HR</option>
+              <option value="TRANSPORT_MANAGER">Transport Manager</option>
+              <option value="HOSTEL_MANAGER">Hostel Manager</option>
+              <option value="RECEPTIONIST">Receptionist</option>
+              <option value="SECURITY">Security</option>
+              <option value="NURSE">Nurse</option>
+              <option value="COUNSELOR">Counselor</option>
               <option value="PARENT">Parent</option>
               <option value="STUDENT">Student</option>
             </select>

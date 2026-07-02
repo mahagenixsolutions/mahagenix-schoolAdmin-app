@@ -95,16 +95,13 @@ export default function BusRouteProgress({ progressPercentage }: BusRouteProgres
             const isLast = idx === timelineItems.length - 1;
             
             // Define status colors
-            let iconColor = '#cbd5e1'; // Gray (pending)
             let textColor = '#64748b';
             let iconElement = <Box sx={{ width: 8, height: 8, bgcolor: '#cbd5e1', borderRadius: '50%' }} />;
 
             if (item.type === 'completed') {
-              iconColor = '#10b981'; // Emerald
               textColor = '#0f172a';
-              iconElement = <CheckCircleIcon sx={{ fontSize: 16, color: iconColor }} />;
+              iconElement = <CheckCircleIcon sx={{ fontSize: 16, color: '#10b981' }} />;
             } else if (item.type === 'current') {
-              iconColor = 'primary.main';
               textColor = '#0f172a';
               iconElement = (
                 <Box sx={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

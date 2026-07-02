@@ -4,23 +4,30 @@ import ParentDashboard from '../parent/ParentDashboard';
 import TeacherDashboard from './TeacherDashboard';
 import AdminDashboard from './admin/AdminDashboard';
 import StudentDashboard from './student/StudentDashboard';
+import { isStaffRole, ROLES } from '../../core/permissions/ROLES';
+import { UserRole } from '@edutrack/shared-types';
 
 export default function DashboardPage() {
   const user = useSelector((s: RootState) => s.auth.user);
 
   if (!user) return null;
 
-  switch (user.role) {
-    case 'SCHOOL_ADMIN':
-    case 'SUPER_ADMIN':
-      return <AdminDashboard />;
-    case 'TEACHER':
-      return <TeacherDashboard />;
-    case 'PARENT':
-      return <ParentDashboard />;
-    case 'STUDENT':
-      return <StudentDashboard />;
-    default:
-      return <div>Unknown Role Dashboard</div>;
+  if (user.role === ROLES.TEACHER) {
+    return <TeacherDashboard />;
   }
+  
+  if (user.role === ROLES.PARENT) {
+    return <ParentDashboard />;
+  }
+  
+  if (user.role === ROLES.STUDENT) {
+    return <StudentDashboard />;
+  }
+
+  // All other staff (Accountant, Librarian, HR, Principal, etc.) will use the generic AdminDashboard for now
+  if (isStaffRole(user.role as UserRole)) {
+    return <AdminDashboard />;
+  }
+
+  return <div>Unknown Role Dashboard</div>;
 }

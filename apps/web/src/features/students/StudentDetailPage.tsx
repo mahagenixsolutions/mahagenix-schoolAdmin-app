@@ -1,14 +1,11 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
-  ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid
-} from 'recharts';
-import {
-  ChevronLeft, Award, Sparkles,
-  MessageSquare, Image, Activity, CheckCircle, Clock
+  ChevronLeft, Award, MessageSquare, Activity, Clock,
+  UserPlus, ArrowUpCircle, GraduationCap, Heart, FileText, Users
 } from 'lucide-react';
 
-import { mockStudents, mockTimelineEvents, mockInsights, mockPortfolio } from '../../data/mockData';
+import { mockStudents, mockTimelineEvents } from '../../data/mockData';
 
 const AVAILABLE_BADGES = [
   { name: 'Star Student', icon: '⭐', desc: 'Outstanding general classroom behavior and peer support.', points: 50 },
@@ -27,15 +24,23 @@ export default function StudentDetailPage() {
   // Fallback to student_1 if not found for UI demonstration purposes
   const student = mockStudents.find(s => s.id === id) || mockStudents[0];
   const events = mockTimelineEvents.filter(e => e.student_id === student.id);
-  const insight = mockInsights[student.id as keyof typeof mockInsights] || mockInsights['student_1'];
-  const portfolioItems = mockPortfolio.filter(p => p.student_id === student.id);
 
   const initials = `${student.first_name[0]}${student.last_name[0]}`.toUpperCase();
 
   // Modals & feedback states
-  const [activeModal, setActiveModal] = useState<'message' | 'badge' | null>(null);
+  const [activeModal, setActiveModal] = useState<'message' | 'badge' | 'promote' | 'alumni' | 'add' | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  // Tab navigation state
+  const [activeTab, setActiveTab] = useState<'timeline' | 'academics' | 'attendance' | 'medical' | 'guardians' | 'documents'>('timeline');
+
+  // ERP actions mock states
+  const [studentClass, setStudentClass] = useState(`${student.class_name} ${student.section}`);
+  const [studentStatus, setStudentStatus] = useState('ACTIVE');
+  
+  // Mock add student state
+  const [addStudentForm, setAddStudentForm] = useState({ firstName: '', lastName: '', gender: 'MALE', classId: 'class-10-a', email: '' });
 
   // Form states
   const [messageForm, setMessageForm] = useState({ subject: '', body: '', isUrgent: false, smsCopy: false });
@@ -71,6 +76,45 @@ export default function StudentDetailPage() {
     }, 1500);
   };
 
+  const handlePromoteStudent = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    triggerToast(`⚡ Promoting ${student.first_name} to the next grade...`);
+    setTimeout(() => {
+      setIsLoading(false);
+      setActiveModal(null);
+      // Increment the class grade from "Class 10 A" to "Class 11 A" (mock increment)
+      const currentClassNum = parseInt(studentClass.replace('Class ', '')) || 10;
+      const nextClassNum = currentClassNum + 1;
+      setStudentClass(`Class ${nextClassNum} A`);
+      triggerToast(`🎉 ${student.first_name} successfully promoted to Class ${nextClassNum} A!`);
+    }, 1500);
+  };
+
+  const handleTransitionAlumni = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    triggerToast(`🎓 Graduating student ${student.first_name} to alumni status...`);
+    setTimeout(() => {
+      setIsLoading(false);
+      setActiveModal(null);
+      setStudentStatus('ALUMNI');
+      triggerToast(`🎓 ${student.first_name} successfully registered as Alumni!`);
+    }, 1500);
+  };
+
+  const handleAddStudentSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    triggerToast(`✨ Registering new student account...`);
+    setTimeout(() => {
+      setIsLoading(false);
+      setActiveModal(null);
+      triggerToast(`✅ Account successfully registered for ${addStudentForm.firstName} ${addStudentForm.lastName}!`);
+      setAddStudentForm({ firstName: '', lastName: '', gender: 'MALE', classId: 'class-10-a', email: '' });
+    }, 1500);
+  };
+
   return (
     <div className="student-profile-container" style={{ paddingBottom: 40, position: 'relative' }}>
       {toastMessage && (
@@ -83,12 +127,15 @@ export default function StudentDetailPage() {
 
       {/* Top Header & Actions */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
-        <button className="btn btn-ghost btn-sm" onClick={() => navigate(-1)} style={{ paddingLeft: 0, display: 'flex', alignItems: 'center', gap: 4 }}>
-          <ChevronLeft size={16} /> Back to Directory
+        <button className="btn btn-ghost btn-sm" onClick={() => navigate('/students')} style={{ paddingLeft: 0, display: 'flex', alignItems: 'center', gap: 4 }}>
+          <ChevronLeft size={16} /> Student Directory
         </button>
         <div style={{ display: 'flex', gap: 8 }}>
+          <button className="btn btn-secondary btn-sm" onClick={() => setActiveModal('add')} style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+            <UserPlus size={14} /> Add Student
+          </button>
           <button className="btn btn-primary btn-sm" onClick={() => setActiveModal('message')} style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
-            <MessageSquare size={14} /> Send Message to Parent
+            <MessageSquare size={14} /> Send Message
           </button>
           <button className="btn btn-secondary btn-sm" onClick={() => setActiveModal('badge')} style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
             <Award size={14} /> Award Badge
@@ -96,271 +143,389 @@ export default function StudentDetailPage() {
         </div>
       </div>
 
-      {/* Main 3-Column Layout */}
+      {/* Main 2-Column Grid Layout */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'minmax(280px, 320px) 1fr minmax(280px, 320px)',
+        gridTemplateColumns: 'minmax(280px, 320px) 1fr',
         gap: 24,
         alignItems: 'start'
       }}>
         
-        {/* COLUMN 1: Identity & Vital Signs (Sticky) */}
+        {/* COLUMN 1: Identity & Quick Actions (Sticky Sidebar) */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 24, position: 'sticky', top: 24 }}>
           {/* Identity Card */}
-          <div className="card border-glow" style={{ borderRadius: 16, overflow: 'hidden' }}>
-            <div style={{ height: 80, background: 'linear-gradient(135deg, var(--color-primary), var(--color-primary-light))' }} />
+          <div className="card border-glow" style={{ borderRadius: 16, overflow: 'hidden', background: 'var(--bg-surface)' }}>
+            <div style={{ height: 80, background: 'linear-gradient(135deg, var(--accent-primary), var(--accent-violet))' }} />
             <div className="card-body" style={{ padding: '0 20px 20px 20px', textAlign: 'center', marginTop: -40 }}>
               <div
                 className="avatar-fallback shadow-md"
                 style={{
                   width: 80, height: 80, borderRadius: '50%', fontSize: 32, fontWeight: 800,
-                  background: 'var(--bg-tertiary)',
-                  color: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  margin: '0 auto 12px auto', border: '4px solid var(--bg-secondary)'
+                  background: 'var(--bg-surface-raised)',
+                  color: 'var(--accent-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  margin: '0 auto 12px auto', border: '4px solid var(--bg-surface)'
                 }}
               >
                 {initials}
               </div>
-              <h2 style={{ fontSize: 22, fontWeight: 800, margin: '0 0 4px 0' }}>{student.first_name} {student.last_name}</h2>
+              <h2 style={{ fontSize: 22, fontWeight: 800, margin: '0 0 4px 0', color: 'var(--text-primary)' }}>
+                {student.first_name} {student.last_name}
+              </h2>
+              
               <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginBottom: 16 }}>
-                <span className="badge badge-primary">{student.class_name} {student.section}</span>
-                <span className={`badge badge-${student.risk_status === 'Low' ? 'success' : student.risk_status === 'Medium' ? 'warning' : 'danger'}`}>
-                  {student.risk_status} Risk
+                <span className="badge badge-primary">{studentClass}</span>
+                <span className={`badge badge-${studentStatus === 'ACTIVE' ? 'present' : 'absent'}`}>
+                  {studentStatus}
                 </span>
               </div>
-              
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, textAlign: 'left', fontSize: 13, background: 'var(--bg-tertiary)', padding: 16, borderRadius: 12 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span className="text-muted">Student ID</span>
-                  <strong className="text-primary">{student.student_code}</strong>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span className="text-muted">Blood Group</span>
-                  <strong>{student.blood_group}</strong>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span className="text-muted">Emergency</span>
-                  <strong>{student.emergency_contact}</strong>
-                </div>
-              </div>
-              
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, textAlign: 'left', fontSize: 13, background: 'var(--bg-tertiary)', padding: 16, borderRadius: 12, marginTop: 12 }}>
-                <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 4 }}>Family & Guardians</div>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span className="text-muted">Father</span>
-                  <strong>Robert Doe</strong>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span className="text-muted">Mother</span>
-                  <strong>Sarah Doe</strong>
-                </div>
-              </div>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, textAlign: 'left', fontSize: 13, background: 'var(--bg-tertiary)', padding: 16, borderRadius: 12, marginTop: 12 }}>
-                <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 4 }}>Fee Status</div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--color-success)' }}>
-                  <span>Cleared Dues</span>
-                  <strong>$2,400</strong>
+              {/* ERP Lifecycle Quick Actions */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 16 }}>
+                <button 
+                  className="btn btn-secondary btn-sm" 
+                  onClick={() => setActiveModal('promote')}
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, width: '100%', height: '36px', fontSize: '13px' }}
+                >
+                  <ArrowUpCircle size={15} /> Promote Student
+                </button>
+                <button 
+                  className="btn btn-ghost btn-sm" 
+                  onClick={() => setActiveModal('alumni')}
+                  disabled={studentStatus === 'ALUMNI'}
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, width: '100%', height: '36px', fontSize: '13px', border: '1px solid var(--border-subtle)', color: studentStatus === 'ALUMNI' ? 'var(--text-muted)' : 'var(--text-primary)' }}
+                >
+                  <GraduationCap size={15} /> Graduate to Alumni
+                </button>
+              </div>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, textAlign: 'left', fontSize: 13, background: 'var(--bg-surface-raised)', padding: 16, borderRadius: 12 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: 'var(--text-secondary)' }}>Student ID</span>
+                  <strong style={{ color: 'var(--text-primary)' }}>{student.student_code}</strong>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--color-danger)' }}>
-                  <span>Pending Dues</span>
-                  <strong>$450</strong>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: 'var(--text-secondary)' }}>Gender</span>
+                  <strong style={{ color: 'var(--text-primary)' }}>{student.gender}</strong>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: 'var(--text-secondary)' }}>Risk Indicator</span>
+                  <strong style={{ color: student.risk_status === 'Low' ? 'var(--accent-success)' : 'var(--accent-warning)' }}>{student.risk_status} Risk</strong>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Vital Signs (Pulse) */}
-          <div className="card" style={{ borderRadius: 16 }}>
-            <div className="card-header" style={{ borderBottom: 'none', paddingBottom: 0 }}>
-              <span className="card-title" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <Activity size={16} className="text-primary" /> Vital Signs
-              </span>
-            </div>
-            <div className="card-body">
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 20 }}>
-                <div style={{ background: 'var(--bg-tertiary)', padding: 12, borderRadius: 12, textAlign: 'center' }}>
-                  <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Attendance</div>
-                  <div style={{ fontSize: 24, fontWeight: 800, color: 'var(--color-secondary)' }}>{student.attendance_rate}%</div>
-                </div>
-                <div style={{ background: 'var(--bg-tertiary)', padding: 12, borderRadius: 12, textAlign: 'center' }}>
-                  <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Avg Marks</div>
-                  <div style={{ fontSize: 24, fontWeight: 800, color: 'var(--color-primary)' }}>{student.avg_marks}%</div>
-                </div>
+          {/* Vitals summary */}
+          <div className="card" style={{ borderRadius: 16, background: 'var(--bg-surface)', padding: 16, border: '1px solid var(--border-subtle)' }}>
+            <h4 style={{ fontSize: '14px', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8, color: 'var(--text-primary)', margin: '0 0 12px 0' }}>
+              <Activity size={16} style={{ color: 'var(--accent-primary)' }} /> Vital Statistics
+            </h4>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+              <div style={{ background: 'var(--bg-surface-raised)', padding: 12, borderRadius: 12, textAlign: 'center' }}>
+                <div style={{ fontSize: 10, color: 'var(--text-secondary)', fontWeight: 600, textTransform: 'uppercase' }}>Attendance</div>
+                <div style={{ fontSize: 20, fontWeight: 800, color: 'var(--accent-success)' }}>{student.attendance_rate}%</div>
               </div>
-              
-              <div style={{ height: 120 }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={student.pulse} margin={{ top: 0, right: 0, left: -25, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" vertical={false} />
-                    <XAxis dataKey="name" tick={{ fontSize: 10 }} axisLine={false} tickLine={false} />
-                    <YAxis tick={{ fontSize: 10 }} axisLine={false} tickLine={false} />
-                    <Bar dataKey="attendance" fill="var(--color-secondary)" radius={[2, 2, 0, 0]} barSize={8} />
-                    <Bar dataKey="marks" fill="var(--color-primary)" radius={[2, 2, 0, 0]} barSize={8} />
-                  </BarChart>
-                </ResponsiveContainer>
+              <div style={{ background: 'var(--bg-surface-raised)', padding: 12, borderRadius: 12, textAlign: 'center' }}>
+                <div style={{ fontSize: 10, color: 'var(--text-secondary)', fontWeight: 600, textTransform: 'uppercase' }}>Average Mark</div>
+                <div style={{ fontSize: 20, fontWeight: 800, color: 'var(--accent-primary)' }}>{student.avg_marks}%</div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* COLUMN 2: The Timeline Feed */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-          <h3 style={{ fontSize: 18, fontWeight: 700, margin: '0 0 4px 0', display: 'flex', alignItems: 'center', gap: 8 }}>
-            <Clock size={18} /> Student Timeline
-          </h3>
-          <p style={{ color: 'var(--text-muted)', fontSize: 13, margin: '0 0 16px 0' }}>
-            A chronological pulse of {student.first_name}'s daily journey.
-          </p>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-            {events.map((event) => (
-              <div key={event.id} className="card hover-scale" style={{ borderRadius: 16, overflow: 'hidden', borderLeft: `4px solid ${event.color}` }}>
-                <div className="card-body" style={{ padding: 16, display: 'flex', gap: 16 }}>
-                  <div style={{ 
-                    width: 48, height: 48, borderRadius: '50%', background: 'var(--bg-secondary)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, flexShrink: 0
-                  }}>
-                    {event.icon}
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 4 }}>
-                      <h4 style={{ margin: 0, fontSize: 15, fontWeight: 700 }}>{event.title}</h4>
-                      <span style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 500 }}>
-                        {new Date(event.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
-                      </span>
-                    </div>
-                    <p style={{ margin: 0, fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                      {event.description}
-                    </p>
-                    <div style={{ marginTop: 12 }}>
-                      <span className="badge" style={{ background: 'var(--bg-secondary)', color: event.color, fontSize: 10 }}>
-                        {event.type}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* COLUMN 3: AI Insights & Digital Portfolio */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-          {/* AI Insights Card */}
-          <div className="card border-glow" style={{ borderRadius: 16, background: 'var(--bg-secondary)' }}>
-            <div className="card-header bg-gradient-header" style={{ padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 8 }}>
-              <Sparkles size={16} className="text-primary" />
-              <span className="card-title text-glow" style={{ fontSize: 14 }}>EduTrack AI Summary</span>
-            </div>
-            <div className="card-body" style={{ padding: 20 }}>
-              <p style={{ margin: '0 0 16px 0', fontSize: 13, lineHeight: 1.6, color: 'var(--text-primary)' }}>
-                {insight.summary}
-              </p>
-              
-              <div style={{ marginBottom: 16 }}>
-                <h5 style={{ margin: '0 0 8px 0', fontSize: 12, display: 'flex', alignItems: 'center', gap: 6, color: 'var(--color-secondary)' }}>
-                  <CheckCircle size={14} /> Core Strengths
-                </h5>
-                <ul style={{ margin: 0, paddingLeft: 20, fontSize: 12, color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: 4 }}>
-                  {insight.strengths.map((str, i) => <li key={i}>{str}</li>)}
-                </ul>
-              </div>
-
-              <div>
-                <h5 style={{ margin: '0 0 8px 0', fontSize: 12, display: 'flex', alignItems: 'center', gap: 6, color: 'var(--color-primary)' }}>
-                  <Sparkles size={14} /> AI Recommendation
-                </h5>
-                <div style={{ background: 'var(--color-primary-surface)', padding: 12, borderRadius: 8, fontSize: 12, color: 'var(--color-primary-dark)', border: '1px dashed var(--color-primary)' }}>
-                  {insight.recommendation}
-                </div>
-              </div>
-            </div>
+        {/* COLUMN 2: Details & Tabs Content */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+          {/* Tabs Menu Header */}
+          <div style={{
+            display: 'flex',
+            borderBottom: '1px solid var(--border-subtle)',
+            paddingBottom: '1px',
+            gap: '24px',
+            overflowX: 'auto',
+            scrollbarWidth: 'none'
+          }}>
+            {[
+              { id: 'timeline', label: 'Timeline', icon: <Clock size={15} /> },
+              { id: 'academics', label: 'Academic History', icon: <Award size={15} /> },
+              { id: 'attendance', label: 'Attendance Logs', icon: <Activity size={15} /> },
+              { id: 'medical', label: 'Medical Info', icon: <Heart size={15} /> },
+              { id: 'guardians', label: 'Guardian Details', icon: <Users size={15} /> },
+              { id: 'documents', label: 'Documents', icon: <FileText size={15} /> },
+            ].map((tab) => {
+              const active = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id as any)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    padding: '12px 4px',
+                    border: 'none',
+                    background: 'transparent',
+                    borderBottom: active ? '2px solid var(--accent-primary)' : '2px solid transparent',
+                    color: active ? 'var(--accent-primary)' : 'var(--text-secondary)',
+                    fontWeight: active ? 700 : 500,
+                    fontSize: '14px',
+                    cursor: 'pointer',
+                    whiteSpace: 'nowrap',
+                    transition: 'all 0.2s',
+                  }}
+                >
+                  {tab.icon}
+                  {tab.label}
+                </button>
+              );
+            })}
           </div>
 
-          {/* Digital Portfolio */}
-          <div className="card" style={{ borderRadius: 16 }}>
-            <div className="card-header" style={{ borderBottom: 'none', paddingBottom: 0 }}>
-              <span className="card-title" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <Image size={16} className="text-primary" /> Digital Portfolio
-              </span>
-            </div>
-            <div className="card-body">
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                {portfolioItems.map(item => (
-                  <div key={item.id} className="hover-scale" style={{ borderRadius: 12, overflow: 'hidden', border: '1px solid var(--border-color)', position: 'relative' }}>
-                    <img src={item.imageUrl} alt={item.title} style={{ width: '100%', height: 120, objectFit: 'cover', display: 'block' }} />
-                    <div style={{ 
-                      position: 'absolute', bottom: 0, left: 0, right: 0, 
-                      background: 'linear-gradient(transparent, rgba(0,0,0,0.8))', 
-                      padding: '24px 12px 12px 12px', color: 'white'
-                    }}>
-                      <div style={{ fontSize: 12, fontWeight: 700 }}>{item.title}</div>
-                      <div style={{ fontSize: 10, opacity: 0.8 }}>{item.date} • {item.type}</div>
+          {/* Tab Pane Renders */}
+          <div style={{ minHeight: '360px' }}>
+            
+            {/* Timeline Tab */}
+            {activeTab === 'timeline' && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                {events.map((event) => (
+                  <div key={event.id} className="card hover-scale" style={{ borderRadius: 16, background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', borderLeft: `4px solid ${event.color}` }}>
+                    <div className="card-body" style={{ padding: 16, display: 'flex', gap: 16 }}>
+                      <div style={{ 
+                        width: 44, height: 44, borderRadius: '50%', background: 'var(--bg-surface-raised)',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, flexShrink: 0
+                      }}>
+                        {event.icon}
+                      </div>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 4 }}>
+                          <h4 style={{ margin: 0, fontSize: 14, fontWeight: 700, color: 'var(--text-primary)' }}>{event.title}</h4>
+                          <span style={{ fontSize: 11, color: 'var(--text-secondary)', fontWeight: 500 }}>
+                            {new Date(event.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                          </span>
+                        </div>
+                        <p style={{ margin: 0, fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                          {event.description}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 ))}
-                {portfolioItems.length === 0 && (
-                  <div style={{ padding: 24, textAlign: 'center', color: 'var(--text-muted)', fontSize: 13, background: 'var(--bg-secondary)', borderRadius: 12 }}>
-                    No portfolio items uploaded yet.
-                  </div>
-                )}
               </div>
-            </div>
-          </div>
+            )}
 
-          {/* Academic Report Cards (Mark Sheets) */}
-          <div className="card" style={{ borderRadius: 16 }}>
-            <div className="card-header" style={{ borderBottom: 'none', paddingBottom: 0 }}>
-              <span className="card-title" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <Award size={16} className="text-primary" /> Academic Report Cards
-              </span>
-            </div>
-            <div className="card-body">
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-                {/* Current Class Report */}
-                <div style={{ border: '1px solid var(--border-color)', borderRadius: 12, overflow: 'hidden' }}>
-                  <div style={{ background: 'var(--bg-secondary)', padding: '10px 14px', fontWeight: 700, fontSize: 13, borderBottom: '1px solid var(--border-color)' }}>
-                    Grade {student.class_name} - Mid Term Report
+            {/* Academics Tab */}
+            {activeTab === 'academics' && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+                {/* Reports summary card */}
+                <div className="card" style={{ padding: '20px', background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)' }}>
+                  <h3 style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <Award size={16} style={{ color: 'var(--accent-primary)' }} /> Terminal Marks Report
+                  </h3>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, paddingBottom: 8, borderBottom: '1px dashed var(--border-subtle)' }}>
+                      <span style={{ color: 'var(--text-secondary)' }}>Mathematics</span>
+                      <strong style={{ color: 'var(--text-primary)' }}>92/100 (Grade A+)</strong>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, paddingBottom: 8, borderBottom: '1px dashed var(--border-subtle)' }}>
+                      <span style={{ color: 'var(--text-secondary)' }}>Physics & Chemistry</span>
+                      <strong style={{ color: 'var(--text-primary)' }}>88/100 (Grade A)</strong>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, paddingBottom: 8, borderBottom: '1px dashed var(--border-subtle)' }}>
+                      <span style={{ color: 'var(--text-secondary)' }}>English Grammar</span>
+                      <strong style={{ color: 'var(--text-primary)' }}>95/100 (Grade A+)</strong>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, paddingTop: 4 }}>
+                      <span style={{ color: 'var(--text-secondary)' }}>Social Science</span>
+                      <strong style={{ color: 'var(--text-primary)' }}>84/100 (Grade B+)</strong>
+                    </div>
                   </div>
-                  <div style={{ padding: 14 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, paddingBottom: 8, borderBottom: '1px dashed var(--border-color)' }}>
-                      <span style={{ color: 'var(--text-muted)' }}>Mathematics</span>
-                      <strong>92/100 (A+)</strong>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, padding: '8px 0', borderBottom: '1px dashed var(--border-color)' }}>
-                      <span style={{ color: 'var(--text-muted)' }}>Science</span>
-                      <strong>88/100 (A)</strong>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, padding: '8px 0', borderBottom: '1px dashed var(--border-color)' }}>
-                      <span style={{ color: 'var(--text-muted)' }}>English</span>
-                      <strong>95/100 (A+)</strong>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, paddingTop: 8 }}>
-                      <span style={{ color: 'var(--text-muted)' }}>History</span>
-                      <strong>84/100 (B+)</strong>
-                    </div>
-                    <button className="btn btn-secondary btn-sm" style={{ width: '100%', marginTop: 16, borderRadius: 8 }}>View Full Mark Sheet</button>
+                  <button className="btn btn-secondary btn-sm" style={{ width: '100%', marginTop: '20px' }}>
+                    Download Official Marksheet (PDF)
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Attendance Tab */}
+            {activeTab === 'attendance' && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+                <div className="card" style={{ padding: '20px', background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)' }}>
+                  <h3 style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '16px' }}>Attendance Monthly Summary</h3>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
+                    {[
+                      { month: 'June', rate: '98%', days: '21/22' },
+                      { month: 'May', rate: '95%', days: '19/20' },
+                      { month: 'April', rate: '100%', days: '22/22' },
+                      { month: 'March', rate: '92%', days: '23/25' },
+                    ].map((item, idx) => (
+                      <div key={idx} style={{ background: 'var(--bg-surface-raised)', padding: '12px', borderRadius: 'var(--radius-md)', textAlign: 'center' }}>
+                        <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)' }}>{item.month}</div>
+                        <div style={{ fontSize: '20px', fontWeight: 800, color: 'var(--accent-success)', margin: '4px 0' }}>{item.rate}</div>
+                        <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{item.days} Present</div>
+                      </div>
+                    ))}
                   </div>
                 </div>
-                
-                {/* Previous Class Report */}
-                {parseInt(student.class_name || '10') > 1 && (
-                  <div style={{ border: '1px solid var(--border-color)', borderRadius: 12, overflow: 'hidden', opacity: 0.8 }}>
-                    <div style={{ background: 'var(--bg-secondary)', padding: '10px 14px', fontWeight: 700, fontSize: 13, borderBottom: '1px solid var(--border-color)' }}>
-                      Grade {parseInt(student.class_name || '10') - 1} - Final Report
+              </div>
+            )}
+
+            {/* Medical Info Tab */}
+            {activeTab === 'medical' && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                <div className="card" style={{ padding: '20px', background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)' }}>
+                  <h3 style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <Heart size={16} style={{ color: 'var(--accent-danger)' }} /> Medical & Health Profile
+                  </h3>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, paddingBottom: 8, borderBottom: '1px dashed var(--border-subtle)' }}>
+                      <span style={{ color: 'var(--text-secondary)' }}>Blood Group</span>
+                      <strong style={{ color: 'var(--text-primary)' }}>{student.blood_group || 'O+'}</strong>
                     </div>
-                    <div style={{ padding: 14 }}>
-                      <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 12 }}>Overall Percentage: <strong>89.5%</strong></div>
-                      <button className="btn btn-ghost btn-sm" style={{ width: '100%', borderRadius: 8, border: '1px solid var(--border-color)' }}>Download Previous Report</button>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, paddingBottom: 8, borderBottom: '1px dashed var(--border-subtle)' }}>
+                      <span style={{ color: 'var(--text-secondary)' }}>Allergies</span>
+                      <strong style={{ color: 'var(--accent-danger)' }}>Peanuts (Severe)</strong>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, paddingBottom: 8, borderBottom: '1px dashed var(--border-subtle)' }}>
+                      <span style={{ color: 'var(--text-secondary)' }}>Chronic Conditions</span>
+                      <strong style={{ color: 'var(--text-primary)' }}>Mild Asthma (Inhaler registered)</strong>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, paddingTop: 4 }}>
+                      <span style={{ color: 'var(--text-secondary)' }}>Vaccination Status</span>
+                      <strong style={{ color: 'var(--accent-success)' }}>Fully Up-To-Date</strong>
                     </div>
                   </div>
-                )}
+                </div>
               </div>
-            </div>
+            )}
+
+            {/* Guardian Info Tab */}
+            {activeTab === 'guardians' && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                <div className="card" style={{ padding: '20px', background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)' }}>
+                  <h3 style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <Users size={16} style={{ color: 'var(--accent-primary)' }} /> Primary Guardians Contact Details
+                  </h3>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                    <div style={{ background: 'var(--bg-surface-raised)', padding: '16px', borderRadius: 'var(--radius-md)' }}>
+                      <div style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-muted)' }}>Father / Guardian 1</div>
+                      <div style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-primary)', margin: '4px 0' }}>Robert Doe</div>
+                      <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>Phone: +91 98765 43210</div>
+                      <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>Email: robert.doe@gmail.com</div>
+                    </div>
+                    <div style={{ background: 'var(--bg-surface-raised)', padding: '16px', borderRadius: 'var(--radius-md)' }}>
+                      <div style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-muted)' }}>Mother / Guardian 2</div>
+                      <div style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-primary)', margin: '4px 0' }}>Sarah Doe</div>
+                      <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>Phone: +91 98765 43211</div>
+                      <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>Email: sarah.doe@gmail.com</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Documents Tab */}
+            {activeTab === 'documents' && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                <div className="card" style={{ padding: '20px', background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)' }}>
+                  <h3 style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <FileText size={16} style={{ color: 'var(--accent-primary)' }} /> Uploaded Student Documents
+                  </h3>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                    {[
+                      { name: 'Birth Certificate.pdf', size: '1.4 MB', type: 'Identification' },
+                      { name: 'Previous Academic Transfer Certificate.pdf', size: '2.1 MB', type: 'Academic Record' },
+                      { name: 'Medical Fitness Certificate.pdf', size: '840 KB', type: 'Medical Record' },
+                    ].map((doc, idx) => (
+                      <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)', background: 'var(--bg-surface-raised)' }}>
+                        <div>
+                          <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)' }}>{doc.name}</div>
+                          <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{doc.type} · {doc.size}</div>
+                        </div>
+                        <button className="btn btn-ghost btn-sm" style={{ border: '1px solid var(--border-subtle)' }}>Download</button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
           </div>
         </div>
       </div>
+
+      {/* Promotes Student Modal */}
+      {activeModal === 'promote' && (
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(15, 23, 42, 0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }}>
+          <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: 16, width: '90%', maxWidth: 440, padding: 20, boxShadow: 'var(--shadow-lg)' }}>
+            <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 12 }}>Promote {student.first_name} {student.last_name}</h3>
+            <p style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: 20 }}>
+              Are you sure you want to promote this student to the next academic grade? This will roll over classes and update directories logs.
+            </p>
+            <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+              <button className="btn btn-secondary" onClick={() => setActiveModal(null)} disabled={isLoading}>Cancel</button>
+              <button className="btn btn-primary" onClick={handlePromoteStudent} disabled={isLoading}>
+                {isLoading ? 'Promoting...' : 'Confirm Promotion'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Transition Alumni Modal */}
+      {activeModal === 'alumni' && (
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(15, 23, 42, 0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }}>
+          <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: 16, width: '90%', maxWidth: 440, padding: 20, boxShadow: 'var(--shadow-lg)' }}>
+            <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 12 }}>Graduate Student</h3>
+            <p style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: 20 }}>
+              Are you sure you want to transition {student.first_name} {student.last_name} to **Alumni** status? This marks their account as graduated.
+            </p>
+            <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+              <button className="btn btn-secondary" onClick={() => setActiveModal(null)} disabled={isLoading}>Cancel</button>
+              <button className="btn btn-primary" onClick={handleTransitionAlumni} disabled={isLoading}>
+                {isLoading ? 'Graduating...' : 'Confirm Alumni Status'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Add Student Modal */}
+      {activeModal === 'add' && (
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(15, 23, 42, 0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }}>
+          <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: 16, width: '90%', maxWidth: 480, padding: 20, boxShadow: 'var(--shadow-lg)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+              <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: 'var(--text-primary)' }}>Add New Student Profile</h3>
+              <button onClick={() => setActiveModal(null)} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', fontSize: 18, cursor: 'pointer' }} disabled={isLoading}>✕</button>
+            </div>
+            <form onSubmit={handleAddStudentSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                  <label style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>First Name</label>
+                  <input type="text" required value={addStudentForm.firstName} onChange={e => setAddStudentForm({ ...addStudentForm, firstName: e.target.value })} style={{ padding: '8px 12px', border: '1px solid var(--border-color)', borderRadius: 8, background: 'var(--bg-body)', color: 'var(--text-primary)' }} />
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                  <label style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Last Name</label>
+                  <input type="text" required value={addStudentForm.lastName} onChange={e => setAddStudentForm({ ...addStudentForm, lastName: e.target.value })} style={{ padding: '8px 12px', border: '1px solid var(--border-color)', borderRadius: 8, background: 'var(--bg-body)', color: 'var(--text-primary)' }} />
+                </div>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                <label style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Assigned Class</label>
+                <select value={addStudentForm.classId} onChange={e => setAddStudentForm({ ...addStudentForm, classId: e.target.value })} style={{ padding: '8px 12px', border: '1px solid var(--border-color)', borderRadius: 8, background: 'var(--bg-body)', color: 'var(--text-primary)' }}>
+                  <option value="class-10-a">Class 10 A</option>
+                  <option value="class-9-a">Class 9 A</option>
+                  <option value="class-8-a">Class 8 A</option>
+                </select>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                <label style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Parent Email</label>
+                <input type="email" required value={addStudentForm.email} onChange={e => setAddStudentForm({ ...addStudentForm, email: e.target.value })} style={{ padding: '8px 12px', border: '1px solid var(--border-color)', borderRadius: 8, background: 'var(--bg-body)', color: 'var(--text-primary)' }} />
+              </div>
+              <button type="submit" disabled={isLoading} className="btn btn-primary" style={{ padding: 12, marginTop: 8 }}>
+                {isLoading ? 'Registering...' : 'Register Student Account'}
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* Parent Message Modal */}
       {activeModal === 'message' && (
@@ -371,7 +536,7 @@ export default function StudentDetailPage() {
               <button onClick={() => setActiveModal(null)} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', fontSize: 18, cursor: 'pointer' }} disabled={isLoading}>✕</button>
             </div>
             <form onSubmit={handleSendMessage} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-              <div style={{ fontSize: 13, color: 'var(--text-secondary)', background: 'var(--bg-secondary)', padding: '10px 14px', borderRadius: 8 }}>
+              <div style={{ fontSize: 13, color: 'var(--text-secondary)', background: 'var(--bg-surface-raised)', padding: '10px 14px', borderRadius: 8 }}>
                 Recipient: <strong>{student.first_name} {student.last_name}'s Primary Parent</strong>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
@@ -431,7 +596,7 @@ export default function StudentDetailPage() {
                   </div>
                 ))}
               </div>
-              <div style={{ background: 'var(--bg-secondary)', padding: '10px 14px', borderRadius: 8, fontSize: 12, color: 'var(--text-secondary)' }}>
+              <div style={{ background: 'var(--bg-surface-raised)', padding: '10px 14px', borderRadius: 8, fontSize: 12, color: 'var(--text-secondary)' }}>
                 <strong>Description:</strong> {selectedBadge.desc}
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>

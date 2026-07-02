@@ -17,7 +17,7 @@ export default function KpiRow({
 
   const cards: StatCardProps[] = [
     {
-      label: 'Total Students',
+      label: 'Active Students',
       value: (data?.totalStudents ?? 0).toLocaleString(),
       icon: <Users size={24} strokeWidth={2} />,
       accentColor: 'primary',
@@ -49,7 +49,7 @@ export default function KpiRow({
       isLoading
     },
     {
-      label: 'Total Teachers',
+      label: 'Active Teachers',
       value: (data?.totalTeachers ?? 0).toString(),
       icon: <GraduationCap size={24} strokeWidth={2} />,
       accentColor: 'info',

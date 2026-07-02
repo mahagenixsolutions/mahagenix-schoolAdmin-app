@@ -222,6 +222,18 @@ export default function UsersPage() {
               <select className="form-select" value={role} onChange={(e) => setRole(e.target.value)}>
                 <option value="TEACHER">Teacher</option>
                 <option value="SCHOOL_ADMIN">School Admin</option>
+                <option value="SUPER_ADMIN">Super Admin</option>
+                <option value="PRINCIPAL">Principal</option>
+                <option value="VICE_PRINCIPAL">Vice Principal</option>
+                <option value="ACCOUNTANT">Accountant</option>
+                <option value="HR">HR</option>
+                <option value="LIBRARIAN">Librarian</option>
+                <option value="TRANSPORT_MANAGER">Transport Manager</option>
+                <option value="HOSTEL_MANAGER">Hostel Manager</option>
+                <option value="RECEPTIONIST">Receptionist</option>
+                <option value="SECURITY">Security</option>
+                <option value="NURSE">Nurse</option>
+                <option value="COUNSELOR">Counselor</option>
               </select>
             </div>
 
@@ -260,6 +272,18 @@ export default function UsersPage() {
               <select className="form-select" value={editRole} onChange={(e) => setEditRole(e.target.value)}>
                 <option value="TEACHER">Teacher</option>
                 <option value="SCHOOL_ADMIN">School Admin</option>
+                <option value="SUPER_ADMIN">Super Admin</option>
+                <option value="PRINCIPAL">Principal</option>
+                <option value="VICE_PRINCIPAL">Vice Principal</option>
+                <option value="ACCOUNTANT">Accountant</option>
+                <option value="HR">HR</option>
+                <option value="LIBRARIAN">Librarian</option>
+                <option value="TRANSPORT_MANAGER">Transport Manager</option>
+                <option value="HOSTEL_MANAGER">Hostel Manager</option>
+                <option value="RECEPTIONIST">Receptionist</option>
+                <option value="SECURITY">Security</option>
+                <option value="NURSE">Nurse</option>
+                <option value="COUNSELOR">Counselor</option>
               </select>
             </div>
 

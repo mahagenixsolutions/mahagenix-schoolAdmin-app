@@ -44,6 +44,21 @@ const PuzzlesPage = lazy(() => import('./features/puzzles/PuzzlesPage'));
 // Teacher Pages
 const LeaveApplicationPage = lazy(() => import('./features/teachers/LeaveApplicationPage'));
 
+// New ERP Pages
+const TeachersPage = lazy(() => import('./features/teachers/TeachersPage'));
+const ParentsPage = lazy(() => import('./features/parent/ParentsPage'));
+const AdmissionsPage = lazy(() => import('./features/admissions/AdmissionsPage'));
+const AcademicPage = lazy(() => import('./features/academic/AcademicPage'));
+const ExamsPage = lazy(() => import('./features/exams/ExamsPage'));
+const FeesPage = lazy(() => import('./features/fees/FeesPage'));
+const LibraryPage = lazy(() => import('./features/library/LibraryPage'));
+const TransportPage = lazy(() => import('./features/transport/TransportPage'));
+const HRPage = lazy(() => import('./features/hr/HRPage'));
+const InventoryPage = lazy(() => import('./features/inventory/InventoryPage'));
+const CommunicationPage = lazy(() => import('./features/communication/CommunicationPage'));
+const SettingsPage = lazy(() => import('./features/settings/SettingsPage'));
+
+
 const PageLoader = () => (
   <div className="flex-center" style={{ height: 400 }}>
     <div style={{
@@ -137,8 +152,46 @@ export default function App() {
             <Route path="reports" element={
               <Suspense fallback={<PageLoader />}><ReportsPage /></Suspense>
             } />
-            <Route path="leave-application" element={
+             <Route path="leave-application" element={
               <Suspense fallback={<PageLoader />}><LeaveApplicationPage /></Suspense>
+            } />
+            
+            {/* Newly added ERP routes */}
+            <Route path="teachers" element={
+              <Suspense fallback={<PageLoader />}><TeachersPage /></Suspense>
+            } />
+            <Route path="parents" element={
+              <Suspense fallback={<PageLoader />}><ParentsPage /></Suspense>
+            } />
+            <Route path="admissions" element={
+              <Suspense fallback={<PageLoader />}><AdmissionsPage /></Suspense>
+            } />
+            <Route path="academic" element={
+              <Suspense fallback={<PageLoader />}><AcademicPage /></Suspense>
+            } />
+            <Route path="exams" element={
+              <Suspense fallback={<PageLoader />}><ExamsPage /></Suspense>
+            } />
+            <Route path="fees" element={
+              <Suspense fallback={<PageLoader />}><FeesPage /></Suspense>
+            } />
+            <Route path="library" element={
+              <Suspense fallback={<PageLoader />}><LibraryPage /></Suspense>
+            } />
+            <Route path="transport" element={
+              <Suspense fallback={<PageLoader />}><TransportPage /></Suspense>
+            } />
+            <Route path="hr" element={
+              <Suspense fallback={<PageLoader />}><HRPage /></Suspense>
+            } />
+            <Route path="inventory" element={
+              <Suspense fallback={<PageLoader />}><InventoryPage /></Suspense>
+            } />
+            <Route path="communication" element={
+              <Suspense fallback={<PageLoader />}><CommunicationPage /></Suspense>
+            } />
+            <Route path="settings" element={
+              <Suspense fallback={<PageLoader />}><SettingsPage /></Suspense>
             } />
             
             {/* Parent-Only Routes */}

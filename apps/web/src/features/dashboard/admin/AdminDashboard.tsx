@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import type { RootState } from '../../../store';
@@ -12,7 +12,6 @@ import KeyInsightsStrip from './KeyInsightsStrip';
 import QuickActionsGrid from './QuickActionsGrid';
 import ClassPerformanceTable from './ClassPerformanceTable';
 import AttendanceTrendChart from './AttendanceTrendChart';
-import SubjectPerformanceChart from './SubjectPerformanceChart';
 import AttendanceDonutChart from './AttendanceDonutChart';
 import FeeCollectionChart from './FeeCollectionChart';
 import RecentActivityFeed from './RecentActivityFeed';
@@ -24,26 +23,6 @@ import OpenAdmissionsModal from '../../../components/modals/OpenAdmissionsModal'
 export default function AdminDashboard() {
   const user = useSelector((s: RootState) => s.auth.user);
   const navigate = useNavigate();
-  const [lastRefreshed] = useState<Date>(new Date());
-  const [timeAgo, setTimeAgo] = useState('just now');
-
-  // Auto-refresh timer and last updated display
-  useEffect(() => {
-    const timeAgoInterval = setInterval(() => {
-      const diffMinutes = Math.floor((new Date().getTime() - lastRefreshed.getTime()) / 60000);
-      if (diffMinutes === 0) setTimeAgo('just now');
-      else if (diffMinutes === 1) setTimeAgo('1 min ago');
-      else setTimeAgo(`${diffMinutes} mins ago`);
-    }, 60000);
-
-    return () => {
-      clearInterval(timeAgoInterval);
-    };
-  }, [lastRefreshed]);
-
-  const handleManualRefresh = () => {
-    window.location.reload();
-  };
 
   // Fetch academic years to find the active one
   const { data: yearsData, isLoading: isYearsLoading } = useGetAcademicYearsQuery();
@@ -70,9 +49,7 @@ export default function AdminDashboard() {
       activeYear={activeYear}
       activeYearId={activeYearId}
       user={user}
-      timeAgo={timeAgo}
       navigate={navigate}
-      handleManualRefresh={handleManualRefresh}
     />
   );
 }
@@ -82,9 +59,7 @@ function AdminDashboardInner({
   activeYear,
   activeYearId,
   user,
-  timeAgo,
   navigate,
-  handleManualRefresh,
 }: any) {
   // Fetch KPIs for AI context registration
   const { data: kpis } = useGetKpisQuery({ academicYearId: activeYearId }, { skip: !activeYearId });
@@ -228,7 +203,7 @@ function AdminDashboardInner({
   };
 
   return (
-    <div className="dashboard-grid">
+    <div className="dashboard-grid" style={{ gap: '28px' }}>
       {/* [A] PAGE HEADER */}
       <div className="col-span-12" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', paddingTop: 24, paddingBottom: 8 }}>
         <div>
@@ -257,65 +232,92 @@ function AdminDashboardInner({
               fontSize: 13, fontWeight: 600, cursor: 'pointer',
               display: 'flex', alignItems: 'center', gap: 6
             }} 
-            onClick={() => navigate('/students/new')}
+            onClick={() => navigate('/students')}
           >
             + Add Student
           </button>
         </div>
       </div>
 
-      {/* [B] SMART ALERT RAIL */}
+      {/* 1. SCHOOL OVERVIEW SECTION */}
       <div className="col-span-12">
-        <AlertsBanner academicYearId={activeYearId} />
+        <h2 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 16px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ width: '4px', height: '18px', borderRadius: '2px', background: 'var(--accent-primary)' }} />
+          School Overview
+        </h2>
+        
+        {/* KPI Cards representing Active Students, Active Teachers, Today's Attendance, Fee Collection Rate */}
+        <KpiRow kpis={kpis} isLoading={false} />
+        
+        {/* Secondary KPI Row representing Pending Fees, Upcoming Exams, Syllabus, New Admissions */}
+        <div style={{ marginTop: '12px' }}>
+          <KpiRowSecondary 
+            onOpenFeeModal={() => setFeeModalOpen(true)} 
+            onOpenAdmissionsModal={() => setAdmissionsModalOpen(true)}
+          />
+        </div>
       </div>
 
-      {/* [C] PRIMARY KPI ROW */}
+      {/* 2. AI INSIGHTS SECTION */}
       <div className="col-span-12">
-        <KpiRow academicYearId={activeYearId} onFeeClick={() => setFeeModalOpen(true)} />
-      </div>
-
-      {/* [D] SECONDARY KPI ROW */}
-      <div className="col-span-12">
-        <KpiRowSecondary academicYearId={activeYearId} onAdmissionsClick={() => setAdmissionsModalOpen(true)} />
-      </div>
-
-      {/* [E] KEY INSIGHTS PANEL */}
-      <div className="col-span-12">
+        <h2 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 16px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ width: '4px', height: '18px', borderRadius: '2px', background: 'var(--accent-violet)' }} />
+          AI Insights
+        </h2>
         <KeyInsightsStrip academicYearId={activeYearId} />
       </div>
 
-      {/* [F] QUICK ACTIONS STRIP */}
-      <div className="col-span-12">
-        <QuickActionsGrid />
+      {/* 3. ATTENDANCE & FEES ANALYTICS CHARTS */}
+      <div className="col-span-12 lg:col-span-8">
+        <h2 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 16px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ width: '4px', height: '18px', borderRadius: '2px', background: 'var(--accent-success)' }} />
+          Analytics & Performance
+        </h2>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '24px' }}>
+          <AttendanceTrendChart />
+          <ClassPerformanceTable academicYearId={activeYearId} />
+        </div>
       </div>
 
-      {/* [G] CLASS PERFORMANCE TABLE */}
-      <div className="col-span-12">
-        <ClassPerformanceTable academicYearId={activeYearId} />
-      </div>
-
-      {/* [H] CHARTS ROW 1 (2 col: 6-6) */}
-      <div className="col-span-6">
-        <AttendanceTrendChart />
-      </div>
-      <div className="col-span-6">
-        <SubjectPerformanceChart academicYearId={activeYearId} />
-      </div>
-
-      {/* [I] CHARTS ROW 2 (3 col: 5-4-3) */}
-      <div className="col-span-5">
+      {/* 4. TODAY'S ATTENDANCE & FEE COLLECTION BREAKDOWNS */}
+      <div className="col-span-12 lg:col-span-4" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        <h2 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 16px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ width: '4px', height: '18px', borderRadius: '2px', background: 'var(--accent-warning)' }} />
+          Circulation & Collections
+        </h2>
         <AttendanceDonutChart />
+        <FeeCollectionChart />
       </div>
-      <div className="col-span-4">
+
+      {/* 5. NOTIFICATIONS & ALERTS */}
+      <div className="col-span-12">
+        <h2 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 16px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ width: '4px', height: '18px', borderRadius: '2px', background: 'var(--accent-danger)' }} />
+          Notifications & Alerts
+        </h2>
+        <AlertsBanner academicYearId={activeYearId} />
+      </div>
+
+      {/* 6. RECENT ACTIVITIES & CALENDAR SCHEDULE */}
+      <div className="col-span-12 lg:col-span-6">
+        <h2 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 16px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ width: '4px', height: '18px', borderRadius: '2px', background: 'var(--text-secondary)' }} />
+          Recent Activities
+        </h2>
         <RecentActivityFeed />
       </div>
-      <div className="col-span-3">
+
+      <div className="col-span-12 lg:col-span-6">
+        <h2 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 16px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ width: '4px', height: '18px', borderRadius: '2px', background: 'var(--accent-primary)' }} />
+          Calendar & Events
+        </h2>
         <UpcomingEventsWidget academicYearId={activeYearId} />
       </div>
 
-      {/* [J] FEE TREND (full width) */}
+      {/* Quick Action Rails */}
       <div className="col-span-12">
-        <FeeCollectionChart />
+        <QuickActionsGrid />
       </div>
 
       {/* Modals */}

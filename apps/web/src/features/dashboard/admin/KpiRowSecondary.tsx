@@ -17,7 +17,7 @@ export default function KpiRowSecondary({
 
   const cards: StatCardProps[] = [
     {
-      label: 'Pending Fee Dues',
+      label: 'Pending Fees',
       value: `₹${(data?.pendingFeesAmount ?? 0).toLocaleString()}`,
       icon: <AlertCircle size={24} strokeWidth={2} />,
       accentColor: 'danger',
@@ -63,7 +63,7 @@ export default function KpiRowSecondary({
       isLoading
     },
     {
-      label: 'Open Admissions',
+      label: 'New Admissions',
       value: (data?.openAdmissions ?? 0).toString(),
       icon: <UserPlus size={24} strokeWidth={2} />,
       accentColor: 'warning',

@@ -79,12 +79,27 @@ const authSlice = createSlice({
       localStorage.setItem('edutrack_user', JSON.stringify(mockUsers.admin));
       localStorage.removeItem('edutrack_selected_student');
     },
-    switchMockRole(state, action: PayloadAction<'SCHOOL_ADMIN' | 'TEACHER' | 'PARENT' | 'STUDENT'>) {
-      const user =
-        action.payload === 'TEACHER' ? mockUsers.teacher :
-        action.payload === 'PARENT' ? mockUsers.parent :
-        action.payload === 'STUDENT' ? (mockUsers as any).student :
-        mockUsers.admin;
+    switchMockRole(state, action: PayloadAction<string>) {
+      let user: any;
+      if (action.payload === 'TEACHER') {
+        user = mockUsers.teacher;
+      } else if (action.payload === 'PARENT') {
+        user = mockUsers.parent;
+      } else if (action.payload === 'STUDENT') {
+        user = (mockUsers as any).student;
+      } else if (action.payload === 'SCHOOL_ADMIN') {
+        user = mockUsers.admin;
+      } else {
+        // Create a generic mock user for the selected role
+        user = {
+          ...mockUsers.admin,
+          role: action.payload,
+          first_name: 'Mock',
+          last_name: action.payload,
+          email: `${action.payload.toLowerCase()}@school.edu`,
+        };
+      }
+      
       state.user = user;
       state.access_token = 'mock-access-token';
       state.refresh_token = 'mock-refresh-token';

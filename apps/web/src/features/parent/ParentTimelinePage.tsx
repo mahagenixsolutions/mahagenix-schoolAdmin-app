@@ -17,7 +17,7 @@ export default function ParentTimelinePage() {
 
   // Merge raw timeline with mock detailed events for a richer UI demonstration
   const timeline = useMemo(() => {
-    let combined = [...rawTimeline];
+    const combined = [...rawTimeline];
     
     // Supplement with Academic Snapshots (from marks)
     marks.forEach((m: any) => {
@@ -105,11 +105,11 @@ export default function ParentTimelinePage() {
   filteredTimeline.forEach(event => {
     const d = new Date(event.created_at);
     d.setHours(0,0,0,0);
-    let group = 'Older';
+    let group;
     if (d.getTime() === today.getTime()) group = 'Today';
     else if (d.getTime() === yesterday.getTime()) group = 'Yesterday';
     else if (d.getTime() > lastWeek.getTime()) group = 'Last Week';
-    else group = d.toLocaleDateString([], { month: 'long', year: 'numeric' });
+    else group = d.toLocaleDateString([], { month: 'long', year: 'numeric' }) || 'Older';
     
     if (!groupedEvents[group]) groupedEvents[group] = [];
     groupedEvents[group].push(event);
