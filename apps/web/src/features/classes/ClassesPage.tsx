@@ -319,7 +319,9 @@ export default function ClassesPage() {
                 color: 'var(--text-primary)',
                 fontSize: '14px',
                 outline: 'none',
-                width: '220px',
+                width: '100%',
+                minWidth: '160px',
+                flex: '1 1 auto',
               }}
             />
           </div>
@@ -328,7 +330,7 @@ export default function ClassesPage() {
             className="form-select"
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value as any)}
-            style={{ width: '150px', height: '38px', fontSize: 14 }}
+            style={{ width: '100%', minWidth: '140px', flex: '1 1 auto', height: '38px', fontSize: 14 }}
           >
             <option value="all">All Statuses</option>
             <option value="on-track">On Track</option>
@@ -340,7 +342,7 @@ export default function ClassesPage() {
             className="form-select"
             value={sectionFilter}
             onChange={(e) => setSectionFilter(e.target.value as any)}
-            style={{ width: '130px', height: '38px', fontSize: 14 }}
+            style={{ width: '100%', minWidth: '120px', flex: '1 1 auto', height: '38px', fontSize: 14 }}
           >
             <option value="all">All Sections</option>
             <option value="A">Sec A</option>
@@ -352,7 +354,7 @@ export default function ClassesPage() {
             className="form-select"
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as any)}
-            style={{ width: '180px', height: '38px', fontSize: 14 }}
+            style={{ width: '100%', minWidth: '160px', flex: '1 1 auto', height: '38px', fontSize: 14 }}
           >
             <option value="grade">Grade Level (1 to 12)</option>
             <option value="performance_asc">Performance (Low to High)</option>
@@ -584,7 +586,7 @@ export default function ClassesPage() {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
             gap: '24px',
           }}
         >

@@ -64,78 +64,82 @@ export default function FeeCollectionChart() {
             </div>
           </div>
         ) : (
-          <ResponsiveContainer width="100%" height={240}>
-            <BarChart
-              data={data?.months || []}
-              margin={{ top: 10, right: 20, left: 20, bottom: 5 }}
-            >
-              <defs>
-                <linearGradient id="gradExpected" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="var(--text-muted)" opacity={0.5} />
-                  <stop offset="100%" stopColor="var(--text-muted)" opacity={0.5} />
-                </linearGradient>
-                <linearGradient id="gradCollected" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="var(--accent-success)" />
-                  <stop offset="100%" stopColor="var(--accent-success)" />
-                </linearGradient>
-                <filter id="feePillGlow" x="-20%" y="-20%" width="140%" height="140%">
-                  <feGaussianBlur stdDeviation="3" result="blur" />
-                  <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                </filter>
-              </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="var(--border-subtle)" vertical={false} />
-              <XAxis
-                dataKey="label"
-                tick={{ fontSize: 12, fill: 'var(--text-muted)', fontWeight: 600 }}
-                axisLine={false}
-                tickLine={false}
-                dy={10}
-              />
-              <YAxis
-                tick={{ fontSize: 12, fill: 'var(--text-muted)', fontWeight: 600 }}
-                axisLine={false}
-                tickLine={false}
-                tickFormatter={(v) => `₹${v / 1000}k`}
-                dx={-10}
-              />
-              <Tooltip
-                contentStyle={{
-                  background: 'var(--bg-surface-raised)',
-                  border: '1px solid var(--border-subtle)',
-                  borderRadius: 8,
-                  fontSize: 13,
-                  boxShadow: '0 10px 24px rgba(0,0,0,0.5)',
-                  color: 'var(--text-primary)',
-                  fontWeight: 600,
-                }}
-                formatter={(v: number, name: string, props: any) => {
-                  if (name === 'Expected') return [`₹${v.toLocaleString()}`, name];
-                  const gap = props.payload.expected - props.payload.collected;
-                  return [`₹${v.toLocaleString()} (Gap: ₹${gap.toLocaleString()})`, name];
-                }}
-              />
-              <Legend
-                iconType="circle"
-                iconSize={8}
-                wrapperStyle={{ fontSize: 12, fontWeight: 600, color: 'var(--text-secondary)' }}
-              />
-              <Bar
-                dataKey="expected"
-                name="Expected"
-                fill="url(#gradExpected)"
-                radius={[4, 4, 4, 4]}
-                barSize={12}
-              />
-              <Bar
-                dataKey="collected"
-                name="Collected"
-                fill="url(#gradCollected)"
-                radius={[4, 4, 4, 4]}
-                barSize={12}
-                style={{ filter: 'url(#feePillGlow)' }}
-              />
-            </BarChart>
-          </ResponsiveContainer>
+          <div className="chart-scrollable-container">
+            <div className="dashboard-chart-wrapper chart-scrollable-inner">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={data?.months || []}
+                  margin={{ top: 10, right: 20, left: 20, bottom: 5 }}
+                >
+                  <defs>
+                    <linearGradient id="gradExpected" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="var(--text-muted)" opacity={0.5} />
+                      <stop offset="100%" stopColor="var(--text-muted)" opacity={0.5} />
+                    </linearGradient>
+                    <linearGradient id="gradCollected" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="var(--accent-success)" />
+                      <stop offset="100%" stopColor="var(--accent-success)" />
+                    </linearGradient>
+                    <filter id="feePillGlow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="3" result="blur" />
+                      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                    </filter>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border-subtle)" vertical={false} />
+                  <XAxis
+                    dataKey="label"
+                    tick={{ fontSize: 12, fill: 'var(--text-muted)', fontWeight: 600 }}
+                    axisLine={false}
+                    tickLine={false}
+                    dy={10}
+                  />
+                  <YAxis
+                    tick={{ fontSize: 12, fill: 'var(--text-muted)', fontWeight: 600 }}
+                    axisLine={false}
+                    tickLine={false}
+                    tickFormatter={(v) => `₹${v / 1000}k`}
+                    dx={-10}
+                  />
+                  <Tooltip
+                    contentStyle={{
+                      background: 'var(--bg-surface-raised)',
+                      border: '1px solid var(--border-subtle)',
+                      borderRadius: 8,
+                      fontSize: 13,
+                      boxShadow: '0 10px 24px rgba(0,0,0,0.5)',
+                      color: 'var(--text-primary)',
+                      fontWeight: 600,
+                    }}
+                    formatter={(v: number, name: string, props: any) => {
+                      if (name === 'Expected') return [`₹${v.toLocaleString()}`, name];
+                      const gap = props.payload.expected - props.payload.collected;
+                      return [`₹${v.toLocaleString()} (Gap: ₹${gap.toLocaleString()})`, name];
+                    }}
+                  />
+                  <Legend
+                    iconType="circle"
+                    iconSize={8}
+                    wrapperStyle={{ fontSize: 12, fontWeight: 600, color: 'var(--text-secondary)' }}
+                  />
+                  <Bar
+                    dataKey="expected"
+                    name="Expected"
+                    fill="url(#gradExpected)"
+                    radius={[4, 4, 4, 4]}
+                    barSize={12}
+                  />
+                  <Bar
+                    dataKey="collected"
+                    name="Collected"
+                    fill="url(#gradCollected)"
+                    radius={[4, 4, 4, 4]}
+                    barSize={12}
+                    style={{ filter: 'url(#feePillGlow)' }}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
         )}
       </div>
     </div>

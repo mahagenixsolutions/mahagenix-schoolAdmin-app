@@ -361,10 +361,16 @@ export default function ReportsPage() {
         @keyframes spin { 100% { transform: rotate(360deg); } }
         
         @media (max-width: 1024px) {
+          .metric-grid { grid-template-columns: repeat(2, 1fr); }
           .report-layout-2col { grid-template-columns: 1fr; }
           .three-col { grid-template-columns: 1fr; }
           .ai-grid { grid-template-columns: 1fr; }
           .drawer { width: 100%; }
+        }
+        @media (max-width: 768px) {
+          .metric-grid { grid-template-columns: 1fr; }
+          .reports-header-bar { flex-direction: column; height: auto; padding: 16px; gap: 16px; align-items: flex-start; }
+          .header-actions { flex-wrap: wrap; width: 100%; }
         }
       `}</style>
 

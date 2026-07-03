@@ -98,85 +98,87 @@ export default function StudentDashboard() {
           overflow: 'hidden',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 20, position: 'relative', zIndex: 2 }}>
-          <div
-            className="avatar-fallback"
-            style={{
-              width: 72,
-              height: 72,
-              fontSize: 26,
-              fontWeight: 800,
-              background: 'rgba(255, 255, 255, 0.15)',
-              border: '3px solid rgba(255, 255, 255, 0.3)',
-              color: 'white',
-            }}
-          >
-            {initials}
-          </div>
-          <div>
-            <span style={{ textTransform: 'uppercase', fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', opacity: 0.8 }}>Student Space</span>
-            <h1 style={{ fontSize: 26, fontWeight: 800, margin: '4px 0 0 0' }}>
-              Welcome back, {profile?.first_name}! 👋
-            </h1>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginTop: 12 }}>
-              <p style={{ opacity: 0.8, fontSize: 13, margin: 0 }}>
-                Class: {profile?.class ? `${profile.class.name} ${profile.class.section}` : 'Unassigned'} · Student ID: {profile?.student_code}
-              </p>
-              <button 
-                onClick={() => navigate('/leave-application')}
-                style={{ 
-                  background: 'rgba(255, 255, 255, 0.2)', 
-                  border: '1px solid rgba(255, 255, 255, 0.3)', 
-                  color: 'white', 
-                  padding: '6px 14px', 
-                  borderRadius: 20, 
-                  fontSize: 12, 
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 6,
-                  transition: 'all 0.2s',
-                  backdropFilter: 'blur(4px)',
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.3)'}
-                onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)'}
-              >
-                <Calendar size={14} /> Apply for Leave
-              </button>
+        <div className="flex-mobile-col" style={{ justifyContent: 'space-between', alignItems: 'flex-start', gap: 24, position: 'relative', zIndex: 2 }}>
+          {/* Left Side: Avatar & Profile Info */}
+          <div className="flex-mobile-col" style={{ alignItems: 'center', gap: 20 }}>
+            <div
+              className="avatar-fallback"
+              style={{
+                width: 72,
+                height: 72,
+                fontSize: 26,
+                fontWeight: 800,
+                background: 'rgba(255, 255, 255, 0.15)',
+                border: '3px solid rgba(255, 255, 255, 0.3)',
+                color: 'white',
+                flexShrink: 0,
+              }}
+            >
+              {initials}
+            </div>
+            <div>
+              <span style={{ textTransform: 'uppercase', fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', opacity: 0.8 }}>Student Space</span>
+              <h1 style={{ fontSize: 26, fontWeight: 800, margin: '4px 0 0 0' }}>
+                Welcome back, {profile?.first_name}! 👋
+              </h1>
+              <div className="flex-mobile-col" style={{ alignItems: 'center', gap: 16, marginTop: 12 }}>
+                <p style={{ opacity: 0.8, fontSize: 13, margin: 0 }}>
+                  Class: {profile?.class ? `${profile.class.name} ${profile.class.section}` : 'Unassigned'} · Student ID: {profile?.student_code}
+                </p>
+                <button 
+                  onClick={() => navigate('/leave-application')}
+                  style={{ 
+                    background: 'rgba(255, 255, 255, 0.2)', 
+                    border: '1px solid rgba(255, 255, 255, 0.3)', 
+                    color: 'white', 
+                    padding: '6px 14px', 
+                    borderRadius: 20, 
+                    fontSize: 12, 
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 6,
+                    transition: 'all 0.2s',
+                    backdropFilter: 'blur(4px)',
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.3)'}
+                  onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)'}
+                >
+                  <Calendar size={14} /> Apply for Leave
+                </button>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* AI study coach speech bubble in absolute position */}
-        <div
-          style={{
-            position: 'absolute',
-            right: 24,
-            top: 24,
-            background: 'rgba(255, 255, 255, 0.08)',
-            border: '1px solid rgba(255, 255, 255, 0.15)',
-            borderRadius: 12,
-            padding: 12,
-            maxWidth: 260,
-            fontSize: 12,
-            backdropFilter: 'blur(8px)',
-            display: 'flex',
-            gap: 8,
-          }}
-          className="md-visible-flex"
-        >
-          <Sparkles size={16} style={{ color: '#FCD34D', flexShrink: 0, marginTop: 2 }} />
-          <div>
-            <strong style={{ display: 'block', color: '#FCD34D', marginBottom: 2 }}>AI Study Coach</strong>
-            <span>Your English essay is scoring highly! Try reviewing Math quadratic formulas tonight to keep your grade trending up.</span>
+          {/* AI study coach speech bubble (No longer absolute) */}
+          <div
+            style={{
+              background: 'rgba(255, 255, 255, 0.08)',
+              border: '1px solid rgba(255, 255, 255, 0.15)',
+              borderRadius: 12,
+              padding: 16,
+              maxWidth: 320,
+              fontSize: 12,
+              backdropFilter: 'blur(8px)',
+              display: 'flex',
+              gap: 12,
+              flexShrink: 0,
+            }}
+          >
+            <Sparkles size={16} style={{ color: '#FCD34D', flexShrink: 0, marginTop: 2 }} />
+            <div>
+              <strong style={{ display: 'block', color: '#FCD34D', marginBottom: 4, fontSize: 13 }}>AI Study Coach</strong>
+              <span style={{ lineHeight: 1.5, display: 'block' }}>Your English essay is scoring highly! Try reviewing Math quadratic formulas tonight to keep your grade trending up.</span>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Puzzles CTA Banner */}
       <div
-        className="card"
+        className="card flex-mobile-col"
         onClick={() => navigate('/puzzles')}
         style={{
           background: 'linear-gradient(135deg, var(--bg-surface-raised), var(--bg-surface))',
@@ -354,7 +356,7 @@ export default function StudentDashboard() {
             </span>
           </div>
           <div className="card-body" style={{ padding: '16px 0 0 0' }}>
-            <div style={{ width: '100%', height: 250 }}>
+            <div className="student-chart-container">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={chartData} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />

@@ -70,8 +70,8 @@ export default function AcademicYearsPage() {
       </div>
 
       {/* Filter and Sort Bar */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, background: 'var(--bg-surface)', padding: 16, borderRadius: 12, border: '1px solid var(--border-color)' }}>
-        <div style={{ display: 'flex', gap: 8 }}>
+      <div className="flex-mobile-col" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, background: 'var(--bg-surface)', padding: 16, borderRadius: 12, border: '1px solid var(--border-color)' }}>
+        <div style={{ display: 'flex', gap: 8, overflowX: 'auto', whiteSpace: 'nowrap', maxWidth: '100%', paddingBottom: 4 }}>
           {['All', 'Active', 'Upcoming', 'Archived'].map(status => (
             <button 
               key={status}
@@ -101,7 +101,7 @@ export default function AcademicYearsPage() {
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 24, position: 'relative' }}>
         {/* Vertical Timeline Line */}
-        <div style={{ position: 'absolute', left: 24, top: 20, bottom: 20, width: 2, background: 'var(--border-color)', zIndex: 0 }} />
+        <div className="hide-on-mobile" style={{ position: 'absolute', left: 24, top: 20, bottom: 20, width: 2, background: 'var(--border-color)', zIndex: 0 }} />
 
         {displayedYears.map((year: any) => {
           const isActive = year.status === 'ACTIVE';
@@ -144,7 +144,7 @@ export default function AcademicYearsPage() {
           return (
             <div 
               key={year.id} 
-              className="card" 
+              className="card no-margin-on-mobile" 
               style={{ 
                 marginLeft: 64, 
                 position: 'relative', 
@@ -165,7 +165,7 @@ export default function AcademicYearsPage() {
               }}
             >
               {/* Timeline Dot */}
-              <div style={{ 
+              <div className="hide-on-mobile" style={{ 
                 position: 'absolute', 
                 left: -49, 
                 top: isArchived ? 20 : 32, 

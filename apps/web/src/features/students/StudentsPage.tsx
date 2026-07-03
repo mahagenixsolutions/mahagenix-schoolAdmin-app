@@ -168,7 +168,7 @@ export default function StudentsPage() {
         </div>
       )}
 
-      <div className="page-header">
+      <div className="page-header flex-mobile-col" style={{ gap: 16 }}>
         <div>
           <h1 className="page-title">Students</h1>
           <p className="page-subtitle">
@@ -189,7 +189,7 @@ export default function StudentsPage() {
       <div className="card" style={{ marginBottom: 20 }}>
         <div className="card-body" style={{ padding: '16px 20px' }}>
           <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
-            <div className="search-bar" style={{ flex: 1, minWidth: 240 }}>
+            <div className="search-bar" style={{ flex: '1 1 auto', minWidth: 160, width: '100%' }}>
               <span className="search-bar-icon">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--text-muted)">
                   <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
@@ -206,7 +206,7 @@ export default function StudentsPage() {
             </div>
             <select 
               className="form-select" 
-              style={{ width: 160 }}
+              style={{ width: '100%', flex: '1 1 auto', minWidth: 120 }}
               value={classFilter}
               onChange={(e) => { setClassFilter(e.target.value); setPage(1); }}
             >
@@ -217,7 +217,7 @@ export default function StudentsPage() {
             </select>
             <select 
               className="form-select" 
-              style={{ width: 140 }}
+              style={{ width: '100%', flex: '1 1 auto', minWidth: 120 }}
               value={statusFilter}
               onChange={(e) => { setStatusFilter(e.target.value); setPage(1); }}
             >
@@ -229,7 +229,7 @@ export default function StudentsPage() {
             </select>
             <select 
               className="form-select" 
-              style={{ width: 140 }}
+              style={{ width: '100%', flex: '1 1 auto', minWidth: 120 }}
               value={genderFilter}
               onChange={(e) => { setGenderFilter(e.target.value); setPage(1); }}
             >
@@ -302,7 +302,7 @@ export default function StudentsPage() {
               <button onClick={() => setShowAdd(false)} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', fontSize: 18, cursor: 'pointer' }} disabled={isProcessing}>✕</button>
             </div>
             <form onSubmit={handleAddStudentSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+              <div className="grid-2" style={{ gap: 12 }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                   <label style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>First Name</label>
                   <input type="text" required value={newStudent.firstName} onChange={e => setNewStudent({ ...newStudent, firstName: e.target.value })} placeholder="Aanya" style={{ padding: '8px 12px', border: '1px solid var(--border-color)', borderRadius: 8, background: 'var(--bg-body)', color: 'var(--text-primary)' }} />
@@ -316,7 +316,7 @@ export default function StudentsPage() {
                 <label style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Student Email</label>
                 <input type="email" required value={newStudent.email} onChange={e => setNewStudent({ ...newStudent, email: e.target.value })} placeholder="aanya.sharma@edutrack.edu" style={{ padding: '8px 12px', border: '1px solid var(--border-color)', borderRadius: 8, background: 'var(--bg-body)', color: 'var(--text-primary)' }} />
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+              <div className="grid-2" style={{ gap: 12 }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                   <label style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Class Cohort</label>
                   <select value={newStudent.classId} onChange={e => setNewStudent({ ...newStudent, classId: e.target.value })} style={{ padding: '8px 12px', border: '1px solid var(--border-color)', borderRadius: 8, background: 'var(--bg-body)', color: 'var(--text-primary)' }}>

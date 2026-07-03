@@ -97,15 +97,10 @@ export default function StudentDetailPage() {
       </div>
 
       {/* Main 3-Column Layout */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'minmax(280px, 320px) 1fr minmax(280px, 320px)',
-        gap: 24,
-        alignItems: 'start'
-      }}>
+      <div className="student-grid">
         
         {/* COLUMN 1: Identity & Vital Signs (Sticky) */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 24, position: 'sticky', top: 24 }}>
+        <div className="sticky-desktop" style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
           {/* Identity Card */}
           <div className="card border-glow" style={{ borderRadius: 16, overflow: 'hidden' }}>
             <div style={{ height: 80, background: 'linear-gradient(135deg, var(--color-primary), var(--color-primary-light))' }} />

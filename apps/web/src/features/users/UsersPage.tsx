@@ -100,7 +100,7 @@ export default function UsersPage() {
 
   return (
     <div>
-      <div className="page-header">
+      <div className="page-header flex-mobile-col" style={{ gap: 16 }}>
         <div>
           <h1 className="page-title">👥 Staff Registry</h1>
           <p className="page-subtitle">Add, manage, and update roles or active statuses for school staff</p>
@@ -110,83 +110,85 @@ export default function UsersPage() {
 
       <div className="card">
         <div className="card-body" style={{ padding: 0 }}>
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Staff Member</th>
-                <th>Email Address</th>
-                <th>Phone Number</th>
-                <th>Access Role</th>
-                <th>Status</th>
-                <th style={{ textAlign: 'right' }}>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {staffList && staffList.length > 0 ? (
-                staffList.map((staff) => {
-                  const initials = `${staff.first_name[0] || ''}${staff.last_name[0] || ''}`.toUpperCase();
-                  const isActive = staff.status === 'ACTIVE';
-
-                  return (
-                    <tr key={staff.id}>
-                      <td>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                          <div
-                            className="avatar-fallback"
-                            style={{
-                              width: 36,
-                              height: 36,
-                              fontSize: 12,
-                              fontWeight: 700,
-                              background: 'linear-gradient(135deg, var(--color-primary), var(--color-primary-light))',
-                              color: 'white',
-                            }}
-                          >
-                            {initials}
-                          </div>
-                          <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>
-                            {staff.first_name} {staff.last_name}
-                          </div>
-                        </div>
-                      </td>
-                      <td>{staff.email}</td>
-                      <td>{staff.phone || '—'}</td>
-                      <td>
-                        <span className="badge badge-primary" style={{ fontSize: 11 }}>
-                          {staff.role}
-                        </span>
-                      </td>
-                      <td>
-                        <span className={`badge badge-${isActive ? 'present' : 'absent'}`} style={{ fontSize: 10 }}>
-                          {staff.status}
-                        </span>
-                      </td>
-                      <td>
-                        <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
-                          <button className="btn btn-secondary btn-xs" onClick={() => handleEditClick(staff)}>
-                            ✏️ Edit
-                          </button>
-                          <button
-                            className={`btn btn-xs ${isActive ? 'btn-ghost' : 'btn-ghost'}`}
-                            style={{ color: isActive ? 'var(--color-danger)' : 'var(--color-secondary)' }}
-                            onClick={() => toggleStatus(staff)}
-                          >
-                            {isActive ? '🚫 Deactivate' : '⚡ Activate'}
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })
-              ) : (
+          <div className="table-responsive">
+            <table className="table">
+              <thead>
                 <tr>
-                  <td colSpan={6} style={{ textAlign: 'center', padding: 24, color: 'var(--text-muted)' }}>
-                    No staff records found in registry.
-                  </td>
+                  <th>Staff Member</th>
+                  <th>Email Address</th>
+                  <th>Phone Number</th>
+                  <th>Access Role</th>
+                  <th>Status</th>
+                  <th style={{ textAlign: 'right' }}>Actions</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {staffList && staffList.length > 0 ? (
+                  staffList.map((staff) => {
+                    const initials = `${staff.first_name[0] || ''}${staff.last_name[0] || ''}`.toUpperCase();
+                    const isActive = staff.status === 'ACTIVE';
+
+                    return (
+                      <tr key={staff.id}>
+                        <td>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                            <div
+                              className="avatar-fallback"
+                              style={{
+                                width: 36,
+                                height: 36,
+                                fontSize: 12,
+                                fontWeight: 700,
+                                background: 'linear-gradient(135deg, var(--color-primary), var(--color-primary-light))',
+                                color: 'white',
+                              }}
+                            >
+                              {initials}
+                            </div>
+                            <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>
+                              {staff.first_name} {staff.last_name}
+                            </div>
+                          </div>
+                        </td>
+                        <td>{staff.email}</td>
+                        <td>{staff.phone || '—'}</td>
+                        <td>
+                          <span className="badge badge-primary" style={{ fontSize: 11 }}>
+                            {staff.role}
+                          </span>
+                        </td>
+                        <td>
+                          <span className={`badge badge-${isActive ? 'present' : 'absent'}`} style={{ fontSize: 10 }}>
+                            {staff.status}
+                          </span>
+                        </td>
+                        <td>
+                          <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+                            <button className="btn btn-secondary btn-xs" onClick={() => handleEditClick(staff)}>
+                              ✏️ Edit
+                            </button>
+                            <button
+                              className={`btn btn-xs ${isActive ? 'btn-ghost' : 'btn-ghost'}`}
+                              style={{ color: isActive ? 'var(--color-danger)' : 'var(--color-secondary)' }}
+                              onClick={() => toggleStatus(staff)}
+                            >
+                              {isActive ? '🚫 Deactivate' : '⚡ Activate'}
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })
+                ) : (
+                  <tr>
+                    <td colSpan={6} style={{ textAlign: 'center', padding: 24, color: 'var(--text-muted)' }}>
+                      No staff records found in registry.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
@@ -196,7 +198,7 @@ export default function UsersPage() {
           <form onSubmit={handleAddSubmit} className="card" style={{ width: 440, padding: 20, gap: 12, display: 'flex', flexDirection: 'column' }}>
             <h3 style={{ margin: 0, color: 'var(--text-primary)' }}>Register New Staff</h3>
             
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+            <div className="grid-2" style={{ gap: 12 }}>
               <div className="form-group" style={{ margin: 0 }}>
                 <label className="form-label">First Name</label>
                 <input type="text" className="form-input" required value={firstName} onChange={(e) => setFirstName(e.target.value)} />
@@ -239,7 +241,7 @@ export default function UsersPage() {
           <form onSubmit={handleEditSubmit} className="card" style={{ width: 440, padding: 20, gap: 12, display: 'flex', flexDirection: 'column' }}>
             <h3 style={{ margin: 0, color: 'var(--text-primary)' }}>Edit Staff Account</h3>
             
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+            <div className="grid-2" style={{ gap: 12 }}>
               <div className="form-group" style={{ margin: 0 }}>
                 <label className="form-label">First Name</label>
                 <input type="text" className="form-input" required value={editFirstName} onChange={(e) => setEditFirstName(e.target.value)} />

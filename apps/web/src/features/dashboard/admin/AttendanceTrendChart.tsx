@@ -83,77 +83,81 @@ export default function AttendanceTrendChart() {
             </div>
           </div>
         ) : (
-          <ResponsiveContainer width="100%" height={240}>
-            <AreaChart
-              data={data?.months || []}
-              margin={{ top: 10, right: 20, left: 10, bottom: 0 }}
-            >
-              <defs>
-                <linearGradient id="attendanceGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="var(--accent-primary)" stopOpacity={0.4} />
-                  <stop offset="95%" stopColor="var(--accent-primary)" stopOpacity={0} />
-                </linearGradient>
-                <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
-                  <feGaussianBlur stdDeviation="4" result="blur" />
-                  <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                </filter>
-              </defs>
-              <CartesianGrid vertical={false} stroke="var(--border-subtle)" strokeDasharray="3 3" />
-              <XAxis
-                dataKey="label"
-                tick={{ fontSize: 12, fill: 'var(--text-muted)', fontWeight: 600 }}
-                axisLine={false}
-                tickLine={false}
-                dy={10}
-              />
-              <YAxis
-                tick={{ fontSize: 12, fill: 'var(--text-muted)', fontWeight: 600 }}
-                axisLine={false}
-                tickLine={false}
-                domain={[0, 100]}
-                unit="%"
-                dx={-5}
-              />
-              <Tooltip
-                contentStyle={{
-                  background: 'var(--bg-surface-raised)',
-                  border: '1px solid var(--border-subtle)',
-                  borderRadius: 8,
-                  fontSize: 13,
-                  boxShadow: '0 10px 24px rgba(0,0,0,0.5)',
-                  color: 'var(--text-primary)',
-                  fontWeight: 600,
-                }}
-                formatter={(v: number, name: string, props: any) => [
-                  `${v}% (${props.payload.count} records)`,
-                  'Attendance',
-                ]}
-              />
-              <ReferenceLine
-                y={85}
-                stroke="var(--accent-success)"
-                strokeDasharray="4 4"
-                label={{
-                  position: 'insideTopLeft',
-                  value: 'Target 85%',
-                  fill: 'var(--accent-success)',
-                  fontSize: 11,
-                  fontWeight: 600,
-                  dy: -10,
-                }}
-              />
-              <Area
-                type="monotone"
-                dataKey="rate"
-                stroke="var(--accent-primary)"
-                strokeWidth={3}
-                fill="url(#attendanceGrad)"
-                dot={{ fill: 'var(--bg-canvas)', r: 4, stroke: 'var(--accent-primary)', strokeWidth: 2 }}
-                activeDot={{ r: 6, strokeWidth: 0, fill: 'var(--accent-primary)', filter: 'url(#neonGlow)' }}
-                style={{ filter: 'url(#neonGlow)' }}
-              />
-            </AreaChart>
-          </ResponsiveContainer>
+          <div className="chart-scrollable-container">
+            <div className="dashboard-chart-wrapper chart-scrollable-inner">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart
+                  data={data?.months || []}
+                  margin={{ top: 10, right: 20, left: 10, bottom: 0 }}
+                >
+                  <defs>
+                    <linearGradient id="attendanceGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="var(--accent-primary)" stopOpacity={0.4} />
+                      <stop offset="95%" stopColor="var(--accent-primary)" stopOpacity={0} />
+                    </linearGradient>
+                    <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="4" result="blur" />
+                      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                    </filter>
+                  </defs>
+                  <CartesianGrid vertical={false} stroke="var(--border-subtle)" strokeDasharray="3 3" />
+                  <XAxis
+                    dataKey="label"
+                    tick={{ fontSize: 12, fill: 'var(--text-muted)', fontWeight: 600 }}
+                    axisLine={false}
+                    tickLine={false}
+                    dy={10}
+                  />
+                  <YAxis
+                    tick={{ fontSize: 12, fill: 'var(--text-muted)', fontWeight: 600 }}
+                    axisLine={false}
+                    tickLine={false}
+                    domain={[0, 100]}
+                    unit="%"
+                    dx={-5}
+                  />
+                  <Tooltip
+                    contentStyle={{
+                      background: 'var(--bg-surface-raised)',
+                      border: '1px solid var(--border-subtle)',
+                      borderRadius: 8,
+                      fontSize: 13,
+                      boxShadow: '0 10px 24px rgba(0,0,0,0.5)',
+                      color: 'var(--text-primary)',
+                      fontWeight: 600,
+                    }}
+                    formatter={(v: number, name: string, props: any) => [
+                      `${v}% (${props.payload.count} records)`,
+                      'Attendance',
+                    ]}
+                  />
+                  <ReferenceLine
+                    y={85}
+                    stroke="var(--accent-success)"
+                    strokeDasharray="4 4"
+                    label={{
+                      position: 'insideTopLeft',
+                      value: 'Target 85%',
+                      fill: 'var(--accent-success)',
+                      fontSize: 11,
+                      fontWeight: 600,
+                      dy: -10,
+                    }}
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="rate"
+                    stroke="var(--accent-primary)"
+                    strokeWidth={3}
+                    fill="url(#attendanceGrad)"
+                    dot={{ fill: 'var(--bg-canvas)', r: 4, stroke: 'var(--accent-primary)', strokeWidth: 2 }}
+                    activeDot={{ r: 6, strokeWidth: 0, fill: 'var(--accent-primary)', filter: 'url(#neonGlow)' }}
+                    style={{ filter: 'url(#neonGlow)' }}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
         )}
       </div>
     </div>

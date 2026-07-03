@@ -49,7 +49,7 @@ export default function TeacherDashboard() {
 
   return (
     <div>
-      <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div className="page-header flex-mobile-col" style={{ justifyContent: 'space-between', alignItems: 'flex-start', gap: 16 }}>
         <div>
           <h1 className="page-title">
             {greeting}, {user?.first_name}! 👋
@@ -102,42 +102,44 @@ export default function TeacherDashboard() {
             {kpis?.students_at_risk?.length === 0 ? (
               <p style={{ color: 'var(--text-muted)' }}>No students currently at risk.</p>
             ) : (
-              <table className="table" style={{ width: '100%', textAlign: 'left' }}>
-                <thead>
-                  <tr>
-                    <th>Student</th>
-                    <th>Risk Factor</th>
-                    <th>Level</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {kpis?.students_at_risk?.map((risk: any, i: number) => (
-                    <tr 
-                      key={i} 
-                      onClick={() => navigate(`/students/${risk.student?.id}`)}
-                      style={{ 
-                        borderBottom: '1px solid var(--border-color)',
-                        cursor: 'pointer',
-                        transition: 'background 0.2s',
-                      }}
-                      onMouseEnter={(e) => e.currentTarget.style.background = 'var(--bg-secondary)'}
-                      onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
-                    >
-                      <td style={{ padding: '12px 0 12px 8px', fontWeight: 600, color: 'var(--text-primary)' }}>{risk.student?.full_name}</td>
-                      <td style={{ padding: '12px 0', color: 'var(--text-muted)' }}>
-                        {risk.risk_factors.join(', ')}
-                      </td>
-                      <td style={{ padding: '12px 8px 12px 0' }}>
-                        <span
-                          className={`badge badge-${risk.risk_level === 'HIGH' ? 'danger' : 'warning'}`}
-                        >
-                          {risk.risk_level}
-                        </span>
-                      </td>
+              <div className="table-responsive">
+                <table className="table" style={{ width: '100%', textAlign: 'left' }}>
+                  <thead>
+                    <tr>
+                      <th>Student</th>
+                      <th>Risk Factor</th>
+                      <th>Level</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {kpis?.students_at_risk?.map((risk: any, i: number) => (
+                      <tr 
+                        key={i} 
+                        onClick={() => navigate(`/students/${risk.student?.id}`)}
+                        style={{ 
+                          borderBottom: '1px solid var(--border-color)',
+                          cursor: 'pointer',
+                          transition: 'background 0.2s',
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.background = 'var(--bg-secondary)'}
+                        onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                      >
+                        <td style={{ padding: '12px 0 12px 8px', fontWeight: 600, color: 'var(--text-primary)' }}>{risk.student?.full_name}</td>
+                        <td style={{ padding: '12px 0', color: 'var(--text-muted)' }}>
+                          {risk.risk_factors.join(', ')}
+                        </td>
+                        <td style={{ padding: '12px 8px 12px 0' }}>
+                          <span
+                            className={`badge badge-${risk.risk_level === 'HIGH' ? 'danger' : 'warning'}`}
+                          >
+                            {risk.risk_level}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             )}
           </div>
         </div>

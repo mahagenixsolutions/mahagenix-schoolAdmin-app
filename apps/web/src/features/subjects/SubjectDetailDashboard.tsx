@@ -55,8 +55,8 @@ export default function SubjectDetailDashboard() {
   return (
     <div style={{ paddingBottom: 40 }}>
       {/* HEADER */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+      <div className="flex-mobile-col" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 24, gap: 16 }}>
+        <div className="flex-mobile-col" style={{ display: 'flex', alignItems: 'flex-start', gap: 16 }}>
           <button className="btn" onClick={() => navigate(-1)} style={{ padding: '8px 12px' }}>← Back</button>
           <div>
             <h1 className="page-title" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -70,7 +70,7 @@ export default function SubjectDetailDashboard() {
       </div>
 
       {/* BENTO GRID LAYOUT */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: 16, gridAutoRows: 'minmax(100px, auto)' }}>
+      <div className="bento-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: 16, gridAutoRows: 'minmax(100px, auto)' }}>
         
         {/* KPI CARDS (Row 1) */}
         <KPICard title="Total Classes" value={dashboard.kpis.totalClasses} icon="🏫" colSpan={3} />

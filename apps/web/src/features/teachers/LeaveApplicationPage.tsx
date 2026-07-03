@@ -44,7 +44,7 @@ export default function LeaveApplicationPage() {
             </select>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+          <div className="grid-2" style={{ gap: 16 }}>
             <div className="form-group">
               <label style={{ display: 'block', marginBottom: 8, fontWeight: 600, color: 'var(--text-primary)', fontSize: 14 }}>Start Date</label>
               <input type="date" required value={startDate} onChange={e => setStartDate(e.target.value)} style={{ width: '100%', padding: '12px 14px', borderRadius: 8, border: '1px solid var(--border-color)', background: 'var(--bg-body)', color: 'var(--text-primary)', fontSize: 14, outline: 'none' }} />

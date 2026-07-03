@@ -47,7 +47,7 @@ export default function KeyInsightsStrip({ academicYearId }: { academicYearId: s
       }}>
         <i className="ti ti-bulb" /> Key Insights
       </h3>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
+      <div className="grid-3" style={{ gap: 24 }}>
         {data.insights.slice(0, 3).map((insight: InsightCardProps & { id: string }) => (
           <InsightCard key={insight.id} {...insight} />
         ))}

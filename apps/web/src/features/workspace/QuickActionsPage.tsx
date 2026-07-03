@@ -23,7 +23,7 @@ export default function QuickActionsPage() {
         <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
           
           {/* Global Search */}
-          <div style={{ display: 'flex', alignItems: 'center', background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '8px 16px', width: '240px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '8px 16px', width: '100%', minWidth: '200px', flex: '1 1 auto' }}>
             <Search size={16} className="text-muted" style={{ marginRight: 8 }} />
             <input 
               type="text" 
@@ -44,7 +44,7 @@ export default function QuickActionsPage() {
       </div>
 
       {/* 3-Column Mission Control Layout */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(250px, 1.2fr) minmax(600px, 3fr) minmax(250px, 1fr)', gap: '24px', alignItems: 'start' }}>
+      <div className="activity-layout-grid">
         
         {/* Left Sidebar: Context & AI */}
         <div className="command-sidebar-left">

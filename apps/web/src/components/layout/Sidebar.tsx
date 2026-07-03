@@ -46,7 +46,25 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
   }).filter((section) => section.items.length > 0);
 
   return (
-    <aside className={`sidebar${collapsed ? ' collapsed' : ''}`}>
+    <>
+      {/* Mobile Backdrop */}
+      {!collapsed && (
+        <div 
+          className="hidden-desktop"
+          onClick={onToggle}
+          style={{
+            position: 'fixed',
+            top: 0, left: 0, right: 0, bottom: 0,
+            background: 'rgba(0,0,0,0.5)',
+            backdropFilter: 'blur(4px)',
+            zIndex: 99,
+          }}
+        />
+      )}
+      <aside 
+        className={`sidebar${collapsed ? ' collapsed' : ''}`} 
+        style={{ zIndex: 100 }}
+      >
       {/* Logo */}
       <div className="sidebar-logo">
         <div className="sidebar-logo-icon">
@@ -183,6 +201,7 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
         </button>
       </div>
     </aside>
+    </>
   );
 }
 

@@ -91,57 +91,44 @@ export default function QuickActionsGrid() {
 
       <h3 style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 16 }}>Quick Actions</h3>
       
-      <div 
-        style={{ 
-          display: 'flex', 
-          gap: 16, 
-          overflowX: 'auto', 
-          scrollbarWidth: 'none', 
-          msOverflowStyle: 'none', 
-          paddingBottom: 4 
-        }}
-      >
-        <style>{`.quick-actions-strip::-webkit-scrollbar { display: none; }`}</style>
-        <div className="quick-actions-strip" style={{ display: 'flex', gap: 16, width: '100%' }}>
-          {ACTIONS.slice(0, 4).map(action => (
-            <button
-              key={action.label}
-              onClick={() => handleAction(action)}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 12,
-                padding: '12px 16px',
-                background: 'var(--bg-secondary)',
-                border: '1px solid var(--border-color)',
-                borderRadius: 'var(--radius-md)',
-                cursor: 'pointer',
-                textAlign: 'left',
-                transition: 'all 0.2s',
-                flex: '1 1 0',
-                minWidth: '220px'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = 'var(--color-primary)';
-                e.currentTarget.style.background = 'var(--bg-primary)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'var(--border-color)';
-                e.currentTarget.style.background = 'var(--bg-secondary)';
-              }}
-            >
-              <span style={{ 
-                color: 'var(--text-secondary)',
-                fontSize: 16,
-                display: 'flex',
-                alignItems: 'center'
-              }}>
-                {action.icon}
-              </span>
-              <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>{action.label}</span>
-            </button>
-          ))}
-        </div>
+      <div className="grid-4" style={{ gap: 16 }}>
+        {ACTIONS.slice(0, 4).map(action => (
+          <button
+            key={action.label}
+            onClick={() => handleAction(action)}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 12,
+              padding: '12px 16px',
+              background: 'var(--bg-secondary)',
+              border: '1px solid var(--border-color)',
+              borderRadius: 'var(--radius-md)',
+              cursor: 'pointer',
+              textAlign: 'left',
+              transition: 'all 0.2s',
+              width: '100%'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = 'var(--color-primary)';
+              e.currentTarget.style.background = 'var(--bg-primary)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = 'var(--border-color)';
+              e.currentTarget.style.background = 'var(--bg-secondary)';
+            }}
+          >
+            <span style={{ 
+              color: 'var(--text-secondary)',
+              fontSize: 16,
+              display: 'flex',
+              alignItems: 'center'
+            }}>
+              {action.icon}
+            </span>
+            <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>{action.label}</span>
+          </button>
+        ))}
       </div>
 
       {/* Modal Dialog */}

@@ -85,12 +85,7 @@ export default function KpiRow({
   ];
 
   return (
-    <div style={{
-      display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-      gap: '24px',
-      marginBottom: '24px'
-    }}>
+    <div className="stats-grid">
       {cards.map((card, idx) => (
         <KpiCard key={idx} {...card} />
       ))}

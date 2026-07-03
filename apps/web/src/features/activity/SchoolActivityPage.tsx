@@ -88,7 +88,7 @@ export default function SchoolActivityPage() {
       </div>
 
       {/* 3-Column Intelligence Center Layout */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(250px, 1fr) minmax(400px, 2.5fr) minmax(250px, 1fr)', gap: '24px', alignItems: 'start' }}>
+      <div className="activity-layout-grid">
         
         {/* Left Sidebar: Stats & Trends */}
         <div className="activity-sidebar-left">

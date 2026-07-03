@@ -230,7 +230,7 @@ function AdminDashboardInner({
   return (
     <div className="dashboard-grid">
       {/* [A] PAGE HEADER */}
-      <div className="col-span-12" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', paddingTop: 24, paddingBottom: 8 }}>
+      <div className="col-span-12 flex-mobile-col" style={{ justifyContent: 'space-between', alignItems: 'flex-start', paddingTop: 24, paddingBottom: 8 }}>
         <div>
           <h1 style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: 28, color: 'var(--text-primary)', margin: '0 0 8px 0', display: 'flex', alignItems: 'center', gap: 12 }}>
             {greeting}, {user?.first_name} 👋

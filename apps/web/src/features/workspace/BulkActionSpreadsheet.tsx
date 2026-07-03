@@ -68,7 +68,7 @@ export default function BulkActionSpreadsheet() {
       )}
 
       {/* Tabs Header */}
-      <div className="card-header border-b" style={{ padding: '0', display: 'flex', background: 'var(--bg-surface)' }}>
+      <div className="card-header border-b" style={{ padding: '0', display: 'flex', background: 'var(--bg-surface)', overflowX: 'auto', whiteSpace: 'nowrap' }}>
         {[
           { id: 'attendance', label: 'Attendance' },
           { id: 'marks', label: 'Marks & Grades' },
@@ -110,7 +110,7 @@ export default function BulkActionSpreadsheet() {
 
       {/* Spreadsheet Grid */}
       <div style={{ flex: 1, overflowX: 'auto', background: 'var(--bg-surface)' }}>
-        <table className="table" style={{ width: '100%', borderCollapse: 'collapse' }}>
+        <table className="table" style={{ width: '100%', minWidth: '600px', borderCollapse: 'collapse' }}>
           <thead style={{ background: 'var(--bg-body)' }}>
             <tr>
               <th style={{ width: '60px', textAlign: 'center' }}>Roll</th>

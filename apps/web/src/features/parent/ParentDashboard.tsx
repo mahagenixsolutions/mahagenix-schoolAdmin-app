@@ -124,7 +124,7 @@ export default function ParentDashboard() {
           </div>
         </div>
 
-        <div style={{ display: 'flex', gap: 12, marginTop: 24 }}>
+        <div className="flex-mobile-col" style={{ gap: 12, marginTop: 24 }}>
           <div style={{ flex: 1, background: 'var(--bg-secondary)', padding: '16px 12px', borderRadius: 16, textAlign: 'center', border: '1px solid var(--border-color)' }}>
             <div style={{ fontSize: 20, marginBottom: 4 }}>🏫</div>
             <div style={{ fontSize: 13, fontWeight: 800, color: 'var(--text-primary)' }}>{isPresentToday ? 'Present' : 'Absent'}</div>
@@ -145,7 +145,7 @@ export default function ParentDashboard() {
 
       {/* 2. ACTION CENTER */}
       {actionItemsCount > 0 && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <div className="flex-mobile-col" style={{ gap: 8 }}>
           {pendingFees.map((fee: any) => (
             <div key={fee.id} style={{ background: 'var(--alert-danger-bg)', border: '1px solid var(--alert-danger-border)', borderRadius: 16, padding: '14px 16px', display: 'flex', alignItems: 'center', gap: 12 }}>
               <div style={{ fontSize: 24 }}>💳</div>
@@ -170,7 +170,7 @@ export default function ParentDashboard() {
       )}
 
       {/* 3. TODAY'S SUMMARY & WELLBEING */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+      <div className="grid-2" style={{ gap: 16 }}>
         <div style={{ background: 'var(--bg-surface)', borderRadius: 20, padding: 20, boxShadow: 'var(--shadow-sm)', border: '1px solid var(--border-color)' }}>
           <h3 style={{ fontSize: 14, fontWeight: 800, color: 'var(--text-primary)', margin: '0 0 12px 0', display: 'flex', alignItems: 'center', gap: 8 }}><span>😊</span> Mood Today</h3>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -220,7 +220,7 @@ export default function ParentDashboard() {
       </div>
 
       {/* 5. SCHOOL NOTICES & EVENTS */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+      <div className="grid-2" style={{ gap: 16 }}>
         {/* Notices */}
         <div style={{ background: 'var(--bg-surface)', borderRadius: 24, padding: 20, boxShadow: 'var(--shadow-sm)', border: '1px solid var(--border-color)' }}>
           <h3 style={{ fontSize: 14, fontWeight: 800, color: 'var(--text-primary)', margin: '0 0 16px 0', display: 'flex', alignItems: 'center', gap: 8 }}><span>📢</span> School Notices</h3>

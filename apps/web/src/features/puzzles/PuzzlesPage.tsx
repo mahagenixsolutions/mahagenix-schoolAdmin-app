@@ -268,7 +268,7 @@ export default function PuzzlesPage() {
       </div>
 
       <div
-        className="grid-12"
+        className="grid-12 bento-grid"
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(12, 1fr)',
@@ -321,6 +321,7 @@ export default function PuzzlesPage() {
             />
 
             <div
+              className="flex-mobile-col"
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -445,6 +446,7 @@ export default function PuzzlesPage() {
 
           {/* Gamified counters banner */}
           <div
+            className="flex-mobile-col"
             style={{
               background: 'var(--bg-surface)',
               border: '1px solid var(--border-subtle)',

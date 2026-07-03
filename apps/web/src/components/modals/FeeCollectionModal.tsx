@@ -223,7 +223,7 @@ export default function FeeCollectionModal({ isOpen, onClose, data }: FeeCollect
               </div>
             ) : (
               <>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div className="grid-2" style={{ gap: '16px' }}>
                   {/* Select Class */}
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     <label style={{ fontSize: '12px', fontWeight: 600, color: '#cbd5e1' }}>Select Class</label>
@@ -271,7 +271,7 @@ export default function FeeCollectionModal({ isOpen, onClose, data }: FeeCollect
                   </div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div className="grid-2" style={{ gap: '16px' }}>
                   {/* Amount */}
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     <label style={{ fontSize: '12px', fontWeight: 600, color: '#cbd5e1' }}>Amount (₹)</label>
@@ -510,74 +510,76 @@ export default function FeeCollectionModal({ isOpen, onClose, data }: FeeCollect
               </div>
               
               <div className="modal-table-container">
-                <table className="modal-table">
-                  <thead>
-                    <tr>
-                      <th>Class</th>
-                      <th>Students</th>
-                      <th>Paid</th>
-                      <th>Pending</th>
-                      <th>Collected</th>
-                      <th>%</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {classBreakdown.map((row, idx) => {
-                      const threshold = getThresholdStyles(row.percent);
-                      return (
-                        <tr
-                          key={row.className}
-                          style={{
-                            opacity: isMounted ? 1 : 0,
-                            transform: isMounted ? 'translateY(0)' : 'translateY(8px)',
-                            transition: `opacity 400ms ease-out ${idx * 30}ms, transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1) ${idx * 30}ms`,
-                            background: idx % 2 === 1 ? 'rgba(255, 255, 255, 0.015)' : 'transparent',
-                          }}
-                        >
-                          <td style={{ borderLeft: `3px solid ${threshold.color}`, fontWeight: 600 }}>
-                            {row.className}
-                          </td>
-                          <td>{row.totalStudents}</td>
-                          <td style={{ color: '#10B981', fontWeight: 600 }}>{row.paidCount}</td>
-                          <td style={{ color: '#EF4444', fontWeight: 600 }}>{row.pendingCount}</td>
-                          <td>₹{formatCurrency(row.collectedAmount)}</td>
-                          <td>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                              <span style={{ fontWeight: 600, minWidth: '32px' }}>{row.percent}%</span>
-                              <div style={{
-                                width: '48px',
-                                height: '4px',
-                                backgroundColor: 'rgba(255, 255, 255, 0.06)',
-                                borderRadius: '2px',
-                                overflow: 'hidden',
-                              }}>
+                <div className="table-responsive">
+                  <table className="modal-table">
+                    <thead>
+                      <tr>
+                        <th>Class</th>
+                        <th>Students</th>
+                        <th>Paid</th>
+                        <th>Pending</th>
+                        <th>Collected</th>
+                        <th>%</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {classBreakdown.map((row, idx) => {
+                        const threshold = getThresholdStyles(row.percent);
+                        return (
+                          <tr
+                            key={row.className}
+                            style={{
+                              opacity: isMounted ? 1 : 0,
+                              transform: isMounted ? 'translateY(0)' : 'translateY(8px)',
+                              transition: `opacity 400ms ease-out ${idx * 30}ms, transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1) ${idx * 30}ms`,
+                              background: idx % 2 === 1 ? 'rgba(255, 255, 255, 0.015)' : 'transparent',
+                            }}
+                          >
+                            <td style={{ borderLeft: `3px solid ${threshold.color}`, fontWeight: 600 }}>
+                              {row.className}
+                            </td>
+                            <td>{row.totalStudents}</td>
+                            <td style={{ color: '#10B981', fontWeight: 600 }}>{row.paidCount}</td>
+                            <td style={{ color: '#EF4444', fontWeight: 600 }}>{row.pendingCount}</td>
+                            <td>₹{formatCurrency(row.collectedAmount)}</td>
+                            <td>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                <span style={{ fontWeight: 600, minWidth: '32px' }}>{row.percent}%</span>
                                 <div style={{
-                                  height: '100%',
-                                  backgroundColor: threshold.color,
-                                  width: isMounted ? `${row.percent}%` : '0%',
-                                  transition: 'width 900ms ease-out',
-                                }} />
+                                  width: '48px',
+                                  height: '4px',
+                                  backgroundColor: 'rgba(255, 255, 255, 0.06)',
+                                  borderRadius: '2px',
+                                  overflow: 'hidden',
+                                }}>
+                                  <div style={{
+                                    height: '100%',
+                                    backgroundColor: threshold.color,
+                                    width: isMounted ? `${row.percent}%` : '0%',
+                                    transition: 'width 900ms ease-out',
+                                  }} />
+                                </div>
                               </div>
-                            </div>
-                          </td>
-                          <td>
-                            <span 
-                              className="modal-badge"
-                              style={{
-                                backgroundColor: threshold.bgClass,
-                                color: threshold.color,
-                                border: `1px solid ${threshold.borderClass}`,
-                              }}
-                            >
-                              {threshold.status}
-                            </span>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
+                            </td>
+                            <td>
+                              <span 
+                                className="modal-badge"
+                                style={{
+                                  backgroundColor: threshold.bgClass,
+                                  color: threshold.color,
+                                  border: `1px solid ${threshold.borderClass}`,
+                                }}
+                              >
+                                {threshold.status}
+                              </span>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
 

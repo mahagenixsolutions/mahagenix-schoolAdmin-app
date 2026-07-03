@@ -31,12 +31,33 @@ const BREADCRUMB_MAP: Record<string, string> = {
 };
 
 export default function AppLayout() {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(() => window.innerWidth <= 1024);
+
+
   const user = useSelector((s: RootState) => s.auth.user);
   const selectedStudent = useSelector((s: RootState) => s.auth.selected_student);
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
+
+  // Auto-close sidebar on mobile when navigating or resizing
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 1024) {
+        setCollapsed(true);
+      } else {
+        setCollapsed(false);
+      }
+    };
+    
+    // Check initially on path change
+    if (window.innerWidth <= 1024) {
+      setCollapsed(true);
+    }
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [location.pathname]);
 
   const isParentOrStudent = user?.role === 'PARENT' || user?.role === 'STUDENT';
   const pageTitle = BREADCRUMB_MAP[location.pathname] || 'EduTrack AI';
@@ -107,7 +128,26 @@ export default function AppLayout() {
       <div className={`main-content${collapsed ? ' sidebar-collapsed' : ''}`} style={isParentOrStudent ? { marginLeft: 0 } : undefined}>
         {/* Topbar */}
         <header className="topbar">
-          <div className="topbar-left">
+          <div className="topbar-left" style={{ display: 'flex', alignItems: 'center' }}>
+            {!isParentOrStudent && (
+              <button
+                className="hidden-desktop"
+                onClick={() => setCollapsed(!collapsed)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: 'var(--text-primary)',
+                  cursor: 'pointer',
+                  padding: '4px',
+                  marginRight: '12px',
+                  display: 'flex',
+                }}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                </svg>
+              </button>
+            )}
             {isParentOrStudent ? (
               <div style={{ position: 'relative' }}>
                 <button
@@ -140,7 +180,7 @@ export default function AppLayout() {
                   >
                     {selectedStudent ? `${selectedStudent.first_name?.[0] ?? ''}${selectedStudent.last_name?.[0] ?? ''}`.toUpperCase() : '??'}
                   </div>
-                  <span>{selectedStudent ? `${selectedStudent.first_name} ${selectedStudent.last_name}` : 'Select Child'}</span>
+                  <span className="hidden-mobile">{selectedStudent ? `${selectedStudent.first_name} ${selectedStudent.last_name}` : 'Select Child'}</span>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{ transform: showChildDropdown ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}>
                     <path d="M7 10l5 5 5-5z" />
                   </svg>
@@ -228,7 +268,7 @@ export default function AppLayout() {
                 )}
               </div>
             ) : (
-              <div className="breadcrumb">
+              <div className="breadcrumb hidden-mobile">
                 <span>EduTrack AI</span>
                 <span>›</span>
                 <span className="breadcrumb-current">{pageTitle}</span>
@@ -239,7 +279,7 @@ export default function AppLayout() {
           <div className="topbar-right">
             {/* Global Search for Staff */}
             {!isParentOrStudent && (
-              <div className="search-bar" style={{ position: 'relative' }}>
+              <div className="search-bar hide-on-mobile" style={{ position: 'relative' }}>
                 <span className="search-bar-icon">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--text-muted)">
                     <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
@@ -349,6 +389,7 @@ export default function AppLayout() {
             {!isParentOrStudent && (
               <button
                 id="topbar-notifications"
+                className="hide-on-mobile"
                 onClick={() => navigate('/notifications')}
                 style={{
                   position: 'relative', background: 'var(--bg-secondary)',
@@ -403,7 +444,7 @@ export default function AppLayout() {
             </select>
 
             {/* User avatar menu */}
-            <div style={{ position: 'relative' }}>
+            <div className="hide-on-mobile" style={{ position: 'relative' }}>
               <div
                 onClick={() => setShowUserDropdown(!showUserDropdown)}
                 style={{
@@ -499,28 +540,29 @@ export default function AppLayout() {
 
 
 
-      {/* Parent Bottom Navigation (Mobile-first layout) */}
-      {isParentOrStudent && (
-        <nav
-          className="bottom-nav"
-          style={{
-            position: 'fixed',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: 64,
-            background: 'var(--bg-secondary)',
-            borderTop: '1px solid var(--border-color)',
-            display: 'flex',
-            justifyContent: 'space-around',
-            alignItems: 'center',
-            zIndex: 1000,
-            boxShadow: '0 -4px 16px rgba(0, 0, 0, 0.06)',
-            backdropFilter: 'blur(12px)',
-          }}
-        >
-          <NavLink
-            to="/dashboard"
+      {/* Bottom Navigation (Mobile-first layout) */}
+      <nav
+        className="bottom-nav hide-on-desktop"
+        style={{
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 64,
+          background: 'var(--bg-secondary)',
+          borderTop: '1px solid var(--border-color)',
+          display: 'flex',
+          justifyContent: 'space-around',
+          alignItems: 'center',
+          zIndex: 1000,
+          boxShadow: '0 -4px 16px rgba(0, 0, 0, 0.06)',
+          backdropFilter: 'blur(12px)',
+        }}
+      >
+        {isParentOrStudent ? (
+          <>
+            <NavLink
+              to="/dashboard"
             style={({ isActive }) => ({
               display: 'flex',
               flexDirection: 'column',
@@ -648,8 +690,114 @@ export default function AppLayout() {
             </svg>
             <span>Profile</span>
           </NavLink>
-        </nav>
-      )}
+          </>
+        ) : (
+          <div style={{ display: 'flex', width: '100%', alignItems: 'center', padding: '0 16px', gap: 12 }}>
+            <div className="search-bar" style={{ position: 'relative', flex: 1 }}>
+              <span className="search-bar-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--text-muted)">
+                  <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                </svg>
+              </span>
+              <input
+                type="search"
+                className="form-input"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={handleSearchChange}
+                onFocus={() => searchQuery.trim().length > 1 && setShowSearchResults(true)}
+                style={{ height: 38, fontSize: 13, paddingRight: 12, width: '100%' }}
+              />
+              {showSearchResults && (
+                <>
+                  <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 999 }} onClick={() => setShowSearchResults(false)} />
+                  <div
+                    style={{
+                      position: 'absolute',
+                      bottom: '100%',
+                      left: 0,
+                      right: 0,
+                      marginBottom: 8,
+                      background: 'var(--bg-secondary)',
+                      border: '1px solid var(--border-color)',
+                      borderRadius: 'var(--radius-md)',
+                      boxShadow: 'var(--shadow-lg)',
+                      zIndex: 1000,
+                      maxHeight: 320,
+                      overflowY: 'auto',
+                      padding: 6,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: 2,
+                    }}
+                  >
+                    {isSearching && <div style={{ padding: 12, textAlign: 'center', fontSize: 13, color: 'var(--text-muted)' }}>Searching...</div>}
+                    {!isSearching && (!searchResults?.data || searchResults.data.length === 0) && <div style={{ padding: 12, textAlign: 'center', fontSize: 13, color: 'var(--text-muted)' }}>No students found</div>}
+                    {!isSearching && searchResults?.data && searchResults.data.length > 0 && searchResults.data.map((student: any) => (
+                      <button
+                        key={student.id}
+                        onClick={() => { navigate(`/students/${student.id}`); setShowSearchResults(false); setSearchQuery(''); }}
+                        style={{ display: 'flex', alignItems: 'center', gap: 12, width: '100%', padding: '8px 12px', border: 'none', background: 'none', color: 'var(--text-primary)', borderRadius: 'var(--radius-sm)', cursor: 'pointer', textAlign: 'left' }}
+                      >
+                        <div style={{ fontSize: 13, fontWeight: 600 }}>{student.first_name} {student.last_name}</div>
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+            
+            <button
+              onClick={() => navigate('/notifications')}
+              style={{ position: 'relative', background: 'transparent', border: 'none', width: 38, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: 'var(--text-secondary)' }}
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+              </svg>
+              <span className="notif-dot" style={{ top: 8, right: 8 }} />
+            </button>
+
+            <div style={{ position: 'relative' }}>
+              <div
+                onClick={() => setShowUserDropdown(!showUserDropdown)}
+                style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+              >
+                <div
+                  className="avatar-fallback"
+                  style={{ width: 32, height: 32, background: 'linear-gradient(135deg, var(--color-primary), var(--color-primary-light))', color: 'white', fontSize: 11, fontWeight: 700 }}
+                >
+                  {user ? `${user.first_name?.[0] ?? ''}${user.last_name?.[0] ?? ''}` : '??'}
+                </div>
+              </div>
+              
+              {showUserDropdown && (
+                <>
+                  <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 999 }} onClick={() => setShowUserDropdown(false)} />
+                  <div
+                    style={{
+                      position: 'absolute', bottom: '100%', right: 0, marginBottom: 8, background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-lg)', zIndex: 1000, minWidth: 160, padding: 4, display: 'flex', flexDirection: 'column',
+                    }}
+                  >
+                    <div style={{ padding: '8px 12px', borderBottom: '1px solid var(--border-color)', margin: '0 0 4px 0' }}>
+                      <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>{user?.first_name} {user?.last_name}</div>
+                      <div style={{ fontSize: 10, color: 'var(--text-muted)' }}>{user?.email}</div>
+                    </div>
+                    <button
+                      onClick={handleLogout}
+                      style={{ display: 'flex', alignItems: 'center', gap: 8, width: '100%', padding: '8px 12px', border: 'none', background: 'none', color: 'var(--color-danger)', borderRadius: 'var(--radius-sm)', cursor: 'pointer', textAlign: 'left', fontSize: 13, fontWeight: 500 }}
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+                      </svg>
+                      <span>Logout</span>
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        )}
+      </nav>
     </div>
   );
 }

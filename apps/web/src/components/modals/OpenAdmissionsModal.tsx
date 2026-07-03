@@ -189,7 +189,7 @@ export default function OpenAdmissionsModal({ isOpen, onClose, data }: OpenAdmis
               </div>
             ) : (
               <>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div className="grid-2" style={{ gap: '16px' }}>
                   {/* Student Name */}
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     <label style={{ fontSize: '12px', fontWeight: 600, color: '#cbd5e1' }}>Applicant Student Name</label>
@@ -482,152 +482,154 @@ export default function OpenAdmissionsModal({ isOpen, onClose, data }: OpenAdmis
               </div>
 
               <div className="modal-table-container">
-                <table className="modal-table">
-                  <thead>
-                    <tr>
-                      <th>Applicant</th>
-                      <th>Class</th>
-                      <th>Applied On</th>
-                      <th>Parent</th>
-                      <th>Waiting</th>
-                      <th>Status</th>
-                      <th style={{ textAlign: 'center' }}>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {applications.map((app, idx) => {
-                      const badge = getStatusBadgeStyles(app.status);
-                      return (
-                        <tr
-                          key={app.id}
-                          style={{
-                            opacity: isMounted ? 1 : 0,
-                            transform: isMounted ? 'translateY(0)' : 'translateY(8px)',
-                            transition: `opacity 400ms ease-out ${idx * 40}ms, transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1) ${idx * 40}ms`,
-                            background: idx % 2 === 1 ? 'rgba(255, 255, 255, 0.015)' : 'transparent',
-                          }}
-                        >
-                          <td style={{ borderLeft: `3px solid #8B5CF6`, fontWeight: 600 }}>
-                            {app.studentName}
-                          </td>
-                          <td>{app.applyingForClass}</td>
-                          <td>{app.appliedDate}</td>
-                          <td>{app.parentName}</td>
-                          <td>
-                            {app.daysWaiting > 7 ? (
-                              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: '#EF4444', fontWeight: 600 }}>
-                                <span
-                                  className="pulse-dot-effect"
-                                  style={{
-                                    width: '8px',
-                                    height: '8px',
-                                    borderRadius: '50%',
-                                    backgroundColor: '#EF4444',
-                                    display: 'inline-block',
-                                  }}
-                                />
-                                {app.daysWaiting} days
-                              </span>
-                            ) : app.daysWaiting >= 4 ? (
-                              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: '#F59E0B', fontWeight: 600 }}>
-                                <span
-                                  style={{
-                                    width: '8px',
-                                    height: '8px',
-                                    borderRadius: '50%',
-                                    backgroundColor: '#F59E0B',
-                                    display: 'inline-block',
-                                  }}
-                                />
-                                {app.daysWaiting} days
-                              </span>
-                            ) : (
-                              <span style={{ color: '#9ca3af' }}>{app.daysWaiting} days</span>
-                            )}
-                          </td>
-                          <td>
-                            <span
-                              className="modal-badge"
-                              style={{
-                                backgroundColor: badge.bg,
-                                color: badge.color,
-                                border: `1px solid ${badge.border}`,
-                              }}
-                            >
-                              {app.status}
-                            </span>
-                          </td>
-                          <td>
-                            <div style={{ display: 'flex', justifyContent: 'center', gap: '8px' }}>
-                              <button
-                                onClick={() => {
-                                  onClose();
-                                  navigate(`/students`);
-                                }}
-                                title="View Details"
+                <div className="table-responsive">
+                  <table className="modal-table">
+                    <thead>
+                      <tr>
+                        <th>Applicant</th>
+                        <th>Class</th>
+                        <th>Applied On</th>
+                        <th>Parent</th>
+                        <th>Waiting</th>
+                        <th>Status</th>
+                        <th style={{ textAlign: 'center' }}>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {applications.map((app, idx) => {
+                        const badge = getStatusBadgeStyles(app.status);
+                        return (
+                          <tr
+                            key={app.id}
+                            style={{
+                              opacity: isMounted ? 1 : 0,
+                              transform: isMounted ? 'translateY(0)' : 'translateY(8px)',
+                              transition: `opacity 400ms ease-out ${idx * 40}ms, transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1) ${idx * 40}ms`,
+                              background: idx % 2 === 1 ? 'rgba(255, 255, 255, 0.015)' : 'transparent',
+                            }}
+                          >
+                            <td style={{ borderLeft: `3px solid #8B5CF6`, fontWeight: 600 }}>
+                              {app.studentName}
+                            </td>
+                            <td>{app.applyingForClass}</td>
+                            <td>{app.appliedDate}</td>
+                            <td>{app.parentName}</td>
+                            <td>
+                              {app.daysWaiting > 7 ? (
+                                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: '#EF4444', fontWeight: 600 }}>
+                                  <span
+                                    className="pulse-dot-effect"
+                                    style={{
+                                      width: '8px',
+                                      height: '8px',
+                                      borderRadius: '50%',
+                                      backgroundColor: '#EF4444',
+                                      display: 'inline-block',
+                                    }}
+                                  />
+                                  {app.daysWaiting} days
+                                </span>
+                              ) : app.daysWaiting >= 4 ? (
+                                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: '#F59E0B', fontWeight: 600 }}>
+                                  <span
+                                    style={{
+                                      width: '8px',
+                                      height: '8px',
+                                      borderRadius: '50%',
+                                      backgroundColor: '#F59E0B',
+                                      display: 'inline-block',
+                                    }}
+                                  />
+                                  {app.daysWaiting} days
+                                </span>
+                              ) : (
+                                <span style={{ color: '#9ca3af' }}>{app.daysWaiting} days</span>
+                              )}
+                            </td>
+                            <td>
+                              <span
+                                className="modal-badge"
                                 style={{
-                                  width: '32px',
-                                  height: '32px',
-                                  borderRadius: '8px',
-                                  border: 'none',
-                                  background: 'transparent',
-                                  color: '#9ca3af',
-                                  cursor: 'pointer',
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                  justifyContent: 'center',
-                                  transition: 'background-color 0.2s, color 0.2s',
-                                }}
-                                onMouseEnter={(e) => {
-                                  e.currentTarget.style.backgroundColor = 'rgba(79, 142, 247, 0.12)';
-                                  e.currentTarget.style.color = '#4F8EF7';
-                                }}
-                                onMouseLeave={(e) => {
-                                  e.currentTarget.style.backgroundColor = 'transparent';
-                                  e.currentTarget.style.color = '#9ca3af';
+                                  backgroundColor: badge.bg,
+                                  color: badge.color,
+                                  border: `1px solid ${badge.border}`,
                                 }}
                               >
-                                <i className="ti ti-eye" style={{ fontSize: '16px' }} />
-                              </button>
-                              <button
-                                onClick={() => handleApproveRow(app.id)}
-                                disabled={app.status === 'Approved'}
-                                title="Approve Applicant"
-                                style={{
-                                  width: '32px',
-                                  height: '32px',
-                                  borderRadius: '8px',
-                                  border: 'none',
-                                  background: 'transparent',
-                                  color: app.status === 'Approved' ? '#10B981' : '#9ca3af',
-                                  cursor: app.status === 'Approved' ? 'default' : 'pointer',
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                  justifyContent: 'center',
-                                  transition: 'background-color 0.2s, color 0.2s',
-                                }}
-                                onMouseEnter={(e) => {
-                                  if (app.status !== 'Approved') {
-                                    e.currentTarget.style.backgroundColor = 'rgba(16, 185, 129, 0.12)';
-                                    e.currentTarget.style.color = '#10B981';
-                                  }
-                                }}
-                                onMouseLeave={(e) => {
-                                  if (app.status !== 'Approved') {
+                                {app.status}
+                              </span>
+                            </td>
+                            <td>
+                              <div style={{ display: 'flex', justifyContent: 'center', gap: '8px' }}>
+                                <button
+                                  onClick={() => {
+                                    onClose();
+                                    navigate(`/students`);
+                                  }}
+                                  title="View Details"
+                                  style={{
+                                    width: '32px',
+                                    height: '32px',
+                                    borderRadius: '8px',
+                                    border: 'none',
+                                    background: 'transparent',
+                                    color: '#9ca3af',
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    transition: 'background-color 0.2s, color 0.2s',
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    e.currentTarget.style.backgroundColor = 'rgba(79, 142, 247, 0.12)';
+                                    e.currentTarget.style.color = '#4F8EF7';
+                                  }}
+                                  onMouseLeave={(e) => {
                                     e.currentTarget.style.backgroundColor = 'transparent';
                                     e.currentTarget.style.color = '#9ca3af';
-                                  }
-                                }}
-                              >
-                                <i className="ti ti-check" style={{ fontSize: '16px' }} />
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
+                                  }}
+                                >
+                                  <i className="ti ti-eye" style={{ fontSize: '16px' }} />
+                                </button>
+                                <button
+                                  onClick={() => handleApproveRow(app.id)}
+                                  disabled={app.status === 'Approved'}
+                                  title="Approve Applicant"
+                                  style={{
+                                    width: '32px',
+                                    height: '32px',
+                                    borderRadius: '8px',
+                                    border: 'none',
+                                    background: 'transparent',
+                                    color: app.status === 'Approved' ? '#10B981' : '#9ca3af',
+                                    cursor: app.status === 'Approved' ? 'default' : 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    transition: 'background-color 0.2s, color 0.2s',
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    if (app.status !== 'Approved') {
+                                      e.currentTarget.style.backgroundColor = 'rgba(16, 185, 129, 0.12)';
+                                      e.currentTarget.style.color = '#10B981';
+                                    }
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    if (app.status !== 'Approved') {
+                                      e.currentTarget.style.backgroundColor = 'transparent';
+                                      e.currentTarget.style.color = '#9ca3af';
+                                    }
+                                  }}
+                                >
+                                  <i className="ti ti-check" style={{ fontSize: '16px' }} />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
 
