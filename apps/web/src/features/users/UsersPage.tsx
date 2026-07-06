@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Button } from '../../components/ui/Button';
 import {
   useGetStaffQuery,
   useCreateStaffMutation,
@@ -105,7 +106,7 @@ export default function UsersPage() {
           <h1 className="page-title">👥 Staff Registry</h1>
           <p className="page-subtitle">Add, manage, and update roles or active statuses for school staff</p>
         </div>
-        <button className="btn btn-primary" onClick={() => setShowAddModal(true)}>+ Register Staff</button>
+        <Button variant="primary" onClick={() => setShowAddModal(true)}>+ Register Staff</Button>
       </div>
 
       <div className="card">
@@ -164,16 +165,17 @@ export default function UsersPage() {
                         </td>
                         <td>
                           <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
-                            <button className="btn btn-secondary btn-xs" onClick={() => handleEditClick(staff)}>
+                            <Button variant="secondary" size="xs" onClick={() => handleEditClick(staff)}>
                               ✏️ Edit
-                            </button>
-                            <button
-                              className={`btn btn-xs ${isActive ? 'btn-ghost' : 'btn-ghost'}`}
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="xs"
                               style={{ color: isActive ? 'var(--color-danger)' : 'var(--color-secondary)' }}
                               onClick={() => toggleStatus(staff)}
                             >
                               {isActive ? '🚫 Deactivate' : '⚡ Activate'}
-                            </button>
+                            </Button>
                           </div>
                         </td>
                       </tr>
@@ -228,8 +230,8 @@ export default function UsersPage() {
             </div>
 
             <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end', marginTop: 12 }}>
-              <button type="button" className="btn btn-secondary" onClick={() => setShowAddModal(false)}>Cancel</button>
-              <button type="submit" className="btn btn-primary">Register Account</button>
+              <Button type="button" variant="secondary" onClick={() => setShowAddModal(false)}>Cancel</Button>
+              <Button type="submit" variant="primary">Register Account</Button>
             </div>
           </form>
         </div>
@@ -275,8 +277,8 @@ export default function UsersPage() {
             </div>
 
             <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end', marginTop: 12 }}>
-              <button type="button" className="btn btn-secondary" onClick={() => setShowEditModal(false)}>Cancel</button>
-              <button type="submit" className="btn btn-primary">Save Changes</button>
+              <Button type="button" variant="secondary" onClick={() => setShowEditModal(false)}>Cancel</Button>
+              <Button type="submit" variant="primary">Save Changes</Button>
             </div>
           </form>
         </div>

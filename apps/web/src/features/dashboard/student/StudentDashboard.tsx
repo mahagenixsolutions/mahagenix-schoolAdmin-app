@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { Button } from '../../../components/ui/Button';
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -125,29 +126,20 @@ export default function StudentDashboard() {
                 <p style={{ opacity: 0.8, fontSize: 13, margin: 0 }}>
                   Class: {profile?.class ? `${profile.class.name} ${profile.class.section}` : 'Unassigned'} · Student ID: {profile?.student_code}
                 </p>
-                <button 
+                <Button 
+                  variant="secondary"
                   onClick={() => navigate('/leave-application')}
                   style={{ 
                     background: 'rgba(255, 255, 255, 0.2)', 
                     border: '1px solid rgba(255, 255, 255, 0.3)', 
                     color: 'white', 
-                    padding: '6px 14px', 
                     borderRadius: 20, 
-                    fontSize: 12, 
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: 6,
-                    transition: 'all 0.2s',
                     backdropFilter: 'blur(4px)',
                   }}
-                  onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.3)'}
-                  onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)'}
+                  startIcon={<Calendar size={14} />}
                 >
-                  <Calendar size={14} /> Apply for Leave
-                </button>
+                  Apply for Leave
+                </Button>
               </div>
             </div>
           </div>
@@ -211,22 +203,18 @@ export default function StudentDashboard() {
             </p>
           </div>
         </div>
-        <button
+        <Button
+          variant="primary"
           style={{
             background: 'linear-gradient(135deg, #EC4899, #8B5CF6)',
             color: 'white',
-            border: 'none',
             borderRadius: '20px',
-            padding: '8px 18px',
-            fontSize: 12,
-            fontWeight: 700,
-            cursor: 'pointer',
             whiteSpace: 'nowrap',
             boxShadow: '0 4px 12px rgba(236, 72, 153, 0.3)',
           }}
         >
           Let's Play &rarr;
-        </button>
+        </Button>
       </div>
 
       {/* KPI Cards Row */}

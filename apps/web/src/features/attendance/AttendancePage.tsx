@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { Button } from '../../components/ui/Button';
 import { useGetMarksClassesQuery, useGetMarksAcademicYearsQuery } from '../marks/marksApi';
 import { useGetClassAttendanceQuery, useBulkMarkAttendanceMutation } from './attendanceApi';
 import { CheckCircle } from 'lucide-react';
@@ -111,14 +112,15 @@ export default function AttendancePage() {
           <h1 className="page-title">📋 Attendance Entry</h1>
           <p className="page-subtitle">{today}</p>
         </div>
-        <button 
-          className="btn btn-primary" 
+        <Button 
+          variant="primary" 
           id="save-attendance-btn" 
           onClick={handleSave}
           disabled={isSaving || isRosterLoading || stats.total === 0}
+          loading={isSaving}
         >
-          {isSaving ? '⏳ Saving...' : '✅ Save Attendance'}
-        </button>
+          {isSaving ? 'Saving...' : '✅ Save Attendance'}
+        </Button>
       </div>
 
       {/* Quick Stats */}
@@ -169,14 +171,16 @@ export default function AttendancePage() {
           <div className="divider" style={{ height: 28, width: 1, margin: 0, background: 'var(--border-color)' }} />
           <span style={{ fontSize: 13, color: 'var(--text-muted)' }}>Mark all as:</span>
           {(['PRESENT', 'ABSENT', 'LATE', 'LEAVE'] as const).map(s => (
-            <button 
+            <Button 
               key={s} 
-              className={`btn btn-sm badge badge-${s.toLowerCase().replace('_','-')}`} 
-              style={{ cursor: 'pointer', border: '1px solid currentColor' }} 
+              variant="outline"
+              size="sm"
+              className={`badge-${s.toLowerCase().replace('_','-')}`} 
+              style={{ border: '1px solid currentColor' }} 
               onClick={() => markAll(s)}
             >
               {s}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
@@ -220,24 +224,22 @@ export default function AttendancePage() {
                   </div>
                   <div style={{ display: 'flex', gap: 4 }}>
                     {(['PRESENT', 'ABSENT', 'LATE', 'LEAVE'] as const).map(s => (
-                      <button
+                      <Button
                         key={s}
+                        variant="ghost"
                         onClick={() => mark(student.student_id, s)}
                         style={{
-                          padding: '4px 8px',
+                          padding: '4px 8px', height: 'auto',
                           border: `1px solid ${studentStatus === s ? 'currentColor' : 'var(--border-color)'}`,
-                          borderRadius: 'var(--radius-sm)',
-                          fontSize: 10, fontWeight: 600,
-                          cursor: 'pointer',
+                          fontSize: 10,
                           background: studentStatus === s
                             ? { PRESENT: 'var(--color-secondary)', ABSENT: 'var(--color-danger)', LATE: 'var(--color-warning)', LEAVE: 'var(--color-gray-400)' }[s]
                             : 'transparent',
                           color: studentStatus === s ? 'white' : 'var(--text-muted)',
-                          transition: 'var(--transition-fast)',
                         }}
                       >
                         {s[0]}
-                      </button>
+                      </Button>
                     ))}
                   </div>
                 </div>

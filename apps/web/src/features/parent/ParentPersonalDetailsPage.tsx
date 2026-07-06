@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import { Button } from '../../components/ui/Button';
 import type { RootState } from '../../store';
 import { 
   useGetParentStudentProfileQuery, 
@@ -113,7 +114,7 @@ export default function ParentPersonalDetailsPage() {
             </div>
             <div>
               <div style={{ fontSize: 11, color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.05em' }}>Vaccination File</div>
-              <button style={{ marginTop: 6, background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', padding: '6px 12px', borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>View Record</button>
+              <Button variant="secondary" size="xs" style={{ marginTop: 6 }}>View Record</Button>
             </div>
           </div>
         </div>
@@ -170,7 +171,7 @@ export default function ParentPersonalDetailsPage() {
                   <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)' }}>{f.title}</div>
                   <div style={{ fontSize: 11, color: '#10b981', fontWeight: 600 }}>PAID • ${f.amount}</div>
                 </div>
-                <button style={{ border: 'none', background: 'transparent', cursor: 'pointer', fontSize: 16 }}>⬇️</button>
+                <Button variant="ghost" size="icon">⬇️</Button>
               </div>
             )) : (
               <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>No paid invoices found.</div>
@@ -178,8 +179,8 @@ export default function ParentPersonalDetailsPage() {
 
             <div style={{ fontSize: 11, color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.05em', marginTop: 8, marginBottom: 4 }}>Official Documents</div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
-              <button style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-color)', padding: 12, borderRadius: 12, textAlign: 'center', cursor: 'pointer', fontWeight: 600, fontSize: 12, color: 'var(--text-primary)' }}>Report Cards</button>
-              <button style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-color)', padding: 12, borderRadius: 12, textAlign: 'center', cursor: 'pointer', fontWeight: 600, fontSize: 12, color: 'var(--text-primary)' }}>Birth Cert</button>
+              <Button variant="secondary" size="sm" fullWidth>Report Cards</Button>
+              <Button variant="secondary" size="sm" fullWidth>Birth Cert</Button>
             </div>
           </div>
         </div>

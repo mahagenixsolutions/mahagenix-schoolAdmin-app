@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { Button } from '../../components/ui/Button';
 import { useLoginMutation } from './authApi';
 import { setCredentials } from '../../store/authSlice';
 
@@ -92,13 +93,13 @@ export default function LoginPage() {
           <div className="form-group">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
               <label className="form-label auth-label" style={{ margin: 0 }}>Password</label>
-              <button
-                type="button"
-                style={{ background: 'none', border: 'none', color: 'var(--color-primary-light)', fontSize: 13, cursor: 'pointer' }}
+              <Button
+                variant="ghost"
+                style={{ padding: 0, height: 'auto', color: 'var(--color-primary-light)', fontSize: 13 }}
                 onClick={() => navigate('/forgot-password')}
               >
                 Forgot password?
-              </button>
+              </Button>
             </div>
             <div style={{ position: 'relative' }}>
               <input
@@ -111,13 +112,13 @@ export default function LoginPage() {
                 required
                 autoComplete="current-password"
               />
-              <button
-                type="button"
+              <Button
+                variant="ghost"
+                size="icon"
                 onClick={() => setShowPassword(!showPassword)}
                 style={{
-                  position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)',
-                  background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)',
-                  cursor: 'pointer', padding: 0,
+                  position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)',
+                  color: 'rgba(255,255,255,0.4)', padding: 0
                 }}
               >
                 {showPassword ? (
@@ -129,28 +130,21 @@ export default function LoginPage() {
                     <path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/>
                   </svg>
                 )}
-              </button>
+              </Button>
             </div>
           </div>
 
-          <button
+          <Button
             id="login-submit"
             type="submit"
-            className="btn btn-primary w-full"
+            variant="primary"
+            fullWidth
             disabled={isLoading}
-            style={{ marginTop: 8, padding: '12px', fontSize: 15, fontWeight: 600, position: 'relative' }}
+            loading={isLoading}
+            style={{ marginTop: 8, padding: '12px', fontSize: 15 }}
           >
-            {isLoading ? (
-              <>
-                <span style={{
-                  width: 16, height: 16, border: '2px solid rgba(255,255,255,0.3)',
-                  borderTopColor: 'white', borderRadius: '50%',
-                  animation: 'spin 0.8s linear infinite', display: 'inline-block',
-                }} />
-                Signing in...
-              </>
-            ) : 'Sign in'}
-          </button>
+            {isLoading ? 'Signing in...' : 'Sign in'}
+          </Button>
         </form>
 
         <div style={{ marginTop: 24, textAlign: 'center', fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>

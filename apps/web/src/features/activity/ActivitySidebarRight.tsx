@@ -1,4 +1,5 @@
 import { Trophy, CalendarClock, ChevronRight, Medal } from 'lucide-react';
+import { Button } from '../../components/ui/Button';
 import { mockContributors, mockUpcomingEvents } from './mockActivityData';
 
 export default function ActivitySidebarRight() {
@@ -39,9 +40,9 @@ export default function ActivitySidebarRight() {
             </div>
           ))}
           <div style={{ padding: '12px 20px 0 20px', textAlign: 'center' }}>
-            <button className="btn btn-ghost btn-sm" style={{ width: '100%', color: 'var(--color-primary)', fontSize: '13px' }}>
-              View Leaderboard <ChevronRight size={14} />
-            </button>
+            <Button variant="ghost" size="sm" endIcon={<ChevronRight size={14} />} style={{ width: '100%', color: 'var(--color-primary)', fontSize: '13px' }}>
+              View Leaderboard
+            </Button>
           </div>
         </div>
       </div>
@@ -65,9 +66,9 @@ export default function ActivitySidebarRight() {
               </div>
             ))}
           </div>
-          <button className="btn btn-outline btn-sm" style={{ width: '100%', marginTop: '20px', fontSize: '13px' }}>
+          <Button variant="outline" size="sm" style={{ width: '100%', marginTop: '20px', fontSize: '13px' }}>
             Full Calendar
-          </button>
+          </Button>
         </div>
       </div>
 

@@ -1,4 +1,5 @@
-import { useMemo, useState, type ReactNode } from 'react';
+import { useMemo, useState } from 'react';
+import { Button } from '../../components/ui/Button';
 import {
   Activity,
   BarChart3,
@@ -127,8 +128,12 @@ export default function AuditLogsPage() {
           <p>Search every action, isolate risky events, track user activity patterns, and let AI surface anomalies before they become incidents.</p>
         </div>
         <div className="hero-actions">
-          <button className="btn btn-secondary" onClick={handleExportCSV} disabled={isProcessing}><Download size={16} /> {isProcessing ? 'Exporting...' : 'Export audit CSV'}</button>
-          <button className="btn btn-primary" onClick={handleSecurityReview} disabled={isProcessing}><ShieldCheck size={16} /> Run security review</button>
+          <Button variant="secondary" onClick={handleExportCSV} disabled={isProcessing} loading={isProcessing}>
+            {!isProcessing && <Download size={16} />} {isProcessing ? 'Exporting...' : 'Export audit CSV'}
+          </Button>
+          <Button variant="primary" onClick={handleSecurityReview} disabled={isProcessing}>
+            <ShieldCheck size={16} /> Run security review
+          </Button>
         </div>
       </div>
 
@@ -147,10 +152,10 @@ export default function AuditLogsPage() {
         </div>
         <div className="pill-row">
           <Filter size={16} />
-          {eventTypes.map((item) => <button key={item} className={type === item ? 'active' : ''} onClick={() => setType(item)}>{item}</button>)}
+          {eventTypes.map((item) => <Button key={item} variant={type === item ? 'primary' : 'ghost'} onClick={() => setType(item)}>{item}</Button>)}
         </div>
         <div className="pill-row">
-          {severities.map((item) => <button key={item} className={severity === item ? 'active danger' : ''} onClick={() => setSeverity(item)}>{item}</button>)}
+          {severities.map((item) => <Button key={item} variant={severity === item ? 'primary' : 'ghost'} className={severity === item ? 'danger' : ''} onClick={() => setSeverity(item)}>{item}</Button>)}
         </div>
       </div>
 
@@ -166,17 +171,17 @@ export default function AuditLogsPage() {
             {filteredEvents.map((event) => {
               const colors = severityColor[event.severity];
               return (
-                <button key={event.id} className={`activity-row ${selectedEvent.id === event.id ? 'selected' : ''}`} onClick={() => setSelectedId(event.id)}>
-                  <div className="event-dot" style={{ background: colors.text }} />
+                <Button key={event.id} variant={selectedEvent.id === event.id ? 'primary' : 'ghost'} className={`activity-row ${selectedEvent.id === event.id ? 'selected' : ''}`} onClick={() => setSelectedId(event.id)} style={{ display: 'flex', textAlign: 'left', width: '100%', padding: '12px 16px', gap: '12px' }}>
+                  <div className="event-dot" style={{ background: colors.text, marginTop: 4 }} />
                   <div>
-                    <div className="row-title">
+                    <div className="row-title" style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
                       <strong>{event.action}</strong>
-                      <span style={{ background: colors.bg, color: colors.text, borderColor: colors.border }}>{event.severity}</span>
+                      <span style={{ background: colors.bg, color: colors.text, borderColor: colors.border, padding: '2px 8px', borderRadius: 9999, fontSize: 11, fontWeight: 600 }}>{event.severity}</span>
                     </div>
-                    <p>{event.actor} - {event.module} - {event.time}</p>
-                    <small>{event.detail}</small>
+                    <p style={{ margin: '4px 0', fontSize: 13 }}>{event.actor} - {event.module} - {event.time}</p>
+                    <small style={{ color: 'var(--text-muted)' }}>{event.detail}</small>
                   </div>
-                </button>
+                </Button>
               );
             })}
           </div>

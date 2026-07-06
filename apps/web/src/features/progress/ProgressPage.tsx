@@ -26,6 +26,7 @@ import {
   Bar,
   Cell,
 } from 'recharts';
+import { Button } from '../../components/ui/Button';
 
 // RTK Query APIs
 import {
@@ -334,15 +335,15 @@ function ProgressPageContent() {
           </p>
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
-          <button className={`btn btn-sm ${activeTab === 'entry' ? 'btn-primary' : 'btn-secondary'}`} onClick={() => setActiveTab('entry')}>
+          <Button variant={activeTab === 'entry' ? 'primary' : 'secondary'} size="sm" onClick={() => setActiveTab('entry')}>
             📊 Record Daily Progress
-          </button>
-          <button className={`btn btn-sm ${activeTab === 'analytics' ? 'btn-primary' : 'btn-secondary'}`} onClick={() => setActiveTab('analytics')}>
+          </Button>
+          <Button variant={activeTab === 'analytics' ? 'primary' : 'secondary'} size="sm" onClick={() => setActiveTab('analytics')}>
             📈 Analytics Dashboard
-          </button>
-          <button className="btn btn-secondary btn-sm" onClick={handleExport}>
+          </Button>
+          <Button variant="secondary" size="sm" onClick={handleExport}>
             📥 Export Report
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -459,8 +460,8 @@ function ProgressPageContent() {
               <span>{saveMessage}</span>
             </div>
             <div style={{ display: 'flex', gap: 8 }}>
-              <button className="btn btn-secondary btn-sm" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => handleBulkSetScore(90)}>🌟 Bulk Set Score (90)</button>
-              <button className="btn btn-secondary btn-sm" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => handleBulkSetScore(75)}>📈 Bulk Set Score (75)</button>
+              <Button variant="secondary" size="sm" onClick={() => handleBulkSetScore(90)}>🌟 Bulk Set Score (90)</Button>
+              <Button variant="secondary" size="sm" onClick={() => handleBulkSetScore(75)}>📈 Bulk Set Score (75)</Button>
             </div>
           </div>
 
@@ -513,13 +514,13 @@ function ProgressPageContent() {
 
                         {/* Name */}
                         <td>
-                          <button
-                            className="btn btn-ghost btn-sm"
-                            style={{ padding: 0, fontWeight: 600, color: 'var(--color-primary)', textAlign: 'left' }}
+                          <Button
+                            variant="ghost" size="sm"
+                            style={{ padding: 0, fontWeight: 600, color: 'var(--color-primary)', textAlign: 'left', justifyContent: 'flex-start' }}
                             onClick={() => setSelectedStudentId(row.student_id)}
                           >
                             {row.name}
-                          </button>
+                          </Button>
                         </td>
 
                         {/* Attendance (Merged indicator) */}
@@ -582,26 +583,28 @@ function ProgressPageContent() {
 
                         {/* Participation Sub-Ratings */}
                         <td>
-                          <button
-                            className="btn btn-secondary btn-sm"
+                          <Button
+                            variant="secondary"
+                            size="sm"
                             style={{ padding: '4px 8px', width: '100%', display: 'flex', justifyContent: 'center', gap: 4, fontSize: 12 }}
                             onClick={(e) => setActiveRatingPopover({ rowIdx: idx, type: 'participation', triggerEl: e.currentTarget })}
                           >
                             <Star size={11} fill="var(--color-warning)" stroke="var(--color-warning)" />
                             <span>{overParticipation}%</span>
-                          </button>
+                          </Button>
                         </td>
 
                         {/* Behavior Sub-Ratings */}
                         <td>
-                          <button
-                            className="btn btn-secondary btn-sm"
+                          <Button
+                            variant="secondary"
+                            size="sm"
                             style={{ padding: '4px 8px', width: '100%', display: 'flex', justifyContent: 'center', gap: 4, fontSize: 12 }}
                             onClick={(e) => setActiveRatingPopover({ rowIdx: idx, type: 'behavior', triggerEl: e.currentTarget })}
                           >
                             <Activity size={11} style={{ color: 'var(--color-primary-light)' }} />
                             <span>{overBehavior}%</span>
-                          </button>
+                          </Button>
                         </td>
 
                         {/* Class Activity Score */}
@@ -664,8 +667,9 @@ function ProgressPageContent() {
 
                         {/* Parent Shared */}
                         <td style={{ textAlign: 'center' }}>
-                          <button
-                            className="btn btn-ghost"
+                          <Button
+                            variant="ghost"
+                            size="sm"
                             style={{ padding: 4 }}
                             onClick={() => {
                               const updated = [...gridData];
@@ -679,7 +683,7 @@ function ProgressPageContent() {
                             ) : (
                               <EyeOff size={16} style={{ color: 'var(--text-muted)' }} />
                             )}
-                          </button>
+                          </Button>
                         </td>
 
                         {/* Last Updated */}
@@ -738,8 +742,8 @@ function ProgressPageContent() {
                     placeholder="Helper activity tag log..."
                     style={{ flex: 1 }}
                   />
-                  <button
-                    className="btn btn-primary btn-sm"
+                  <Button
+                    variant="primary" size="sm"
                     onClick={() => {
                       const input = document.getElementById('bulk-activities-input') as HTMLInputElement | null;
                       if (!input || !input.value.trim()) return;
@@ -759,7 +763,7 @@ function ProgressPageContent() {
                     }}
                   >
                     Apply Activity Log
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>
@@ -969,7 +973,7 @@ function RatingPopover({ row, type, triggerEl, onClose, onChange }: RatingPopove
         <h4 style={{ fontSize: 13, fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-secondary)' }}>
           {type === 'participation' ? '🗣️ Participation Star Matrix' : '🤝 Behavior Star Matrix'}
         </h4>
-        <button className="btn btn-ghost" style={{ padding: 2 }} onClick={onClose}><X size={14} /></button>
+        <Button variant="ghost" size="icon" style={{ padding: 2 }} onClick={onClose}><X size={14} /></Button>
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -980,9 +984,11 @@ function RatingPopover({ row, type, triggerEl, onClose, onChange }: RatingPopove
               <span style={{ fontSize: 12, fontWeight: 500 }}>{cat.label}</span>
               <div style={{ display: 'flex', gap: 3 }}>
                 {[1, 2, 3, 4, 5].map((star) => (
-                  <button
+                  <Button
                     key={star}
-                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                    variant="ghost"
+                    size="icon"
+                    style={{ padding: 0 }}
                     onClick={() => handleStarClick(cat.key, star)}
                   >
                     <Star
@@ -990,7 +996,7 @@ function RatingPopover({ row, type, triggerEl, onClose, onChange }: RatingPopove
                       fill={star <= starsVal ? 'var(--color-warning)' : 'none'}
                       stroke={star <= starsVal ? 'var(--color-warning)' : 'var(--color-gray-300)'}
                     />
-                  </button>
+                  </Button>
                 ))}
               </div>
             </div>
@@ -1106,13 +1112,13 @@ function StudentDetailDrawer({ studentId, onClose }: StudentDetailDrawerProps) {
             </p>
           </div>
         </div>
-        <button className="btn btn-ghost" style={{ padding: 4, color: 'white' }} onClick={onClose}><X size={20} /></button>
+        <Button variant="ghost" size="icon" style={{ color: 'white' }} onClick={onClose}><X size={20} /></Button>
       </div>
 
       {/* Drawer Tabs */}
       <div style={{ display: 'flex', borderBottom: '1px solid var(--border-color)', background: 'var(--bg-secondary)' }}>
-        <button
-          className="btn btn-ghost"
+        <Button
+          variant="ghost"
           style={{
             flex: 1, borderRadius: 0, padding: 12, fontSize: 13,
             borderBottom: activeTab === 'profile' ? '2.5px solid var(--color-primary)' : 'none',
@@ -1122,9 +1128,9 @@ function StudentDetailDrawer({ studentId, onClose }: StudentDetailDrawerProps) {
           onClick={() => setActiveTab('profile')}
         >
           👤 Profile
-        </button>
-        <button
-          className="btn btn-ghost"
+        </Button>
+        <Button
+          variant="ghost"
           style={{
             flex: 1, borderRadius: 0, padding: 12, fontSize: 13,
             borderBottom: activeTab === 'timeline' ? '2.5px solid var(--color-primary)' : 'none',
@@ -1134,9 +1140,9 @@ function StudentDetailDrawer({ studentId, onClose }: StudentDetailDrawerProps) {
           onClick={() => setActiveTab('timeline')}
         >
           📅 Timeline
-        </button>
-        <button
-          className="btn btn-ghost"
+        </Button>
+        <Button
+          variant="ghost"
           style={{
             flex: 1, borderRadius: 0, padding: 12, fontSize: 13,
             borderBottom: activeTab === 'trends' ? '2.5px solid var(--color-primary)' : 'none',
@@ -1146,9 +1152,9 @@ function StudentDetailDrawer({ studentId, onClose }: StudentDetailDrawerProps) {
           onClick={() => setActiveTab('trends')}
         >
           📈 Trends
-        </button>
-        <button
-          className="btn btn-ghost"
+        </Button>
+        <Button
+          variant="ghost"
           style={{
             flex: 1, borderRadius: 0, padding: 12, fontSize: 13,
             borderBottom: activeTab === 'ai' ? '2.5px solid var(--color-primary)' : 'none',
@@ -1158,7 +1164,7 @@ function StudentDetailDrawer({ studentId, onClose }: StudentDetailDrawerProps) {
           onClick={() => setActiveTab('ai')}
         >
           ✨ AI Insights
-        </button>
+        </Button>
       </div>
 
       {/* Drawer Body Scroll */}

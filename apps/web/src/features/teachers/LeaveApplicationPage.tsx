@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ArrowLeft, Send } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '../../components/ui/Button';
 
 export default function LeaveApplicationPage() {
   const navigate = useNavigate();
@@ -23,9 +24,9 @@ export default function LeaveApplicationPage() {
   return (
     <div className="page-container" style={{ padding: 24 }}>
       <div className="page-header" style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 24 }}>
-        <button onClick={() => navigate(-1)} style={{ padding: 8, background: 'transparent', border: 'none', color: 'var(--text-primary)', cursor: 'pointer', borderRadius: '50%' }}>
+        <Button variant="ghost" size="icon" onClick={() => navigate(-1)} style={{ borderRadius: '50%' }}>
           <ArrowLeft size={24} />
-        </button>
+        </Button>
         <div>
           <h1 className="page-title" style={{ margin: 0, fontSize: 24, fontWeight: 700, color: 'var(--text-primary)' }}>Apply for Leave</h1>
           <p className="page-subtitle" style={{ margin: '4px 0 0', color: 'var(--text-muted)' }}>Submit a leave request to the administration.</p>
@@ -61,10 +62,10 @@ export default function LeaveApplicationPage() {
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 12, marginTop: 8 }}>
-            <button type="button" onClick={() => navigate(-1)} style={{ padding: '10px 16px', background: 'transparent', border: '1px solid var(--border-color)', borderRadius: 8, color: 'var(--text-primary)', fontWeight: 600, cursor: 'pointer' }}>Cancel</button>
-            <button type="submit" disabled={isSubmitting} style={{ padding: '10px 20px', background: 'var(--color-primary)', border: 'none', borderRadius: 8, color: '#fff', fontWeight: 600, cursor: isSubmitting ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', gap: 8, opacity: isSubmitting ? 0.7 : 1 }}>
-              {isSubmitting ? 'Submitting...' : <><Send size={16} /> Submit Request</>}
-            </button>
+            <Button type="button" variant="outline" onClick={() => navigate(-1)}>Cancel</Button>
+            <Button type="submit" variant="primary" loading={isSubmitting} disabled={isSubmitting} startIcon={!isSubmitting && <Send size={16} />}>
+              Submit Request
+            </Button>
           </div>
         </form>
       </div>

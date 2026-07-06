@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Activity, Search, Filter } from 'lucide-react';
+import { Button } from '../../components/ui/Button';
 import ActivitySidebarLeft from './ActivitySidebarLeft';
 import ActivitySidebarRight from './ActivitySidebarRight';
 import ActivityFeedItem from './ActivityFeedItem';
@@ -66,24 +67,18 @@ export default function SchoolActivityPage() {
           <Filter size={16} /> <span style={{ fontSize: '13px', fontWeight: 500 }}>Filter:</span>
         </div>
         {filters.map(f => (
-          <button
+          <Button
             key={f}
+            variant={filter === f ? 'primary' : 'outline'}
             onClick={() => setFilter(f)}
             style={{
-              padding: '6px 16px',
               borderRadius: '20px',
-              fontSize: '13px',
-              fontWeight: 500,
-              cursor: 'pointer',
               whiteSpace: 'nowrap',
-              background: filter === f ? 'var(--color-primary)' : 'var(--bg-surface)',
-              color: filter === f ? '#fff' : 'var(--text-secondary)',
-              border: filter === f ? '1px solid var(--color-primary)' : '1px solid var(--border-color)',
-              transition: 'all 0.2s'
+              padding: '6px 16px', height: 'auto',
             }}
           >
             {f}
-          </button>
+          </Button>
         ))}
       </div>
 

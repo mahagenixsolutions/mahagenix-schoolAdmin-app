@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { Button } from '../../../components/ui/Button';
 import { useNavigate } from 'react-router-dom';
 import type { RootState } from '../../../store';
 import { useGetAcademicYearsQuery } from '../../academic-years/academicYearsApi';
@@ -250,17 +251,12 @@ function AdminDashboardInner({
         </div>
         <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
           <ExportReportDropdown />
-          <button 
-            style={{ 
-              background: 'var(--accent-primary)', color: '#fff', border: 'none', 
-              padding: '8px 16px', borderRadius: 'var(--radius-md)', 
-              fontSize: 13, fontWeight: 600, cursor: 'pointer',
-              display: 'flex', alignItems: 'center', gap: 6
-            }} 
+          <Button 
+            variant="primary"
             onClick={() => navigate('/students/new')}
           >
             + Add Student
-          </button>
+          </Button>
         </div>
       </div>
 

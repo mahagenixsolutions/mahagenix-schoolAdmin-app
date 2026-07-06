@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import { Button } from '../../components/ui/Button';
 import { useGetClassDetailsQuery } from './classesApi';
 import {
   AreaChart, Area, BarChart, Bar,
@@ -77,9 +78,9 @@ export default function ClassDetailPage() {
       {/* Page Header */}
       <div className="page-header card border-glow" style={{ marginBottom: 24, padding: '16px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div>
-          <button className="btn btn-ghost btn-sm" onClick={() => navigate('/classes')} style={{ marginBottom: 8, padding: 0, display: 'flex', alignItems: 'center', gap: 4 }}>
-            <ChevronLeft size={16} /> Back to Classes
-          </button>
+          <Button variant="ghost" size="sm" startIcon={<ChevronLeft size={16} />} onClick={() => navigate('/classes')} style={{ marginBottom: 8, padding: 0 }}>
+            Back to Classes
+          </Button>
           <h1 className="page-title" style={{ margin: 0 }}>Class {classId} Dashboard</h1>
           <p className="page-subtitle" style={{ margin: 0 }}>Roster directory, performance trends, and student diagnostics.</p>
         </div>
@@ -208,18 +209,22 @@ export default function ClassDetailPage() {
 
                 {/* Grid/List View Toggles */}
                 <div style={{ display: 'flex', gap: 4, background: 'var(--bg-secondary)', padding: 4, borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
-                  <button
+                  <Button
+                    variant={viewMode === 'grid' ? 'primary' : 'ghost'}
+                    size="icon"
                     onClick={() => setViewMode('grid')}
-                    style={{ background: viewMode === 'grid' ? 'var(--bg-primary)' : 'none', border: 'none', padding: 4, borderRadius: 'var(--radius-sm)', cursor: 'pointer', color: viewMode === 'grid' ? 'var(--color-primary)' : 'var(--text-muted)' }}
+                    style={{ padding: 4, borderRadius: 'var(--radius-sm)' }}
                   >
                     <Grid size={16} />
-                  </button>
-                  <button
+                  </Button>
+                  <Button
+                    variant={viewMode === 'list' ? 'primary' : 'ghost'}
+                    size="icon"
                     onClick={() => setViewMode('list')}
-                    style={{ background: viewMode === 'list' ? 'var(--bg-primary)' : 'none', border: 'none', padding: 4, borderRadius: 'var(--radius-sm)', cursor: 'pointer', color: viewMode === 'list' ? 'var(--color-primary)' : 'var(--text-muted)' }}
+                    style={{ padding: 4, borderRadius: 'var(--radius-sm)' }}
                   >
                     <List size={16} />
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>
@@ -319,20 +324,24 @@ export default function ClassDetailPage() {
                   Showing {(page - 1) * meta.limit + 1} to {Math.min(page * meta.limit, meta.total)} of {meta.total} students
                 </span>
                 <div style={{ display: 'flex', gap: 8 }}>
-                  <button
-                    className="btn btn-secondary btn-xs"
+                  <Button
+                    variant="secondary"
+                    size="sm"
                     disabled={page === 1}
                     onClick={() => setPage(page - 1)}
+                    startIcon={<ChevronLeft size={14} />}
                   >
-                    <ChevronLeft size={14} /> Previous
-                  </button>
-                  <button
-                    className="btn btn-secondary btn-xs"
+                    Previous
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    size="sm"
                     disabled={page === meta.total_pages}
                     onClick={() => setPage(page + 1)}
+                    endIcon={<ChevronRight size={14} />}
                   >
-                    Next <ChevronRight size={14} />
-                  </button>
+                    Next
+                  </Button>
                 </div>
               </div>
             )}

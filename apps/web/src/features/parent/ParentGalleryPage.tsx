@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { Button } from '../../components/ui/Button';
 import type { RootState } from '../../store';
 import { useGetParentGalleryQuery } from './parentApi';
 
@@ -71,25 +72,14 @@ export default function ParentGalleryPage() {
       {/* FILTER TABS */}
       <div style={{ display: 'flex', gap: 12, overflowX: 'auto', paddingBottom: 16, marginBottom: 24, msOverflowStyle: 'none', scrollbarWidth: 'none' }}>
         {CATEGORIES.map((cat) => (
-          <button
+          <Button
             key={cat}
+            variant={filterCategory === cat ? 'primary' : 'secondary'}
             onClick={() => setFilterCategory(cat)}
-            style={{
-              padding: '10px 20px',
-              borderRadius: 24,
-              background: filterCategory === cat ? 'var(--text-primary)' : 'var(--bg-surface)',
-              color: filterCategory === cat ? 'var(--bg-primary)' : 'var(--text-secondary)',
-              fontWeight: 700,
-              fontSize: 14,
-              cursor: 'pointer',
-              whiteSpace: 'nowrap',
-              boxShadow: 'var(--shadow-sm)',
-              transition: 'all 0.2s',
-              border: filterCategory === cat ? '1px solid var(--text-primary)' : '1px solid var(--border-color)'
-            }}
+            style={{ borderRadius: 24, whiteSpace: 'nowrap' }}
           >
             {cat}
-          </button>
+          </Button>
         ))}
       </div>
 
@@ -168,19 +158,20 @@ export default function ParentGalleryPage() {
           }}
           onClick={() => setActivePhoto(null)}
         >
-          <button
-            onClick={() => setActivePhoto(null)}
+          <div
             style={{
-              position: 'absolute', top: 24, right: 24,
-              background: 'rgba(255,255,255,0.1)', border: 'none', borderRadius: '50%',
-              width: 48, height: 48, color: 'white', fontSize: 24, cursor: 'pointer',
-              display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background 0.2s'
+              position: 'absolute', top: 24, right: 24, zIndex: 2001
             }}
-            onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.2)'}
-            onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
           >
-            ✕
-          </button>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setActivePhoto(null)}
+              style={{ color: 'white', background: 'rgba(255,255,255,0.1)', borderRadius: '50%' }}
+            >
+              ✕
+            </Button>
+          </div>
 
           <div style={{ maxWidth: '90%', maxHeight: '85%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20 }} onClick={(e) => e.stopPropagation()}>
             <img
@@ -195,17 +186,14 @@ export default function ParentGalleryPage() {
                 {activePhoto.category} • {new Date(activePhoto.date).toLocaleDateString([], { month: 'long', day: 'numeric', year: 'numeric' })}
               </p>
 
-              <button
+              <Button
+                variant="secondary"
                 onClick={() => handleDownload(activePhoto.url)}
-                style={{
-                  background: 'white', color: '#0f172a', padding: '10px 24px', borderRadius: 24,
-                  fontWeight: 800, fontSize: 14, border: 'none', cursor: 'pointer',
-                  display: 'flex', alignItems: 'center', gap: 8, margin: '0 auto',
-                  boxShadow: '0 4px 12px rgba(255,255,255,0.2)'
-                }}
+                style={{ borderRadius: 24, margin: '0 auto', color: '#0f172a', background: 'white' }}
+                startIcon={<span>📥</span>}
               >
-                <span>📥</span> Download Photo
-              </button>
+                Download Photo
+              </Button>
             </div>
           </div>
         </div>

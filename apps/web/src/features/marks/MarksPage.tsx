@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
+import { Button } from '../../components/ui/Button';
 import {
   AreaChart, Area, BarChart, Bar,
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend,
@@ -513,34 +514,34 @@ export default function MarksPage() {
             <p className="page-subtitle">Manage examinations, scores, grades, rankings, and academic performance.</p>
           </div>
           <div className="export-button-group">
-            <button className="btn btn-secondary btn-sm" onClick={handleExcelImport} disabled={exporting !== null}>
+            <Button variant="secondary" size="sm" onClick={handleExcelImport} disabled={exporting !== null}>
               <FileSpreadsheet size={14} />
               <span>Import Excel</span>
-            </button>
-            <button className="btn btn-secondary btn-sm" onClick={handleExcelExport} disabled={exporting !== null}>
+            </Button>
+            <Button variant="secondary" size="sm" onClick={handleExcelExport} disabled={exporting !== null}>
               <Download size={14} />
               <span>Export Excel</span>
-            </button>
-            <button className="btn btn-secondary btn-sm" onClick={handlePrintReports} disabled={exporting !== null}>
+            </Button>
+            <Button variant="secondary" size="sm" onClick={handlePrintReports} disabled={exporting !== null}>
               <Printer size={14} />
               <span>Download Report Cards</span>
-            </button>
+            </Button>
             
             {/* Approval triggers depending on state */}
             {approvalStatus === 'DRAFT' && (
-              <button className="btn btn-primary btn-sm" onClick={() => handleWorkflowTransition('SUBMITTED')}>
+              <Button variant="primary" size="sm" onClick={() => handleWorkflowTransition('SUBMITTED')}>
                 Submit for Approval
-              </button>
+              </Button>
             )}
             {approvalStatus === 'SUBMITTED' && (
-              <button className="btn btn-success btn-sm" onClick={() => handleWorkflowTransition('APPROVED')}>
+              <Button variant="primary" style={{ background: 'var(--color-success)', color: 'white' }} size="sm" onClick={() => handleWorkflowTransition('APPROVED')}>
                 Approve Roster
-              </button>
+              </Button>
             )}
             {approvalStatus === 'APPROVED' && (
-              <button className="btn btn-primary btn-sm" onClick={() => handleWorkflowTransition('PUBLISHED')}>
+              <Button variant="primary" size="sm" onClick={() => handleWorkflowTransition('PUBLISHED')}>
                 Publish Results
-              </button>
+              </Button>
             )}
             {approvalStatus === 'PUBLISHED' && (
               <span className="badge badge-present" style={{ display: 'flex', alignItems: 'center', gap: 4, height: 36, padding: '0 12px' }}>
@@ -636,8 +637,8 @@ export default function MarksPage() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <button 
-            className="btn btn-ghost btn-sm"
+          <Button 
+            variant="ghost" size="sm"
             onClick={() => {
               setSearchQuery('');
               if (classesData && classesData.length > 0) setClassFilter(classesData[0].id);
@@ -650,7 +651,7 @@ export default function MarksPage() {
             }}
           >
             Reset Filters
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -771,12 +772,12 @@ export default function MarksPage() {
             </div>
             
             <div className="ai-actions-row">
-              <button className="btn btn-secondary btn-sm" onClick={() => triggerToast('✉️ Parental review alerts dispatched successfully.')}>
+              <Button variant="secondary" size="sm" onClick={() => triggerToast('✉️ Parental review alerts dispatched successfully.')}>
                 Dispatch Parents Alerts
-              </button>
-              <button className="btn btn-primary btn-sm" onClick={() => triggerToast('📅 Math remedial classes created on school calendar.')}>
+              </Button>
+              <Button variant="primary" size="sm" onClick={() => triggerToast('📅 Math remedial classes created on school calendar.')}>
                 Configure Remedial Sessions
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -1035,7 +1036,7 @@ export default function MarksPage() {
           <div className="student-drawer-sheet" onClick={(e) => e.stopPropagation()}>
             <div className="drawer-header">
               <span className="title">Student Academic File</span>
-              <button className="btn-close" onClick={() => setSelectedStudentId(null)}><X size={16} /></button>
+              <Button variant="ghost" size="icon" onClick={() => setSelectedStudentId(null)}><X size={16} /></Button>
             </div>
             
             <div className="drawer-body">

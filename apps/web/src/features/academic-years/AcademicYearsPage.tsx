@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '../../components/ui/Button';
 import { 
   useGetAcademicYearsQuery, 
   useActivateAcademicYearMutation,
@@ -66,25 +67,24 @@ export default function AcademicYearsPage() {
           <h1 className="page-title" style={{ margin: 0 }}>Academic Years Control Center</h1>
           <p className="page-subtitle" style={{ margin: 0 }}>Manage academic sessions, timelines, and promotions</p>
         </div>
-        <button className="btn btn-primary" onClick={() => setIsNewModalOpen(true)}>+ New Academic Year</button>
+        <Button variant="primary" onClick={() => setIsNewModalOpen(true)}>+ New Academic Year</Button>
       </div>
 
       {/* Filter and Sort Bar */}
       <div className="flex-mobile-col" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, background: 'var(--bg-surface)', padding: 16, borderRadius: 12, border: '1px solid var(--border-color)' }}>
         <div style={{ display: 'flex', gap: 8, overflowX: 'auto', whiteSpace: 'nowrap', maxWidth: '100%', paddingBottom: 4 }}>
           {['All', 'Active', 'Upcoming', 'Archived'].map(status => (
-            <button 
+            <Button 
               key={status}
+              variant={filterStatus === status ? 'primary' : 'outline'}
               onClick={() => setFilterStatus(status)}
               style={{ 
-                padding: '6px 16px', borderRadius: 20, fontSize: 14, fontWeight: 500, cursor: 'pointer',
-                background: filterStatus === status ? 'var(--color-primary)' : 'transparent',
-                color: filterStatus === status ? '#fff' : 'var(--text-secondary)',
-                border: filterStatus === status ? 'none' : '1px solid var(--border-color)'
+                padding: '6px 16px', borderRadius: 20, height: 'auto',
+                whiteSpace: 'nowrap'
               }}
             >
               {status}
-            </button>
+            </Button>
           ))}
         </div>
         <div>
@@ -229,37 +229,32 @@ export default function AcademicYearsPage() {
                   
                   {/* Kebab Action Menu */}
                   <div style={{ position: 'relative', marginLeft: isArchived ? 0 : 16 }}>
-                    <button 
+                    <Button 
+                      variant="ghost"
+                      size="icon"
                       onClick={(e) => { e.stopPropagation(); setMenuOpenId(menuOpenId === year.id ? null : year.id); }}
                       onMouseEnter={(e) => e.currentTarget.style.background = 'var(--bg-secondary)'}
                       onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
                       style={{ 
-                        background: 'transparent', 
-                        border: 'none', 
                         fontSize: 20, 
-                        cursor: 'pointer', 
                         width: 36,
                         height: 36,
                         borderRadius: '50%',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
                         color: 'var(--text-secondary)',
-                        transition: 'background 0.2s'
                       }}
                     >
                       ⋮
-                    </button>
+                    </Button>
                     {menuOpenId === year.id && (
                       <div style={{ 
                         position: 'absolute', right: 0, top: 40, width: 180, background: 'var(--bg-surface)', 
                         border: '1px solid var(--border-color)', borderRadius: 8, boxShadow: '0 4px 12px rgba(0,0,0,0.1)', zIndex: 10 
                       }}>
-                        <button onClick={(e) => { e.stopPropagation(); navigate(`/academic-years/${year.id}`); }} style={menuItemStyle}>View Details</button>
-                        <button onClick={(e) => { e.stopPropagation(); setMenuOpenId(null); }} style={menuItemStyle}>Edit</button>
-                        {isUpcoming && <button onClick={(e) => handleActivateClick(year, e)} style={menuItemStyle}>Set as Active</button>}
-                        {isActive && <button onClick={(e) => handleArchiveClick(year, e)} style={menuItemStyle}>Archive</button>}
-                        {isUpcoming && <button onClick={(e) => { e.stopPropagation(); setMenuOpenId(null); }} style={{...menuItemStyle, color: '#EF4444'}}>Delete</button>}
+                        <Button variant="ghost" onClick={(e) => { e.stopPropagation(); navigate(`/academic-years/${year.id}`); }} style={{ width: '100%', justifyContent: 'flex-start', ...menuItemStyle }}>View Details</Button>
+                        <Button variant="ghost" onClick={(e) => { e.stopPropagation(); setMenuOpenId(null); }} style={{ width: '100%', justifyContent: 'flex-start', ...menuItemStyle }}>Edit</Button>
+                        {isUpcoming && <Button variant="ghost" onClick={(e) => handleActivateClick(year, e)} style={{ width: '100%', justifyContent: 'flex-start', ...menuItemStyle }}>Set as Active</Button>}
+                        {isActive && <Button variant="ghost" onClick={(e) => handleArchiveClick(year, e)} style={{ width: '100%', justifyContent: 'flex-start', ...menuItemStyle }}>Archive</Button>}
+                        {isUpcoming && <Button variant="ghost" onClick={(e) => { e.stopPropagation(); setMenuOpenId(null); }} style={{ width: '100%', justifyContent: 'flex-start', ...menuItemStyle, color: '#EF4444' }}>Delete</Button>}
                       </div>
                     )}
                   </div>
@@ -282,13 +277,13 @@ export default function AcademicYearsPage() {
               Are you sure you want to proceed?
             </p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
-              <button className="btn" onClick={() => setActivatingYear(null)}>Cancel</button>
-              <button className="btn btn-primary" style={{ background: '#EF4444', borderColor: '#EF4444' }} onClick={() => {
+              <Button variant="ghost" onClick={() => setActivatingYear(null)}>Cancel</Button>
+              <Button variant="danger" onClick={() => {
                 activateYear(activatingYear.id);
                 setActivatingYear(null);
               }}>
                 Yes, Activate {activatingYear.name}
-              </button>
+              </Button>
             </div>
           </div>
         </div>

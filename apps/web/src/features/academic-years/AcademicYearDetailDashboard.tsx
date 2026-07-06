@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { Button } from '../../components/ui/Button';
 import { 
   useGetAcademicYearDetailsQuery, 
   useGetPromotionsQuery, 
@@ -45,7 +46,7 @@ export default function AcademicYearDetailDashboard() {
       {/* HEADER */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          <button className="btn" onClick={() => navigate(-1)} style={{ padding: '8px 12px' }}>← Back</button>
+          <Button variant="ghost" onClick={() => navigate(-1)} style={{ padding: '8px 12px' }}>← Back</Button>
           <div>
             <h1 className="page-title" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: 8 }}>
               {overview.name}
@@ -63,11 +64,11 @@ export default function AcademicYearDetailDashboard() {
           </div>
         </div>
         <div style={{ display: 'flex', gap: 12 }}>
-          <button className="btn" onClick={() => window.print()}>Print Reports</button>
+          <Button variant="secondary" onClick={() => window.print()}>Print Reports</Button>
           {!isArchived && (
-            <button className="btn btn-danger" onClick={() => setIsCloseModalOpen(true)} disabled={isClosing}>
+            <Button variant="danger" onClick={() => setIsCloseModalOpen(true)} disabled={isClosing}>
               {isClosing ? 'Closing...' : 'Close Academic Year'}
-            </button>
+            </Button>
           )}
         </div>
       </div>
@@ -91,7 +92,7 @@ export default function AcademicYearDetailDashboard() {
         <div className="card" style={{ gridColumn: 'span 4', alignSelf: 'start' }}>
           <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <h3 className="card-title">Term Management</h3>
-            {!isArchived && terms.length < 4 && <button className="btn btn-sm">+ Add Term</button>}
+            {!isArchived && terms.length < 4 && <Button variant="secondary" size="sm">+ Add Term</Button>}
           </div>
           <div className="card-body">
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -113,7 +114,7 @@ export default function AcademicYearDetailDashboard() {
         <div className="card" style={{ gridColumn: 'span 8', alignSelf: 'start' }}>
           <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <h3 className="card-title">Academic Calendar</h3>
-            {!isArchived && <button className="btn btn-sm">+ Add Event</button>}
+            {!isArchived && <Button variant="secondary" size="sm">+ Add Event</Button>}
           </div>
           <div className="card-body" style={{ maxHeight: 300, overflowY: 'auto' }}>
             <table className="table" style={{ width: '100%' }}>
@@ -176,7 +177,7 @@ export default function AcademicYearDetailDashboard() {
         <div className="card" style={{ gridColumn: 'span 12' }}>
           <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <h3 className="card-title">Major School Achievements</h3>
-            {!isArchived && <button className="btn btn-sm">+ Add Achievement</button>}
+            {!isArchived && <Button variant="secondary" size="sm">+ Add Achievement</Button>}
           </div>
           <div className="card-body" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 16 }}>
             {achievements.map((ach: any) => (
@@ -250,8 +251,8 @@ function CloseYearModal({ academicYear, onClose, onConfirm }: any) {
               </label>
             </div>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
-              <button className="btn" onClick={onClose}>Cancel</button>
-              <button className="btn btn-primary" disabled={!allChecked} onClick={() => setStep(2)}>Proceed to Confirm</button>
+              <Button variant="ghost" onClick={onClose}>Cancel</Button>
+              <Button variant="primary" disabled={!allChecked} onClick={() => setStep(2)}>Proceed to Confirm</Button>
             </div>
           </div>
         )}
@@ -276,8 +277,8 @@ function CloseYearModal({ academicYear, onClose, onConfirm }: any) {
               />
             </div>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
-              <button className="btn" onClick={() => setStep(1)}>Back</button>
-              <button className="btn btn-danger" disabled={confirmText !== academicYear.name} onClick={() => onConfirm()}>Close Academic Year</button>
+              <Button variant="ghost" onClick={() => setStep(1)}>Back</Button>
+              <Button variant="danger" disabled={confirmText !== academicYear.name} onClick={() => onConfirm()}>Close Academic Year</Button>
             </div>
           </div>
         )}
@@ -363,20 +364,17 @@ function StudentPromotionCenter({ academicYearId }: { academicYearId: string }) 
       <div style={{ width: 250, display: 'flex', flexDirection: 'column', gap: 8 }}>
         <h4 style={{ margin: '0 0 8px 0', fontSize: 13, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Classes</h4>
         {sortedClasses.map((c: any) => (
-          <button 
+          <Button 
             key={c.id} 
-            className="btn" 
+            variant={selectedClass === c.id ? 'primary' : 'outline'}
             style={{ 
               justifyContent: 'flex-start', 
-              background: selectedClass === c.id ? 'var(--color-primary)' : 'var(--bg-body)',
-              color: selectedClass === c.id ? '#fff' : 'var(--text-primary)',
-              border: '1px solid var(--border-color)',
               padding: '12px 16px'
             }}
             onClick={() => { setSelectedClass(c.id); setStudentTargets({}); }}
           >
             {c.name} <span style={{ marginLeft: 'auto', fontSize: 11, background: 'rgba(0,0,0,0.1)', padding: '2px 6px', borderRadius: 12 }}>{c.students?.length || 0}</span>
-          </button>
+          </Button>
         ))}
       </div>
 
@@ -390,9 +388,9 @@ function StudentPromotionCenter({ academicYearId }: { academicYearId: string }) 
                 <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>{selectedCount} students selected for action</div>
               </div>
               <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-                <button className="btn btn-primary" disabled={selectedCount === 0} onClick={handleBulkPromote}>
+                <Button variant="primary" disabled={selectedCount === 0} onClick={handleBulkPromote}>
                   Execute Selected Actions
-                </button>
+                </Button>
               </div>
             </div>
 

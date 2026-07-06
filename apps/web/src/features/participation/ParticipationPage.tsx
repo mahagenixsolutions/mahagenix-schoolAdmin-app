@@ -10,6 +10,7 @@ import {
   useGetAchievementsQuery, 
   useGetBadgesQuery 
 } from './participationApi';
+import { Button } from '../../components/ui/Button';
 import {
   flexRender,
   getCoreRowModel,
@@ -140,7 +141,7 @@ export default function ParticipationPage() {
           <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: 16, width: '90%', maxWidth: 460, padding: 20, boxShadow: 'var(--shadow-lg)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
               <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: 'var(--text-primary)' }}>Log Extracurricular Record</h3>
-              <button onClick={() => setShowAdd(false)} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', fontSize: 18, cursor: 'pointer' }} disabled={isProcessing}>✕</button>
+              <Button variant="ghost" size="icon" onClick={() => setShowAdd(false)} style={{ color: 'var(--text-muted)' }} disabled={isProcessing}>✕</Button>
             </div>
             <form onSubmit={handleAddRecordSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
@@ -180,9 +181,9 @@ export default function ParticipationPage() {
                 <label style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Points Assigned</label>
                 <input type="number" required value={formPoints} onChange={e => setFormPoints(e.target.value)} placeholder="50" style={{ padding: '8px 12px', border: '1px solid var(--border-color)', borderRadius: 8, background: 'var(--bg-body)', color: 'var(--text-primary)' }} />
               </div>
-              <button type="submit" disabled={isProcessing} className="btn btn-primary" style={{ padding: 12, marginTop: 8 }}>
-                {isProcessing ? 'Saving Record...' : 'Log Record'}
-              </button>
+              <Button type="submit" variant="primary" disabled={isProcessing} loading={isProcessing} style={{ padding: 12, marginTop: 8 }}>
+                Log Record
+              </Button>
             </form>
           </div>
         </div>
@@ -194,8 +195,8 @@ export default function ParticipationPage() {
           <p className="page-subtitle" style={{ marginTop: 8 }}>Track student involvement, achievements, leadership, and cultural participation.</p>
         </div>
         <div className="p-header-actions">
-          <button className="btn-outline" onClick={handleExportReport} disabled={isProcessing}><Download size={18}/> {isProcessing ? 'Exporting...' : 'Export Report'}</button>
-          <button className="btn-premium" onClick={() => setShowAdd(true)}><Plus size={18}/> Add Record</button>
+          <Button variant="outline" onClick={handleExportReport} disabled={isProcessing} startIcon={<Download size={18}/>}>{isProcessing ? 'Exporting...' : 'Export Report'}</Button>
+          <Button variant="primary" onClick={() => setShowAdd(true)} startIcon={<Plus size={18}/>}>Add Record</Button>
         </div>
       </div>
 
@@ -232,10 +233,10 @@ export default function ParticipationPage() {
       </div>
 
       <div className="participation-tabs">
-        <button className={`p-tab ${activeTab === 'overview' ? 'active' : ''}`} onClick={() => setActiveTab('overview')}><Target size={18}/> Analytics Overview</button>
-        <button className={`p-tab ${activeTab === 'spreadsheet' ? 'active' : ''}`} onClick={() => setActiveTab('spreadsheet')}><Activity size={18}/> Spreadsheet View</button>
-        <button className={`p-tab ${activeTab === 'achievements' ? 'active' : ''}`} onClick={() => setActiveTab('achievements')}><Trophy size={18}/> Achievements Gallery</button>
-        <button className={`p-tab ${activeTab === 'badges' ? 'active' : ''}`} onClick={() => setActiveTab('badges')}><Star size={18}/> Badges</button>
+        <Button className={`p-tab ${activeTab === 'overview' ? 'active' : ''}`} variant="ghost" onClick={() => setActiveTab('overview')} startIcon={<Target size={18}/>}>Analytics Overview</Button>
+        <Button className={`p-tab ${activeTab === 'spreadsheet' ? 'active' : ''}`} variant="ghost" onClick={() => setActiveTab('spreadsheet')} startIcon={<Activity size={18}/>}>Spreadsheet View</Button>
+        <Button className={`p-tab ${activeTab === 'achievements' ? 'active' : ''}`} variant="ghost" onClick={() => setActiveTab('achievements')} startIcon={<Trophy size={18}/>}>Achievements Gallery</Button>
+        <Button className={`p-tab ${activeTab === 'badges' ? 'active' : ''}`} variant="ghost" onClick={() => setActiveTab('badges')} startIcon={<Star size={18}/>}>Badges</Button>
       </div>
 
       {activeTab === 'overview' && (
@@ -293,7 +294,7 @@ export default function ParticipationPage() {
               />
             </div>
             <div style={{ display: 'flex', gap: 8 }}>
-              <button className="btn-outline"><Filter size={16}/> Filter</button>
+              <Button variant="outline" startIcon={<Filter size={16}/>}>Filter</Button>
             </div>
           </div>
           <div className="table-wrapper">
@@ -338,14 +339,16 @@ export default function ParticipationPage() {
               Showing {table.getRowModel().rows.length} of {records?.length || 0} records
             </div>
             <div style={{ display: 'flex', gap: 8 }}>
-              <button 
+              <Button 
+                variant="outline"
                 onClick={() => table.previousPage()} 
                 disabled={!table.getCanPreviousPage()}
-                className="btn-outline" style={{ padding: '6px 12px' }}>Prev</button>
-              <button 
+                style={{ padding: '6px 12px' }}>Prev</Button>
+              <Button 
+                variant="outline"
                 onClick={() => table.nextPage()} 
                 disabled={!table.getCanNextPage()}
-                className="btn-outline" style={{ padding: '6px 12px' }}>Next</button>
+                style={{ padding: '6px 12px' }}>Next</Button>
             </div>
           </div>
         </div>

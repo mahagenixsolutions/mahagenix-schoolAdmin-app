@@ -1,4 +1,5 @@
 import { useMemo, useState, type ReactNode } from 'react';
+import { Button } from '../../components/ui/Button';
 import {
   CalendarDays,
   Camera,
@@ -322,8 +323,12 @@ export default function EventsPage() {
           <p>Plan campus experiences, track class-wise registrations, publish galleries, and keep leadership informed with event intelligence.</p>
         </div>
         <div className="hero-actions">
-          <button className="btn btn-secondary" onClick={handleExportCalendar} disabled={isProcessing}><Download size={16} /> {isProcessing ? 'Syncing...' : 'Export calendar'}</button>
-          <button className="btn btn-primary" onClick={() => setShowCreate(true)}><CalendarDays size={16} /> Create event</button>
+          <Button variant="secondary" onClick={handleExportCalendar} disabled={isProcessing} loading={isProcessing}>
+            {!isProcessing && <Download size={16} />} {isProcessing ? 'Syncing...' : 'Export calendar'}
+          </Button>
+          <Button variant="primary" onClick={() => setShowCreate(true)}>
+            <CalendarDays size={16} /> Create event
+          </Button>
         </div>
       </div>
 
@@ -342,9 +347,9 @@ export default function EventsPage() {
         <div className="type-pills">
           <Filter size={16} />
           {EVENT_TYPES.map((type) => (
-            <button key={type} className={selectedType === type ? 'active' : ''} onClick={() => setSelectedType(type)}>
+            <Button key={type} variant={selectedType === type ? 'primary' : 'ghost'} onClick={() => setSelectedType(type)}>
               {type}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
@@ -363,7 +368,7 @@ export default function EventsPage() {
               const palette = eventPalette[event.type] || eventPalette['Holiday'];
               const isSelected = selectedEvent.id === event.id;
               return (
-                <button key={event.id} className={`calendar-event ${isSelected ? 'selected' : ''}`} onClick={() => setSelectedEventId(event.id)}>
+                <Button key={event.id} variant={isSelected ? 'primary' : 'ghost'} className={`calendar-event ${isSelected ? 'selected' : ''}`} onClick={() => setSelectedEventId(event.id)} style={{ display: 'flex', textAlign: 'left', width: '100%', padding: 12 }}>
                   <div className="date-tile" style={{ background: palette.soft, color: palette.text }}>
                     <span>{formatMonth(event.date)}</span>
                     <strong>{formatDay(event.date)}</strong>
@@ -378,7 +383,7 @@ export default function EventsPage() {
                       <span><MapPin size={13} /> {event.venue}</span>
                     </div>
                   </div>
-                </button>
+                </Button>
               );
             })}
           </div>
@@ -432,7 +437,7 @@ export default function EventsPage() {
           <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: 16, width: '90%', maxWidth: 480, padding: 20, boxShadow: 'var(--shadow-lg)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
               <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: 'var(--text-primary)' }}>Schedule Campus Event</h3>
-              <button onClick={() => setShowCreate(false)} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', fontSize: 18, cursor: 'pointer' }} disabled={isProcessing}>✕</button>
+              <Button variant="ghost" size="icon" onClick={() => setShowCreate(false)} disabled={isProcessing}>✕</Button>
             </div>
             <form onSubmit={handleCreateEvent} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
@@ -469,9 +474,9 @@ export default function EventsPage() {
                 <label style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Venue / Location</label>
                 <input type="text" required value={formVenue} onChange={e => setFormVenue(e.target.value)} placeholder="e.g. Science Auditorium" style={{ padding: '10px 12px', border: '1px solid var(--border-color)', borderRadius: 8, background: 'var(--bg-body)', color: 'var(--text-primary)' }} />
               </div>
-              <button type="submit" disabled={isProcessing} className="btn btn-primary" style={{ padding: 12, marginTop: 8 }}>
+              <Button type="submit" variant="primary" disabled={isProcessing} loading={isProcessing} style={{ padding: 12, marginTop: 8 }} fullWidth>
                 {isProcessing ? 'Scheduling Event...' : 'Schedule Event'}
-              </button>
+              </Button>
             </form>
           </div>
         </div>

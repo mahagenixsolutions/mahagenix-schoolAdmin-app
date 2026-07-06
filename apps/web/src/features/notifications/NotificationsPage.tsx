@@ -1,4 +1,5 @@
 import { useMemo, useState, type ReactNode } from 'react';
+import { Button } from '../../components/ui/Button';
 import {
   AlertTriangle,
   BarChart3,
@@ -240,8 +241,12 @@ export default function NotificationsPage() {
           <p>Compose announcements, target precise audiences, track read status, and understand which channels are actually working.</p>
         </div>
         <div className="hero-actions">
-          <button className="btn btn-secondary" onClick={handleExportLog} disabled={isProcessing}><FileText size={16} /> {isProcessing ? 'Exporting...' : 'Export log'}</button>
-          <button className="btn btn-primary" onClick={handleNewBroadcastClick}><Send size={16} /> New broadcast</button>
+          <Button variant="secondary" onClick={handleExportLog} disabled={isProcessing} loading={isProcessing}>
+            {!isProcessing && <FileText size={16} />} {isProcessing ? 'Exporting...' : 'Export log'}
+          </Button>
+          <Button variant="primary" onClick={handleNewBroadcastClick}>
+            <Send size={16} /> New broadcast
+          </Button>
         </div>
       </div>
 
@@ -268,9 +273,9 @@ export default function NotificationsPage() {
             <div className="priority-tabs">
               <Filter size={16} />
               {priorities.map((item) => (
-                <button key={item} className={priority === item ? 'active' : ''} onClick={() => setPriority(item)}>
+                <Button key={item} variant={priority === item ? 'primary' : 'ghost'} onClick={() => setPriority(item)}>
                   {item}
-                </button>
+                </Button>
               ))}
             </div>
           </div>
@@ -279,7 +284,7 @@ export default function NotificationsPage() {
               const colors = priorityColors[item.priority];
               const selected = selectedNotification.id === item.id;
               return (
-                <button key={item.id} className={`feed-item ${selected ? 'selected' : ''}`} onClick={() => setSelectedNotificationId(item.id)}>
+                <Button key={item.id} variant={selected ? 'primary' : 'ghost'} className={`feed-item ${selected ? 'selected' : ''}`} onClick={() => setSelectedNotificationId(item.id)} style={{ display: 'block', textAlign: 'left', width: '100%', padding: 16 }}>
                   <div className="feed-topline">
                     <span className="priority-chip" style={{ background: colors?.bg || 'var(--bg-secondary)', color: colors?.text || 'var(--text-primary)', borderColor: colors?.border || 'var(--border-color)' }}>{item.priority}</span>
                     <span className="feed-time">{item.sentAt}</span>
@@ -291,7 +296,7 @@ export default function NotificationsPage() {
                     <span><Radio size={13} /> {item.channel}</span>
                     <span><CheckCircle2 size={13} /> {item.status}</span>
                   </div>
-                </button>
+                </Button>
               );
             })}
           </div>
@@ -356,14 +361,14 @@ export default function NotificationsPage() {
             </div>
             <div className="channel-row">
               {channels.map((item) => (
-                <button key={item} className={composerChannel === item ? 'active' : ''} onClick={() => setComposerChannel(item)} type="button">
+                <Button key={item} variant={composerChannel === item ? 'primary' : 'ghost'} onClick={() => setComposerChannel(item)} type="button">
                   {item}
-                </button>
+                </Button>
               ))}
             </div>
-            <button type="submit" className="btn btn-primary send-button" disabled={isProcessing}>
-              <Send size={16} /> {isProcessing ? 'Dispatching...' : 'Schedule broadcast'}
-            </button>
+            <Button type="submit" variant="primary" loading={isProcessing} disabled={isProcessing} className="send-button">
+              {!isProcessing && <Send size={16} />} {isProcessing ? 'Dispatching...' : 'Schedule broadcast'}
+            </Button>
           </form>
         </section>
       </div>

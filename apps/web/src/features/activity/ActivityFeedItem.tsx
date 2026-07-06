@@ -1,4 +1,5 @@
 import { Heart, MessageSquare, Share2, Award, Megaphone, BookOpen, Trophy, ClipboardCheck } from 'lucide-react';
+import { Button } from '../../components/ui/Button';
 
 export default function ActivityFeedItem({ activity }: { activity: any }) {
   
@@ -72,16 +73,16 @@ export default function ActivityFeedItem({ activity }: { activity: any }) {
 
         {/* Micro-interactions */}
         <div style={{ display: 'flex', gap: '16px', borderTop: '1px solid var(--border-color)', paddingTop: '16px', marginTop: '8px' }}>
-          <button style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'none', border: 'none', color: 'var(--text-secondary)', fontSize: '13px', cursor: 'pointer', fontWeight: 500 }}>
-            <Heart size={16} /> {activity.likes} Likes
-          </button>
-          <button style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'none', border: 'none', color: 'var(--text-secondary)', fontSize: '13px', cursor: 'pointer', fontWeight: 500 }}>
-            <MessageSquare size={16} /> {activity.comments} Comments
-          </button>
+          <Button variant="ghost" size="sm" startIcon={<Heart size={16} />} style={{ color: 'var(--text-secondary)' }}>
+            {activity.likes} Likes
+          </Button>
+          <Button variant="ghost" size="sm" startIcon={<MessageSquare size={16} />} style={{ color: 'var(--text-secondary)' }}>
+            {activity.comments} Comments
+          </Button>
           <div style={{ flex: 1 }} />
-          <button style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'none', border: 'none', color: 'var(--text-muted)', fontSize: '13px', cursor: 'pointer' }}>
-            <Share2 size={16} /> Share
-          </button>
+          <Button variant="ghost" size="sm" startIcon={<Share2 size={16} />} style={{ color: 'var(--text-muted)' }}>
+            Share
+          </Button>
         </div>
 
       </div>

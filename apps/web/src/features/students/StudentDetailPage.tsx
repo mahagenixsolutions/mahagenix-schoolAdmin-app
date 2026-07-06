@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { Button } from '../../components/ui/Button';
 import {
   ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid
 } from 'recharts';
@@ -83,16 +84,16 @@ export default function StudentDetailPage() {
 
       {/* Top Header & Actions */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
-        <button className="btn btn-ghost btn-sm" onClick={() => navigate(-1)} style={{ paddingLeft: 0, display: 'flex', alignItems: 'center', gap: 4 }}>
-          <ChevronLeft size={16} /> Back to Directory
-        </button>
+        <Button variant="ghost" size="sm" onClick={() => navigate(-1)} startIcon={<ChevronLeft size={16} />} style={{ paddingLeft: 0 }}>
+          Back to Directory
+        </Button>
         <div style={{ display: 'flex', gap: 8 }}>
-          <button className="btn btn-primary btn-sm" onClick={() => setActiveModal('message')} style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
-            <MessageSquare size={14} /> Send Message to Parent
-          </button>
-          <button className="btn btn-secondary btn-sm" onClick={() => setActiveModal('badge')} style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
-            <Award size={14} /> Award Badge
-          </button>
+          <Button variant="primary" size="sm" onClick={() => setActiveModal('message')} startIcon={<MessageSquare size={14} />}>
+            Send Message to Parent
+          </Button>
+          <Button variant="secondary" size="sm" onClick={() => setActiveModal('badge')} startIcon={<Award size={14} />}>
+            Award Badge
+          </Button>
         </div>
       </div>
 
@@ -335,7 +336,7 @@ export default function StudentDetailPage() {
                       <span style={{ color: 'var(--text-muted)' }}>History</span>
                       <strong>84/100 (B+)</strong>
                     </div>
-                    <button className="btn btn-secondary btn-sm" style={{ width: '100%', marginTop: 16, borderRadius: 8 }}>View Full Mark Sheet</button>
+                    <Button variant="secondary" size="sm" fullWidth style={{ marginTop: 16, borderRadius: 8 }}>View Full Mark Sheet</Button>
                   </div>
                 </div>
                 
@@ -347,7 +348,7 @@ export default function StudentDetailPage() {
                     </div>
                     <div style={{ padding: 14 }}>
                       <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 12 }}>Overall Percentage: <strong>89.5%</strong></div>
-                      <button className="btn btn-ghost btn-sm" style={{ width: '100%', borderRadius: 8, border: '1px solid var(--border-color)' }}>Download Previous Report</button>
+                      <Button variant="ghost" size="sm" fullWidth style={{ borderRadius: 8, border: '1px solid var(--border-color)' }}>Download Previous Report</Button>
                     </div>
                   </div>
                 )}
@@ -363,7 +364,7 @@ export default function StudentDetailPage() {
           <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: 16, width: '90%', maxWidth: 480, padding: 20, boxShadow: 'var(--shadow-lg)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
               <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: 'var(--text-primary)' }}>Message Parent of {student.first_name}</h3>
-              <button onClick={() => setActiveModal(null)} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', fontSize: 18, cursor: 'pointer' }} disabled={isLoading}>✕</button>
+              <Button variant="ghost" size="icon" onClick={() => setActiveModal(null)} style={{ color: 'var(--text-muted)' }} disabled={isLoading}>✕</Button>
             </div>
             <form onSubmit={handleSendMessage} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
               <div style={{ fontSize: 13, color: 'var(--text-secondary)', background: 'var(--bg-secondary)', padding: '10px 14px', borderRadius: 8 }}>
@@ -387,9 +388,9 @@ export default function StudentDetailPage() {
                   <span>Send direct SMS backup alert</span>
                 </label>
               </div>
-              <button type="submit" disabled={isLoading} className="btn btn-primary" style={{ padding: 12, marginTop: 8 }}>
-                {isLoading ? 'Dispatching Message...' : 'Send Message'}
-              </button>
+              <Button type="submit" variant="primary" disabled={isLoading} loading={isLoading} style={{ padding: 12, marginTop: 8 }}>
+                Send Message
+              </Button>
             </form>
           </div>
         </div>
@@ -401,7 +402,7 @@ export default function StudentDetailPage() {
           <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: 16, width: '90%', maxWidth: 500, padding: 20, boxShadow: 'var(--shadow-lg)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
               <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: 'var(--text-primary)' }}>Award Badge to {student.first_name}</h3>
-              <button onClick={() => setActiveModal(null)} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', fontSize: 18, cursor: 'pointer' }} disabled={isLoading}>✕</button>
+              <Button variant="ghost" size="icon" onClick={() => setActiveModal(null)} style={{ color: 'var(--text-muted)' }} disabled={isLoading}>✕</Button>
             </div>
             <form onSubmit={handleAwardBadge} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
               <label style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: -4 }}>Choose Badge Type</label>
@@ -433,9 +434,9 @@ export default function StudentDetailPage() {
                 <label style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Reason / Comment</label>
                 <input type="text" required value={badgeReason} onChange={e => setBadgeReason(e.target.value)} placeholder="e.g. Excellent logic flow built during Python algorithms assignment." style={{ padding: '10px 12px', border: '1px solid var(--border-color)', borderRadius: 8, background: 'var(--bg-body)', color: 'var(--text-primary)' }} />
               </div>
-              <button type="submit" disabled={isLoading} className="btn btn-primary" style={{ padding: 12, marginTop: 8 }}>
+              <Button type="submit" disabled={isLoading} loading={isLoading} variant="primary" style={{ padding: 12, marginTop: 8 }} fullWidth>
                 {isLoading ? 'Awarding badge...' : `Award Badge (+${selectedBadge.points} Points)`}
-              </button>
+              </Button>
             </form>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Button } from '../../../components/ui/Button';
 import { useNavigate } from 'react-router-dom';
 
 const ACTIONS = [
@@ -93,29 +94,20 @@ export default function QuickActionsGrid() {
       
       <div className="grid-4" style={{ gap: 16 }}>
         {ACTIONS.slice(0, 4).map(action => (
-          <button
+          <Button
             key={action.label}
+            variant="ghost"
             onClick={() => handleAction(action)}
             style={{
               display: 'flex',
               alignItems: 'center',
+              justifyContent: 'flex-start',
               gap: 12,
               padding: '12px 16px',
               background: 'var(--bg-secondary)',
               border: '1px solid var(--border-color)',
-              borderRadius: 'var(--radius-md)',
-              cursor: 'pointer',
-              textAlign: 'left',
-              transition: 'all 0.2s',
-              width: '100%'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = 'var(--color-primary)';
-              e.currentTarget.style.background = 'var(--bg-primary)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = 'var(--border-color)';
-              e.currentTarget.style.background = 'var(--bg-secondary)';
+              width: '100%',
+              textAlign: 'left'
             }}
           >
             <span style={{ 
@@ -127,7 +119,7 @@ export default function QuickActionsGrid() {
               {action.icon}
             </span>
             <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>{action.label}</span>
-          </button>
+          </Button>
         ))}
       </div>
 
@@ -171,13 +163,9 @@ export default function QuickActionsGrid() {
                 {activeModal === 'fee' && 'Collect Student Fee Payment'}
                 {activeModal === 'notice' && 'Compose Notice Broadcast'}
               </h4>
-              <button 
-                onClick={() => setActiveModal(null)} 
-                style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontSize: 18 }}
-                disabled={isLoading}
-              >
+              <Button variant="ghost" size="icon" onClick={() => setActiveModal(null)} disabled={isLoading}>
                 ✕
-              </button>
+              </Button>
             </div>
 
             {/* Form */}
@@ -231,9 +219,9 @@ export default function QuickActionsGrid() {
                     />
                   </div>
                 </div>
-                <button type="submit" disabled={isLoading} className="btn btn-primary" style={{ marginTop: 8, padding: 12 }}>
+                <Button type="submit" disabled={isLoading} loading={isLoading} variant="primary" style={{ marginTop: 8, padding: 12 }} fullWidth>
                   {isLoading ? 'Registering Student...' : 'Register Student'}
-                </button>
+                </Button>
               </form>
             )}
 
@@ -288,9 +276,9 @@ export default function QuickActionsGrid() {
                     />
                   </div>
                 </div>
-                <button type="submit" disabled={isLoading} className="btn btn-primary" style={{ marginTop: 8, padding: 12 }}>
+                <Button type="submit" disabled={isLoading} loading={isLoading} variant="primary" style={{ marginTop: 8, padding: 12 }} fullWidth>
                   {isLoading ? 'Registering Teacher...' : 'Register Teacher'}
-                </button>
+                </Button>
               </form>
             )}
 
@@ -361,9 +349,9 @@ export default function QuickActionsGrid() {
                     />
                   </div>
                 </div>
-                <button type="submit" disabled={isLoading} className="btn btn-primary" style={{ marginTop: 8, padding: 12 }}>
+                <Button type="submit" disabled={isLoading} loading={isLoading} variant="primary" style={{ marginTop: 8, padding: 12 }} fullWidth>
                   {isLoading ? 'Processing Payment...' : 'Mark as Paid'}
-                </button>
+                </Button>
               </form>
             )}
 
@@ -431,9 +419,9 @@ export default function QuickActionsGrid() {
                     style={{ padding: '10px 12px', border: '1px solid var(--border-color)', borderRadius: 8, background: 'var(--bg-body)', color: 'var(--text-primary)', resize: 'vertical', fontFamily: 'inherit', fontSize: 13 }}
                   />
                 </div>
-                <button type="submit" disabled={isLoading} className="btn btn-primary" style={{ marginTop: 8, padding: 12 }}>
+                <Button type="submit" disabled={isLoading} loading={isLoading} variant="primary" style={{ marginTop: 8, padding: 12 }} fullWidth>
                   {isLoading ? 'Broadcasting Notice...' : 'Schedule Broadcast'}
-                </button>
+                </Button>
               </form>
             )}
           </div>

@@ -8,6 +8,7 @@ import {
 import { useState } from 'react';
 import { ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGrid, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
 import TeacherProfileDrawer from '../teachers/TeacherProfileDrawer';
+import { Button } from '../../components/ui/Button';
 
 export default function SubjectDetailDashboard() {
   const { id } = useParams<{ id: string }>();
@@ -57,7 +58,7 @@ export default function SubjectDetailDashboard() {
       {/* HEADER */}
       <div className="flex-mobile-col" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 24, gap: 16 }}>
         <div className="flex-mobile-col" style={{ display: 'flex', alignItems: 'flex-start', gap: 16 }}>
-          <button className="btn" onClick={() => navigate(-1)} style={{ padding: '8px 12px' }}>← Back</button>
+          <Button variant="secondary" size="sm" onClick={() => navigate(-1)}>← Back</Button>
           <div>
             <h1 className="page-title" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: 8 }}>
               {dashboard.overview.name}
@@ -66,7 +67,7 @@ export default function SubjectDetailDashboard() {
             <p className="page-subtitle" style={{ margin: 0 }}>{dashboard.overview.description}</p>
           </div>
         </div>
-        <button className="btn btn-primary" onClick={() => window.print()}>Export Report</button>
+        <Button variant="primary" onClick={() => window.print()}>Export Report</Button>
       </div>
 
       {/* BENTO GRID LAYOUT */}
@@ -352,9 +353,9 @@ function Pagination({ total, current, onChange, pageSize }: { total: number, cur
   if (pages <= 1) return null;
   return (
     <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8, padding: 12, borderTop: '1px solid var(--border-color)' }}>
-      <button className="btn" disabled={current === 1} onClick={() => onChange(current - 1)} style={{ padding: '4px 12px', fontSize: 12 }}>Prev</button>
+      <Button variant="secondary" size="xs" disabled={current === 1} onClick={() => onChange(current - 1)}>Prev</Button>
       <span style={{ fontSize: 12, display: 'flex', alignItems: 'center', color: 'var(--text-muted)' }}>Page {current} of {pages}</span>
-      <button className="btn" disabled={current === pages} onClick={() => onChange(current + 1)} style={{ padding: '4px 12px', fontSize: 12 }}>Next</button>
+      <Button variant="secondary" size="xs" disabled={current === pages} onClick={() => onChange(current + 1)}>Next</Button>
     </div>
   );
 }

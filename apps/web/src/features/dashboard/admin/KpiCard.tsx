@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
+import { Button } from '../../../components/ui/Button';
 
 export interface StatCardProps {
   label: string;
@@ -82,9 +83,9 @@ export default function KpiCard({
         justifyContent: 'space-between',
         cursor: onClick || (link && state !== 'setup_required') ? 'pointer' : 'default',
         background: isHovered ? 'var(--bg-surface-raised)' : 'var(--bg-surface)',
-        border: `1px solid ${isHovered ? 'var(--border-subtle)' : 'var(--border-subtle)'}`,
-        borderColor: isHovered ? colorHex : 'var(--border-subtle)',
-        borderTop: `3px solid ${colorHex}`,
+        borderWidth: '3px 1px 1px 1px',
+        borderStyle: 'solid',
+        borderColor: `${colorHex} ${isHovered ? colorHex : 'var(--border-subtle)'} ${isHovered ? colorHex : 'var(--border-subtle)'} ${isHovered ? colorHex : 'var(--border-subtle)'}`,
         borderRadius: 'var(--radius-lg)',
         transition: 'all 0.2s ease',
         minHeight: '160px',
@@ -247,22 +248,18 @@ export default function KpiCard({
         })()}`
 
         {!isLoading && state === 'setup_required' && setupCta && (
-          <button
+          <Button
+            size="sm"
+            onClick={handleSetupClick}
             style={{
               padding: '6px 14px',
               fontSize: '12px',
-              fontWeight: 600,
               color: 'var(--bg-canvas)',
               backgroundColor: 'var(--text-primary)',
-              border: 'none',
-              borderRadius: 'var(--radius-sm)',
-              cursor: 'pointer',
-              transition: 'opacity 0.2s',
             }}
-            onClick={handleSetupClick}
           >
             {setupCta.label}
-          </button>
+          </Button>
         )}
       </div>
     </div>

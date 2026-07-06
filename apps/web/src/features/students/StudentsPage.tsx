@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '../../components/ui/Button';
 import { DataTable, Pagination } from '../../components/ui/DataTable';
 import { useGetStudentsQuery } from './studentsApi';
 import { mockClasses } from '../../mock/classes';
@@ -176,12 +177,12 @@ export default function StudentsPage() {
           </p>
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
-          <button className="btn btn-secondary btn-sm" onClick={() => setShowImport(true)}>
+          <Button variant="secondary" size="sm" onClick={() => setShowImport(true)}>
             📥 Import CSV
-          </button>
-          <button className="btn btn-primary btn-sm" id="add-student-btn" onClick={() => setShowAdd(true)}>
+          </Button>
+          <Button variant="primary" size="sm" id="add-student-btn" onClick={() => setShowAdd(true)}>
             + Add Student
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -264,7 +265,7 @@ export default function StudentsPage() {
           <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: 16, width: '90%', maxWidth: 450, padding: 20, boxShadow: 'var(--shadow-lg)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
               <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: 'var(--text-primary)' }}>Import Students via CSV</h3>
-              <button onClick={() => setShowImport(false)} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', fontSize: 18, cursor: 'pointer' }} disabled={isProcessing}>✕</button>
+              <Button variant="ghost" size="icon" onClick={() => setShowImport(false)} style={{ color: 'var(--text-muted)' }} disabled={isProcessing}>✕</Button>
             </div>
             <form onSubmit={handleImportCSV} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
               <div style={{ border: '2px dashed var(--border-color)', borderRadius: 10, padding: '30px 10px', textAlign: 'center', cursor: 'pointer', background: 'var(--bg-body)' }}>
@@ -285,9 +286,9 @@ export default function StudentsPage() {
                 </div>
               )}
 
-              <button type="submit" disabled={isProcessing} className="btn btn-primary" style={{ padding: 12 }}>
-                {isProcessing ? 'Parsing datasets...' : 'Upload & Process CSV'}
-              </button>
+              <Button type="submit" variant="primary" disabled={isProcessing} loading={isProcessing} style={{ padding: 12 }}>
+                Upload & Process CSV
+              </Button>
             </form>
           </div>
         </div>
@@ -299,7 +300,7 @@ export default function StudentsPage() {
           <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: 16, width: '90%', maxWidth: 480, padding: 20, boxShadow: 'var(--shadow-lg)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
               <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: 'var(--text-primary)' }}>Register New Student Profile</h3>
-              <button onClick={() => setShowAdd(false)} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', fontSize: 18, cursor: 'pointer' }} disabled={isProcessing}>✕</button>
+              <Button variant="ghost" size="icon" onClick={() => setShowAdd(false)} style={{ color: 'var(--text-muted)' }} disabled={isProcessing}>✕</Button>
             </div>
             <form onSubmit={handleAddStudentSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
               <div className="grid-2" style={{ gap: 12 }}>
@@ -337,9 +338,9 @@ export default function StudentsPage() {
                 <label style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Student Code</label>
                 <input type="text" required value={newStudent.code} onChange={e => setNewStudent({ ...newStudent, code: e.target.value })} placeholder="STU-009" style={{ padding: '8px 12px', border: '1px solid var(--border-color)', borderRadius: 8, background: 'var(--bg-body)', color: 'var(--text-primary)' }} />
               </div>
-              <button type="submit" disabled={isProcessing} className="btn btn-primary" style={{ padding: 12, marginTop: 8 }}>
-                {isProcessing ? 'Registering Student...' : 'Register Student'}
-              </button>
+              <Button type="submit" variant="primary" disabled={isProcessing} loading={isProcessing} style={{ padding: 12, marginTop: 8 }}>
+                Register Student
+              </Button>
             </form>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useGetTeacherProfileQuery } from './teachersApi';
+import { Button } from '../../components/ui/Button';
 
 interface DrawerProps {
   teacherId: string | null;
@@ -48,16 +49,18 @@ export default function TeacherProfileDrawer({ teacherId, subjectId, onClose }: 
       >
         <div style={{ padding: '20px 24px', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--bg-secondary)' }}>
           <h2 style={{ margin: 0, fontSize: 18, fontWeight: 600, color: 'var(--text-primary)' }}>Teacher Profile</h2>
-          <button 
+          <Button 
+            variant="ghost" 
+            size="sm"
             onClick={onClose} 
             style={{ 
-              padding: '6px 12px', borderRadius: '20px', background: 'var(--bg-tertiary)', 
-              border: '1px solid var(--border-color)', cursor: 'pointer', fontWeight: 500, color: 'var(--text-primary)',
+              borderRadius: '20px', background: 'var(--bg-tertiary)', 
+              border: '1px solid var(--border-color)', color: 'var(--text-primary)',
               boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
             }}
           >
             ✕ Close
-          </button>
+          </Button>
         </div>
 
         {isLoading ? (

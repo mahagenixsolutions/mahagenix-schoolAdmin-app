@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Button } from '../../components/ui/Button';
 
 export default function NewAcademicYearModal({ onClose, onSuccess }: { onClose: () => void, onSuccess?: () => void }) {
   const [name, setName] = useState('');
@@ -85,8 +86,8 @@ export default function NewAcademicYearModal({ onClose, onSuccess }: { onClose: 
           </div>
 
           <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end', marginTop: 16 }}>
-            <button type="button" className="btn" onClick={onClose}>Cancel</button>
-            <button type="submit" className="btn btn-primary">Create Year</button>
+            <Button type="button" variant="ghost" onClick={onClose}>Cancel</Button>
+            <Button type="submit" variant="primary">Create Year</Button>
           </div>
         </form>
       </div>

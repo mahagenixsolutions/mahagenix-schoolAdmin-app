@@ -1,5 +1,6 @@
 import { useMemo, useState, useEffect, type ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
+import { Button } from '../../components/ui/Button';
 import {
   BarChart3,
   CalendarClock,
@@ -389,13 +390,13 @@ export default function ReportsPage() {
           <div className="eyebrow">Executive Reporting Center</div>
           <h1>Reports & Export Center</h1>
         </div>
-        <div className="header-actions">
-          <button className="btn-ghost" onClick={() => { document.querySelector('.export-section')?.scrollIntoView({ behavior: 'smooth' }); }}>
-            Export Center <ChevronDown size={16} />
-          </button>
-          <button className="btn-primary" onClick={() => setIsBuilderOpen(true)}>
-            Build Report <Sparkles size={16} />
-          </button>
+        <div className="header-actions" style={{ display: 'flex', gap: 8 }}>
+          <Button variant="ghost" endIcon={<ChevronDown size={16} />} onClick={() => { document.querySelector('.export-section')?.scrollIntoView({ behavior: 'smooth' }); }}>
+            Export Center
+          </Button>
+          <Button variant="primary" endIcon={<Sparkles size={16} />} onClick={() => setIsBuilderOpen(true)}>
+            Build Report
+          </Button>
         </div>
       </div>
 
@@ -440,7 +441,7 @@ export default function ReportsPage() {
             </div>
             <div className="pill-row">
               <Filter size={14} color="var(--text-muted)" />
-              {categories.map((item) => <button key={item} className={category === item ? 'active' : ''} onClick={() => setCategory(item)}>{item}</button>)}
+              {categories.map((item) => <Button key={item} size="sm" variant={category === item ? 'primary' : 'ghost'} onClick={() => setCategory(item)}>{item}</Button>)}
             </div>
           </div>
           <div className="report-list">
@@ -478,9 +479,9 @@ export default function ReportsPage() {
                   {report.status === 'Draft' && (
                     <div className="draft-strip" onClick={(e) => e.stopPropagation()}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 12, justifyContent: 'space-between' }}>
-                        <button className="btn-ghost" style={{ fontSize: 12, color: '#F59E0B', border: '1px solid rgba(245,158,11,0.3)', padding: '4px 10px', borderRadius: 6, background: 'transparent', cursor: 'pointer' }} onClick={() => { setIsBuilderOpen(true); }}>
+                        <Button variant="ghost" size="sm" style={{ fontSize: 12, color: '#F59E0B', border: '1px solid rgba(245,158,11,0.3)' }} onClick={() => { setIsBuilderOpen(true); }}>
                           Continue editing &rarr;
-                        </button>
+                        </Button>
                         <div className="progress-dots">
                           {Array.from({ length: report.draftTotal || 5 }).map((_, i) => (
                             <div key={i} className={`progress-dot ${i < (report.draftProgress || 0) ? 'dot-filled' : 'dot-empty'}`} />
@@ -503,7 +504,7 @@ export default function ReportsPage() {
             <div className="pill-row" style={{ gap: 4 }}>
               <span style={{ fontSize: 12, color: 'var(--text-muted)', marginRight: 4 }}>Preview as:</span>
               {['Leadership Team', 'Finance Office', 'Class Teachers'].map(aud => (
-                <button key={aud} className={previewAudience === aud ? 'active' : ''} onClick={() => setPreviewAudience(aud)} style={{ padding: '4px 10px' }}>{aud}</button>
+                <Button key={aud} size="sm" variant={previewAudience === aud ? 'primary' : 'ghost'} onClick={() => setPreviewAudience(aud)}>{aud}</Button>
               ))}
             </div>
           </div>
@@ -580,9 +581,9 @@ export default function ReportsPage() {
             <Sparkles size={18} color="#8B5CF6" /> AI Reporting Insights
             <span style={{ background: 'rgba(139,92,246,0.15)', color: '#8B5CF6', padding: '2px 8px', borderRadius: 9999, fontSize: 11, fontWeight: 700, marginLeft: 8 }}>✦ 3 suggestions</span>
           </h2>
-          <button className="btn-ghost" onClick={refreshAiInsights} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }} title="Regenerate insights">
+          <Button variant="ghost" size="icon" onClick={refreshAiInsights} style={{ color: 'var(--text-muted)' }} title="Regenerate insights">
             <RefreshCw size={18} className={isAiLoading ? 'spin' : ''} style={isAiLoading ? { animation: 'spin 1s linear infinite' } : {}} />
-          </button>
+          </Button>
         </div>
         <div className="ai-grid">
           <div className="ai-card">
@@ -590,27 +591,27 @@ export default function ReportsPage() {
               <div className="ai-icon" style={{ background: '#4F8EF718', color: '#4F8EF7' }}><BarChart3 size={18} /></div>
               <p>Board Review Pack should include attendance risk and fee aging — both moved more than 5% this month.</p>
             </div>
-            <button className="ai-btn" style={{ borderColor: '#10B981', color: '#10B981' }} onClick={() => triggerToast('Section added to Board Review Pack ✓')}>
+            <Button variant="outline" size="sm" style={{ borderColor: '#10B981', color: '#10B981' }} onClick={() => triggerToast('Section added to Board Review Pack ✓')}>
               Add to pack &rarr;
-            </button>
+            </Button>
           </div>
           <div className="ai-card">
             <div style={{ display: 'flex', gap: 12 }}>
               <div className="ai-icon" style={{ background: '#F59E0B18', color: '#F59E0B' }}><AlertTriangle size={18} /></div>
               <p>Class 8A and Class 9A need a separate academic intervention appendix.</p>
             </div>
-            <button className="ai-btn" style={{ borderColor: '#4F8EF7', color: '#4F8EF7' }} onClick={() => { setIsBuilderOpen(true); triggerToast('Opening builder with Class 8A, 9A...'); }}>
+            <Button variant="outline" size="sm" style={{ borderColor: '#4F8EF7', color: '#4F8EF7' }} onClick={() => { setIsBuilderOpen(true); triggerToast('Opening builder with Class 8A, 9A...'); }}>
               Generate appendix &rarr;
-            </button>
+            </Button>
           </div>
           <div className="ai-card">
             <div style={{ display: 'flex', gap: 12 }}>
               <div className="ai-icon" style={{ background: '#8B5CF618', color: '#8B5CF6' }}><Calendar size={18} /></div>
               <p>Schedule the Attendance Risk Digest for class teachers daily until Unit Test 1 closes.</p>
             </div>
-            <button className="ai-btn" style={{ borderColor: '#8B5CF6', color: '#8B5CF6' }} onClick={() => { document.querySelector('.schedule-section')?.scrollIntoView({ behavior: 'smooth' }); triggerToast('Highlighting schedules...'); }}>
+            <Button variant="outline" size="sm" style={{ borderColor: '#8B5CF6', color: '#8B5CF6' }} onClick={() => { document.querySelector('.schedule-section')?.scrollIntoView({ behavior: 'smooth' }); triggerToast('Highlighting schedules...'); }}>
               Set schedule &rarr;
-            </button>
+            </Button>
           </div>
         </div>
       </section>
@@ -655,7 +656,7 @@ export default function ReportsPage() {
               <div className="bp-title">One-Click Board Pack</div>
               <div className="bp-desc">Auto-bundles Executive Summary + Fee Report + Attendance Audit into one board-ready PDF.</div>
               <div className="bp-stats">Used 28 times &middot; ~8 pages &middot; ~4.2 MB avg</div>
-              <button className="bp-btn" onClick={() => triggerToast('Generating Board Pack... Check Export Center')}>Generate Now &rarr;</button>
+              <Button variant="primary" style={{ width: '100%', marginTop: 'auto' }} onClick={() => triggerToast('Generating Board Pack... Check Export Center')}>Generate Now &rarr;</Button>
             </div>
             {templates.map((template) => (
               <div key={template.name} className="template-card">
@@ -689,8 +690,8 @@ export default function ReportsPage() {
                 <div className="export-actions">
                   {file.status === 'Ready' && (
                     <>
-                      <button className="btn-icon-sh" onClick={() => triggerToast('Link copied ✓')}><Share size={16} /></button>
-                      <button className="btn-icon-dl" onClick={() => triggerToast(`Downloading ${file.file}...`)}><Download size={16} /></button>
+                      <Button variant="ghost" size="icon" onClick={() => triggerToast('Link copied ✓')}><Share size={16} /></Button>
+                      <Button variant="ghost" size="icon" onClick={() => triggerToast(`Downloading ${file.file}...`)}><Download size={16} /></Button>
                     </>
                   )}
                   {file.status === 'Processing' && (
@@ -704,9 +705,9 @@ export default function ReportsPage() {
                 </div>
               </div>
             ))}
-            <button className="dl-all-btn" onClick={() => triggerToast('Preparing ZIP file for download...')}>
+            <Button variant="primary" style={{ width: '100%', marginTop: 8 }} onClick={() => triggerToast('Preparing ZIP file for download...')}>
               &darr; Download all 2 ready files as ZIP
-            </button>
+            </Button>
           </div>
         </section>
       </div>
@@ -721,7 +722,7 @@ export default function ReportsPage() {
             <input type="text" className="h-search" placeholder="Search history..." value={historySearch} onChange={(e) => setHistorySearch(e.target.value)} />
             <div className="pill-row">
               {['All', 'Downloaded', 'Auto-sent', 'Shared', 'Duplicated'].map(f => (
-                <button key={f} className={historyFilter === f ? 'active' : ''} onClick={() => setHistoryFilter(f)}>{f}</button>
+                <Button key={f} variant={historyFilter === f ? 'primary' : 'secondary'} size="sm" onClick={() => setHistoryFilter(f)} style={{ borderRadius: 16 }}>{f}</Button>
               ))}
             </div>
             <select className="h-select">
@@ -731,7 +732,7 @@ export default function ReportsPage() {
               <option>This term</option>
             </select>
           </div>
-          <button className="btn-ghost" style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', fontSize: 12, cursor: 'pointer' }} onClick={() => triggerToast('Exporting audit log...')}>Export audit log &darr;</button>
+          <Button variant="ghost" size="sm" style={{ color: 'var(--text-muted)' }} onClick={() => triggerToast('Exporting audit log...')}>Export audit log &darr;</Button>
         </div>
         <div className="history-list">
           {history.filter(h => historyFilter === 'All' || h.type === historyFilter).map((item, idx) => {
@@ -767,7 +768,7 @@ export default function ReportsPage() {
       <div className={`drawer ${isBuilderOpen ? 'open' : ''}`}>
         <div className="drawer-header">
           <h2><Settings2 size={18} style={{ marginRight: 8, verticalAlign: 'middle' }} /> Report Builder</h2>
-          <button className="drawer-close" onClick={() => setIsBuilderOpen(false)}><X size={20} /></button>
+          <Button variant="ghost" size="icon" onClick={() => setIsBuilderOpen(false)}><X size={20} /></Button>
         </div>
         <div className="drawer-body">
           <div className="builder-form">
@@ -795,9 +796,9 @@ export default function ReportsPage() {
                 {['Leadership Team', 'Academic Office', 'Finance Office', 'Class Teachers'].map((item) => <option key={item}>{item}</option>)}
               </select>
             </label>
-            <button className="build-button" onClick={handleGeneratePreview} disabled={isGenerating}>
-              {isGenerating ? <><Loader2 size={16} className="spin" style={{ animation: 'spin 1s linear infinite' }} /> Generating...</> : <><Send size={16} /> Generate preview</>}
-            </button>
+            <Button variant="primary" onClick={handleGeneratePreview} disabled={isGenerating} loading={isGenerating} fullWidth>
+              {!isGenerating && <><Send size={16} /> Generate preview</>}
+            </Button>
           </div>
         </div>
       </div>

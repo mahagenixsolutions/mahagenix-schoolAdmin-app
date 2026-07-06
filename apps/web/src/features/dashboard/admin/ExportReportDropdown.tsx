@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '../../../components/ui/Button';
 
 export default function ExportReportDropdown() {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,16 +28,17 @@ export default function ExportReportDropdown() {
 
   return (
     <div style={{ position: 'relative' }} ref={dropdownRef}>
-      <button 
-        className="btn btn-secondary btn-sm" 
+      <Button 
+        variant="secondary" size="sm"
         onClick={() => setIsOpen(!isOpen)}
-        style={{ display: 'flex', alignItems: 'center', gap: 4 }}
+        startIcon={
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+          </svg>
+        }
       >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
-        </svg>
         Export Report ▾
-      </button>
+      </Button>
 
       {isOpen && (
         <div style={{
@@ -53,8 +55,9 @@ export default function ExportReportDropdown() {
           padding: '4px 0'
         }}>
           {options.map((opt, i) => (
-            <button
+            <Button
               key={i}
+              variant="ghost"
               onClick={() => {
                 navigate('/reports', { state: { category: opt.category } });
                 setIsOpen(false);
@@ -63,17 +66,12 @@ export default function ExportReportDropdown() {
                 width: '100%',
                 padding: '8px 16px',
                 textAlign: 'left',
-                background: 'transparent',
-                border: 'none',
+                justifyContent: 'flex-start',
                 fontSize: 13,
-                color: 'var(--text-primary)',
-                cursor: 'pointer',
               }}
-              onMouseEnter={(e) => e.currentTarget.style.background = 'var(--bg-primary)'}
-              onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
             >
               {opt.label}
-            </button>
+            </Button>
           ))}
         </div>
       )}

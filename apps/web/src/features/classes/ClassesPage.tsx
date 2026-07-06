@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '../../components/ui/Button';
 import {
   Grid,
   List,
@@ -373,42 +374,30 @@ export default function ClassesPage() {
               alignItems: 'center',
             }}
           >
-            <button
+            <Button
+              variant={viewMode === 'grid' ? 'primary' : 'ghost'}
+              size="icon"
               onClick={() => setViewMode('grid')}
               style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
                 width: '30px',
                 height: '30px',
                 borderRadius: '6px',
-                border: viewMode === 'grid' ? '1px solid #4F8EF7' : '1px solid transparent',
-                background: viewMode === 'grid' ? '#4F8EF718' : 'transparent',
-                color: viewMode === 'grid' ? '#4F8EF7' : 'var(--text-muted)',
-                cursor: 'pointer',
-                transition: 'all 0.2s',
               }}
             >
               <Grid size={16} />
-            </button>
-            <button
+            </Button>
+            <Button
+              variant={viewMode === 'list' ? 'primary' : 'ghost'}
+              size="icon"
               onClick={() => setViewMode('list')}
               style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
                 width: '30px',
                 height: '30px',
                 borderRadius: '6px',
-                border: viewMode === 'list' ? '1px solid #4F8EF7' : '1px solid transparent',
-                background: viewMode === 'list' ? '#4F8EF718' : 'transparent',
-                color: viewMode === 'list' ? '#4F8EF7' : 'var(--text-muted)',
-                cursor: 'pointer',
-                transition: 'all 0.2s',
               }}
             >
               <List size={16} />
-            </button>
+            </Button>
           </div>
         </div>
       </div>
@@ -1075,24 +1064,21 @@ export default function ClassesPage() {
                       </span>
                     </td>
                     <td style={{ textAlign: 'right', borderBottom: 'none' }}>
-                      <button
-                        className="btn btn-ghost btn-sm"
+                      <Button
+                        variant="ghost"
+                        size="sm"
                         onClick={(e) => {
                           e.stopPropagation();
                           handleCardClick(cls.grade);
                         }}
                         style={{
                           color: '#4F8EF7',
-                          fontWeight: 600,
                           background: 'rgba(79, 142, 247, 0.1)',
-                          border: 'none',
-                          borderRadius: '6px',
-                          padding: '4px 10px',
-                          cursor: 'pointer',
+                          padding: '4px 10px', height: 'auto'
                         }}
                       >
                         View &rarr;
-                      </button>
+                      </Button>
                     </td>
                   </tr>
                 );

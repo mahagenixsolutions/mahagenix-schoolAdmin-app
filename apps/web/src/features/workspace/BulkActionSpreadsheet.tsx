@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Save, Check } from 'lucide-react';
+import { Save, Check, AlertCircle } from 'lucide-react';
+import { Button } from '../../components/ui/Button';
 import { mockRoster } from './mockCommandCenterData';
 
 type TabType = 'attendance' | 'marks' | 'remarks';
@@ -74,7 +75,7 @@ export default function BulkActionSpreadsheet() {
           { id: 'marks', label: 'Marks & Grades' },
           { id: 'remarks', label: 'Remarks & Badges' },
         ].map(tab => (
-          <button
+          <Button
             key={tab.id}
             onClick={() => setActiveTab(tab.id as TabType)}
             style={{
@@ -86,11 +87,12 @@ export default function BulkActionSpreadsheet() {
               fontWeight: activeTab === tab.id ? 700 : 500,
               fontSize: '14px',
               cursor: 'pointer',
-              transition: 'all 0.2s'
+              transition: 'all 0.2s',
+              borderRadius: 0
             }}
           >
             {tab.label}
-          </button>
+          </Button>
         ))}
       </div>
 
@@ -101,10 +103,10 @@ export default function BulkActionSpreadsheet() {
         </div>
         <div style={{ display: 'flex', gap: '8px' }}>
           {activeTab === 'attendance' && (
-             <button className="btn btn-outline btn-sm" onClick={handleMarkAllPresent} style={{ fontSize: '12px' }}><Check size={14}/> Mark All Present</button>
+             <Button variant="outline" size="sm" onClick={handleMarkAllPresent} startIcon={<Check size={14}/>}>Mark All Present</Button>
           )}
-          <button className="btn btn-secondary btn-sm" onClick={handleSaveDraft} disabled={isProcessing} style={{ fontSize: '12px' }}><Save size={14}/> {isProcessing ? 'Saving...' : 'Save Draft'}</button>
-          <button className="btn btn-primary btn-sm" onClick={handleSubmit} disabled={isProcessing} style={{ fontSize: '12px' }}>{isProcessing ? 'Submitting...' : 'Submit to Database'}</button>
+          <Button variant="secondary" size="sm" onClick={handleSaveDraft} disabled={isProcessing} loading={isProcessing} startIcon={!isProcessing && <Save size={14}/>}>Save Draft</Button>
+          <Button variant="primary" size="sm" onClick={handleSubmit} disabled={isProcessing} loading={isProcessing}>Submit to Database</Button>
         </div>
       </div>
 

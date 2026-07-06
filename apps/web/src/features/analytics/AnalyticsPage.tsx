@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { Button } from '../../components/ui/Button';
 import {
   AreaChart, Area, BarChart, Bar,
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend,
@@ -376,8 +377,9 @@ export default function AnalyticsPage() {
             <p className="page-subtitle">ERP school administration logs, performance indices, and diagnostic insights.</p>
           </div>
           <div className="export-button-group">
-            <button 
-              className="btn btn-secondary btn-sm" 
+            <Button 
+              variant="secondary"
+              size="sm"
               onClick={() => handleExport('pdf')}
               disabled={exporting !== null}
             >
@@ -392,9 +394,10 @@ export default function AnalyticsPage() {
                   <span>Export PDF</span>
                 </>
               )}
-            </button>
-            <button 
-              className="btn btn-primary btn-sm"
+            </Button>
+            <Button 
+              variant="primary"
+              size="sm"
               onClick={() => handleExport('excel')}
               disabled={exporting !== null}
             >
@@ -409,7 +412,7 @@ export default function AnalyticsPage() {
                   <span>Export Excel</span>
                 </>
               )}
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -814,21 +817,22 @@ export default function AnalyticsPage() {
                       <span className="rec-title">{item.title}</span>
                     </div>
                     <p className="rec-description">{item.recommendation}</p>
-                    <button 
-                      className={`btn btn-sm ${isApplied ? 'btn-ghost text-success' : 'btn-primary'}`}
+                    <Button 
+                      variant={isApplied ? 'ghost' : 'primary'}
+                      size="sm"
                       onClick={() => handleApplyRecommendation(item.id, item.actionText)}
                       disabled={isApplied}
                       style={{ marginTop: 8 }}
                     >
                       {isApplied ? (
                         <>
-                          <Check size={12} />
-                          <span>{item.appliedText}</span>
+                          <Check size={12} style={{ color: 'var(--color-success)' }} />
+                          <span style={{ color: 'var(--color-success)' }}>{item.appliedText}</span>
                         </>
                       ) : (
                         <span>{item.actionText}</span>
                       )}
-                    </button>
+                    </Button>
                   </div>
                 );
               })}
@@ -1078,27 +1082,33 @@ export default function AnalyticsPage() {
             <p style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>Click headers to sort school sections dynamically.</p>
           </div>
           <div className="sorting-badge-group">
-            <button 
-              className={`btn btn-secondary btn-xs ${classSortKey === 'rank' ? 'active-sort' : ''}`}
+            <Button 
+              variant="secondary"
+              size="sm"
+              className={classSortKey === 'rank' ? 'active-sort' : ''}
               onClick={() => handleSortToggle('rank')}
             >
               <ArrowUpDown size={12} />
               <span>Rank {classSortKey === 'rank' ? (classSortOrder === 'asc' ? '↑' : '↓') : ''}</span>
-            </button>
-            <button 
-              className={`btn btn-secondary btn-xs ${classSortKey === 'attendance' ? 'active-sort' : ''}`}
+            </Button>
+            <Button 
+              variant="secondary"
+              size="sm"
+              className={classSortKey === 'attendance' ? 'active-sort' : ''}
               onClick={() => handleSortToggle('attendance')}
             >
               <ArrowUpDown size={12} />
               <span>Attendance {classSortKey === 'attendance' ? (classSortOrder === 'asc' ? '↑' : '↓') : ''}</span>
-            </button>
-            <button 
-              className={`btn btn-secondary btn-xs ${classSortKey === 'marks' ? 'active-sort' : ''}`}
+            </Button>
+            <Button 
+              variant="secondary"
+              size="sm"
+              className={classSortKey === 'marks' ? 'active-sort' : ''}
               onClick={() => handleSortToggle('marks')}
             >
               <ArrowUpDown size={12} />
               <span>Average Marks {classSortKey === 'marks' ? (classSortOrder === 'asc' ? '↑' : '↓') : ''}</span>
-            </button>
+            </Button>
           </div>
         </div>
         <div className="card-body grid-cards-scroller">
@@ -1237,9 +1247,9 @@ export default function AnalyticsPage() {
                 onChange={(e) => setAiQuery(e.target.value)}
                 disabled={isAiLoading}
               />
-              <button type="submit" className="btn btn-primary btn-chat-send" disabled={isAiLoading}>
+              <Button type="submit" variant="primary" className="btn-chat-send" disabled={isAiLoading} style={{ padding: '8px 12px', height: 'auto' }}>
                 <Send size={14} />
-              </button>
+              </Button>
             </form>
           </div>
         </div>

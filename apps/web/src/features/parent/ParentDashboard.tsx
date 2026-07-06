@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { Button } from '../../components/ui/Button';
 import { useNavigate } from 'react-router-dom';
 import type { RootState } from '../../store';
 import {
@@ -153,7 +154,7 @@ export default function ParentDashboard() {
                 <div style={{ fontSize: 15, fontWeight: 800, color: 'var(--alert-danger-text)' }}>${fee.amount} Fee Overdue</div>
                 <div style={{ fontSize: 13, color: 'var(--alert-danger-text)', opacity: 0.9 }}>{fee.title} is pending.</div>
               </div>
-              <button style={{ padding: '6px 12px', background: 'var(--color-danger)', color: 'white', border: 'none', borderRadius: 8, fontWeight: 600, fontSize: 12, cursor: 'pointer' }} onClick={() => setShowPaymentModal(fee)}>Pay Now</button>
+              <Button variant="danger" size="sm" onClick={() => setShowPaymentModal(fee)}>Pay Now</Button>
             </div>
           ))}
           {pendingHomework.map((hw: any) => (
@@ -163,7 +164,7 @@ export default function ParentDashboard() {
                 <div style={{ fontSize: 15, fontWeight: 800, color: 'var(--alert-warning-text)' }}>{hw.homework?.subject?.name} Homework</div>
                 <div style={{ fontSize: 13, color: 'var(--alert-warning-text)', opacity: 0.9 }}>Due tomorrow.</div>
               </div>
-              <button style={{ padding: '6px 12px', background: 'var(--color-warning)', color: 'white', border: 'none', borderRadius: 8, fontWeight: 600, fontSize: 12, cursor: 'pointer' }} onClick={() => setShowHomeworkModal(hw)}>View</button>
+              <Button variant="warning" size="sm" onClick={() => setShowHomeworkModal(hw)}>View</Button>
             </div>
           ))}
         </div>
@@ -203,9 +204,9 @@ export default function ParentDashboard() {
             </h3>
             <div style={{ fontSize: 13, color: 'var(--transport-text)', fontWeight: 500 }}>Status: <span style={{ fontWeight: 800 }}>On Time</span></div>
           </div>
-          <button style={{ background: '#10b981', color: 'white', padding: '8px 16px', borderRadius: 16, border: 'none', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)' }} onClick={() => window.dispatchEvent(new Event('open-bus-tracker'))}>
+          <Button variant="primary" style={{ background: '#10b981', color: 'white', borderRadius: 16, boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)' }} onClick={() => window.dispatchEvent(new Event('open-bus-tracker'))}>
             Track Live
-          </button>
+          </Button>
         </div>
         <div style={{ display: 'flex', gap: 24, marginTop: 16, position: 'relative', zIndex: 1 }}>
           <div>
@@ -272,31 +273,32 @@ export default function ParentDashboard() {
       <div style={{ position: 'fixed', bottom: 84, right: 20, zIndex: 1000, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 12 }}>
         {showQuickActions && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, animation: 'slideUp 0.2s ease-out' }}>
-            <button onClick={() => { navigate('/messages'); setShowQuickActions(false); }} style={{ display: 'flex', alignItems: 'center', gap: 12, background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: 24, padding: '8px 16px', boxShadow: 'var(--shadow-md)', cursor: 'pointer', fontWeight: 600, color: 'var(--text-primary)' }}>
-              <span>💬</span> Message Teacher
-            </button>
-            <button onClick={() => { navigate('/profile'); setShowQuickActions(false); }} style={{ display: 'flex', alignItems: 'center', gap: 12, background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: 24, padding: '8px 16px', boxShadow: 'var(--shadow-md)', cursor: 'pointer', fontWeight: 600, color: 'var(--text-primary)' }}>
-              <span>💳</span> Pay Fees
-            </button>
-            <button onClick={() => { window.dispatchEvent(new Event('open-bus-tracker')); setShowQuickActions(false); }} style={{ display: 'flex', alignItems: 'center', gap: 12, background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: 24, padding: '8px 16px', boxShadow: 'var(--shadow-md)', cursor: 'pointer', fontWeight: 600, color: 'var(--text-primary)' }}>
-              <span>🚌</span> Track Bus
-            </button>
-            <button onClick={() => { navigate('/timeline'); setShowQuickActions(false); }} style={{ display: 'flex', alignItems: 'center', gap: 12, background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: 24, padding: '8px 16px', boxShadow: 'var(--shadow-md)', cursor: 'pointer', fontWeight: 600, color: 'var(--text-primary)' }}>
-              <span>📄</span> Report Card
-            </button>
+            <Button variant="secondary" onClick={() => { navigate('/messages'); setShowQuickActions(false); }} style={{ borderRadius: 24, boxShadow: 'var(--shadow-md)', justifyContent: 'flex-start' }} startIcon={<span>💬</span>}>
+              Message Teacher
+            </Button>
+            <Button variant="secondary" onClick={() => { navigate('/profile'); setShowQuickActions(false); }} style={{ borderRadius: 24, boxShadow: 'var(--shadow-md)', justifyContent: 'flex-start' }} startIcon={<span>💳</span>}>
+              Pay Fees
+            </Button>
+            <Button variant="secondary" onClick={() => { window.dispatchEvent(new Event('open-bus-tracker')); setShowQuickActions(false); }} style={{ borderRadius: 24, boxShadow: 'var(--shadow-md)', justifyContent: 'flex-start' }} startIcon={<span>🚌</span>}>
+              Track Bus
+            </Button>
+            <Button variant="secondary" onClick={() => { navigate('/timeline'); setShowQuickActions(false); }} style={{ borderRadius: 24, boxShadow: 'var(--shadow-md)', justifyContent: 'flex-start' }} startIcon={<span>📄</span>}>
+              Report Card
+            </Button>
           </div>
         )}
-        <button 
+        <Button 
+          variant="primary"
+          size="icon"
           onClick={() => setShowQuickActions(!showQuickActions)}
           style={{ 
             width: 56, height: 56, borderRadius: '50%', background: '#3b82f6', color: 'white', 
-            border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', 
-            boxShadow: '0 4px 20px rgba(59, 130, 246, 0.4)', cursor: 'pointer', fontSize: 24,
+            boxShadow: '0 4px 20px rgba(59, 130, 246, 0.4)', fontSize: 24,
             transition: 'transform 0.2s', transform: showQuickActions ? 'rotate(45deg)' : 'none'
           }}
         >
           +
-        </button>
+        </Button>
         <style>{`@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }`}</style>
       </div>
 
@@ -306,7 +308,7 @@ export default function ParentDashboard() {
           <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', padding: 32, borderRadius: 24, maxWidth: 400, width: '90%', boxShadow: 'var(--shadow-xl)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
               <h3 style={{ margin: 0, fontSize: 18, fontWeight: 800 }}>Payment Method</h3>
-              <button onClick={() => setShowPaymentModal(null)} style={{ border: 'none', background: 'var(--bg-secondary)', color: 'var(--text-primary)', width: 32, height: 32, borderRadius: '50%', cursor: 'pointer', fontWeight: 800 }}>✕</button>
+              <Button variant="ghost" size="icon" onClick={() => setShowPaymentModal(null)}>✕</Button>
             </div>
             <div style={{ marginBottom: 24 }}>
               <div style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Paying for</div>
@@ -314,15 +316,15 @@ export default function ParentDashboard() {
               <div style={{ fontSize: 32, fontWeight: 800, color: '#16a34a', marginTop: 8 }}>${showPaymentModal.amount}</div>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              <button style={{ padding: 16, borderRadius: 16, border: '1px solid var(--border-color)', background: 'var(--bg-secondary)', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer' }}>
-                <span style={{ fontSize: 24 }}>💳</span> <span style={{ fontWeight: 600 }}>Credit / Debit Card</span>
-              </button>
-              <button style={{ padding: 16, borderRadius: 16, border: '1px solid var(--border-color)', background: 'var(--bg-secondary)', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer' }}>
-                <span style={{ fontSize: 24 }}>🏦</span> <span style={{ fontWeight: 600 }}>Net Banking</span>
-              </button>
-              <button style={{ padding: 16, borderRadius: 16, border: '1px solid var(--border-color)', background: 'var(--bg-secondary)', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer' }}>
-                <span style={{ fontSize: 24 }}>📱</span> <span style={{ fontWeight: 600 }}>UPI / Wallet</span>
-              </button>
+              <Button variant="secondary" style={{ padding: 16, borderRadius: 16, justifyContent: 'flex-start' }} startIcon={<span style={{ fontSize: 24 }}>💳</span>}>
+                <span style={{ fontWeight: 600 }}>Credit / Debit Card</span>
+              </Button>
+              <Button variant="secondary" style={{ padding: 16, borderRadius: 16, justifyContent: 'flex-start' }} startIcon={<span style={{ fontSize: 24 }}>🏦</span>}>
+                <span style={{ fontWeight: 600 }}>Net Banking</span>
+              </Button>
+              <Button variant="secondary" style={{ padding: 16, borderRadius: 16, justifyContent: 'flex-start' }} startIcon={<span style={{ fontSize: 24 }}>📱</span>}>
+                <span style={{ fontWeight: 600 }}>UPI / Wallet</span>
+              </Button>
             </div>
           </div>
         </div>
@@ -337,7 +339,7 @@ export default function ParentDashboard() {
                 <h3 style={{ margin: 0, fontSize: 18, fontWeight: 800 }}>{showHomeworkModal.homework?.subject?.name} Homework</h3>
                 <div style={{ fontSize: 13, color: '#d97706', fontWeight: 600, marginTop: 4 }}>Due Tomorrow</div>
               </div>
-              <button onClick={() => setShowHomeworkModal(null)} style={{ border: 'none', background: 'var(--bg-secondary)', color: 'var(--text-primary)', width: 32, height: 32, borderRadius: '50%', cursor: 'pointer', fontWeight: 800 }}>✕</button>
+              <Button variant="ghost" size="icon" onClick={() => setShowHomeworkModal(null)}>✕</Button>
             </div>
             <div style={{ background: 'var(--bg-secondary)', padding: 20, borderRadius: 16, border: '1px solid var(--border-color)', marginBottom: 24 }}>
               <h4 style={{ margin: '0 0 8px 0', fontSize: 14 }}>{showHomeworkModal.homework?.title || 'Assignment Details'}</h4>
@@ -346,8 +348,8 @@ export default function ParentDashboard() {
               </p>
             </div>
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 12 }}>
-              <button onClick={() => setShowHomeworkModal(null)} style={{ padding: '10px 20px', borderRadius: 12, border: '1px solid var(--border-color)', background: 'var(--bg-surface)', color: 'var(--text-primary)', fontWeight: 600, cursor: 'pointer' }}>Close</button>
-              <button onClick={() => { alert('Homework marked as completed!'); setShowHomeworkModal(null); }} style={{ padding: '10px 20px', borderRadius: 12, border: 'none', background: '#3b82f6', color: 'white', fontWeight: 600, cursor: 'pointer' }}>Mark Completed</button>
+              <Button variant="secondary" onClick={() => setShowHomeworkModal(null)}>Close</Button>
+              <Button variant="primary" onClick={() => { alert('Homework marked as completed!'); setShowHomeworkModal(null); }}>Mark Completed</Button>
             </div>
           </div>
         </div>

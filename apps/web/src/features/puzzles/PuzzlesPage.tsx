@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Button } from '../../components/ui/Button';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../store';
 import { Trophy, ArrowLeft } from 'lucide-react';
@@ -540,27 +541,24 @@ export default function PuzzlesPage() {
             />
 
             {/* Sound Toggler */}
-            <button
+            <Button
+              variant="secondary"
               onClick={() => {
                 setSoundEnabled(!soundEnabled);
                 playSoundChime(true);
               }}
               style={{
-                background: 'rgba(255,255,255,0.03)',
-                border: '1px solid var(--border-subtle)',
                 borderRadius: '12px',
                 padding: '6px 12px',
                 fontSize: '11px',
                 fontWeight: 700,
                 color: 'var(--text-secondary)',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
+                border: '1px solid var(--border-subtle)',
+                background: 'rgba(255,255,255,0.03)',
               }}
             >
               <span>{soundEnabled ? '🔊 Sound On' : '🔇 Muted'}</span>
-            </button>
+            </Button>
           </div>
 
           {/* Puzzle Categories Grid */}
@@ -668,23 +666,17 @@ export default function PuzzlesPage() {
                       {cat.status === 'Solved' ? 'Solved ✅' : 'New ✨'}
                     </span>
 
-                    <button
-                      className="bouncy-hover"
+                    <Button
+                      variant={cat.status === 'Solved' ? 'primary' : 'secondary'}
                       style={{
                         background: cat.status === 'Solved' ? '#22C55E' : 'var(--text-primary)',
                         color: cat.status === 'Solved' ? 'white' : 'var(--bg-canvas)',
-                        border: 'none',
                         borderRadius: '16px',
                         padding: '8px 16px',
-                        fontSize: '13px',
-                        fontWeight: 700,
-                        cursor: 'pointer',
-                        boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-                        transition: 'transform 0.2s',
                       }}
                     >
                       {cat.status === 'Solved' ? 'Replay' : 'Play'}
-                    </button>
+                    </Button>
                   </div>
                 </div>
               );
@@ -939,19 +931,13 @@ export default function PuzzlesPage() {
                   {activeCategory.name} Challenge
                 </span>
               </div>
-              <button
+              <Button
+                variant="ghost" size="icon"
                 onClick={closeGame}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  color: 'var(--text-muted)',
-                  cursor: 'pointer',
-                  padding: '6px',
-                  display: 'flex',
-                }}
+                style={{ padding: '6px' }}
               >
                 <ArrowLeft size={20} />
-              </button>
+              </Button>
             </div>
 
             {/* Puzzle Question */}
@@ -982,8 +968,9 @@ export default function PuzzlesPage() {
               {activeCategory.options.map((opt) => {
                 const isSelected = selectedOption === opt;
                 return (
-                  <button
+                  <Button
                     key={opt}
+                    variant={isSelected ? 'primary' : 'secondary'}
                     onClick={() => selectOption(opt)}
                     style={{
                       width: '100%',
@@ -998,17 +985,12 @@ export default function PuzzlesPage() {
                       color: isSelected ? 'var(--color-primary)' : 'var(--text-primary)',
                       fontSize: '15px',
                       fontWeight: 700,
-                      textAlign: 'left',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
                       justifyContent: 'space-between',
-                      transition: 'all 0.2s',
                     }}
                   >
                     <span>{opt}</span>
                     {isSelected && <span style={{ fontSize: '18px' }}>🎯</span>}
-                  </button>
+                  </Button>
                 );
               })}
             </div>
@@ -1032,22 +1014,18 @@ export default function PuzzlesPage() {
                 </span>
               </div>
             ) : (
-              <button
+              <Button
+                variant="ghost"
                 onClick={() => setShowHint(true)}
                 style={{
-                  background: 'none',
-                  border: 'none',
                   color: 'var(--color-primary)',
                   fontSize: '12px',
-                  fontWeight: 700,
-                  cursor: 'pointer',
-                  textAlign: 'left',
-                  alignSelf: 'flex-start',
                   padding: 0,
+                  alignSelf: 'flex-start',
                 }}
               >
                 💡 Need a Hint?
-              </button>
+              </Button>
             )}
 
             {/* Action Feedback alerts */}
@@ -1080,24 +1058,20 @@ export default function PuzzlesPage() {
 
             {/* Modal Actions Footer */}
             <div style={{ display: 'flex', gap: '12px', marginTop: '8px' }}>
-              <button
+              <Button
+                variant="secondary"
                 onClick={closeGame}
                 style={{
                   flex: 1,
-                  background: 'none',
-                  border: '1.5px solid var(--border-subtle)',
                   borderRadius: '16px',
                   padding: '12px',
-                  fontSize: '13px',
-                  fontWeight: 700,
-                  color: 'var(--text-secondary)',
-                  cursor: 'pointer',
                 }}
               >
                 Quit Game
-              </button>
+              </Button>
 
-              <button
+              <Button
+                variant="primary"
                 onClick={checkAnswer}
                 disabled={!selectedOption}
                 style={{
@@ -1107,15 +1081,12 @@ export default function PuzzlesPage() {
                   border: 'none',
                   borderRadius: '16px',
                   padding: '12px',
-                  fontSize: '13px',
-                  fontWeight: 700,
-                  cursor: selectedOption ? 'pointer' : 'not-allowed',
                   opacity: selectedOption ? 1 : 0.6,
                   boxShadow: selectedOption ? '0 4px 14px rgba(236, 72, 153, 0.3)' : 'none',
                 }}
               >
                 Check Answer
-              </button>
+              </Button>
             </div>
           </div>
         </div>

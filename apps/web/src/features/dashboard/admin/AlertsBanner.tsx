@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Button } from '../../../components/ui/Button';
 import { useGetAlertsQuery } from '../dashboardApi';
 
 export default function AlertsBanner({ academicYearId }: { academicYearId: string }) {
@@ -91,18 +92,17 @@ export default function AlertsBanner({ academicYearId }: { academicYearId: strin
               >
                 {alert.message}
               </Link>
-              <button
+              <Button
+                variant="ghost"
+                size="icon"
                 onClick={(e) => {
                   e.preventDefault();
                   setDismissed((prev) => new Set(prev).add(alert.id));
                 }}
                 style={{
-                  background: 'none',
-                  border: 'none',
                   padding: 0,
                   marginLeft: 4,
                   color: 'var(--text-muted)',
-                  cursor: 'pointer',
                   fontSize: 16,
                   display: 'flex',
                   alignItems: 'center',
@@ -110,7 +110,7 @@ export default function AlertsBanner({ academicYearId }: { academicYearId: strin
                 title="Dismiss"
               >
                 ×
-              </button>
+              </Button>
             </div>
           );
         })}

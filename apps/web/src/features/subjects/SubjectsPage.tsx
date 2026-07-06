@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '../../components/ui/Button';
 import { useGetSubjectsListQuery } from './subjectsApi';
 
 export default function SubjectsPage() {
@@ -87,7 +88,7 @@ export default function SubjectsPage() {
           <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: 16, width: '90%', maxWidth: 440, padding: 20, boxShadow: 'var(--shadow-lg)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
               <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: 'var(--text-primary)' }}>Add New Curriculum Subject</h3>
-              <button onClick={() => setShowAdd(false)} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', fontSize: 18, cursor: 'pointer' }} disabled={isProcessing}>✕</button>
+              <Button variant="ghost" size="icon" onClick={() => setShowAdd(false)} style={{ color: 'var(--text-muted)' }} disabled={isProcessing}>✕</Button>
             </div>
             <form onSubmit={handleAddSubjectSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
@@ -114,9 +115,9 @@ export default function SubjectsPage() {
                   <input type="number" required value={formTeachers} onChange={e => setFormTeachers(e.target.value)} placeholder="2" style={{ padding: '8px 12px', border: '1px solid var(--border-color)', borderRadius: 8, background: 'var(--bg-body)', color: 'var(--text-primary)' }} />
                 </div>
               </div>
-              <button type="submit" disabled={isProcessing} className="btn btn-primary" style={{ padding: 12, marginTop: 8 }}>
-                {isProcessing ? 'Adding Subject...' : 'Add Subject'}
-              </button>
+              <Button type="submit" variant="primary" disabled={isProcessing} loading={isProcessing} style={{ padding: 12, marginTop: 8 }}>
+                Add Subject
+              </Button>
             </form>
           </div>
         </div>
@@ -127,7 +128,7 @@ export default function SubjectsPage() {
           <h1 className="page-title">📚 Subjects</h1>
           <p className="page-subtitle">Manage subjects and teacher assignments</p>
         </div>
-        <button className="btn btn-primary" onClick={() => setShowAdd(true)}>+ Add Subject</button>
+        <Button variant="primary" onClick={() => setShowAdd(true)}>+ Add Subject</Button>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 16 }}>

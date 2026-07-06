@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useGetTeacherKPIsQuery } from '../analytics/analyticsApi';
 import type { RootState } from '../../store';
+import { Button } from '../../components/ui/Button';
 
 export default function TeacherDashboard() {
   const user = useSelector((s: RootState) => s.auth.user);
@@ -56,13 +57,12 @@ export default function TeacherDashboard() {
           </h1>
           <p className="page-subtitle">Here's your classroom overview for today.</p>
         </div>
-        <button 
+        <Button 
+          variant="primary"
           onClick={() => navigate('/leave-application')} 
-          className="btn btn-primary"
-          style={{ display: 'flex', alignItems: 'center', gap: 8 }}
         >
           <span>Apply for Leave</span>
-        </button>
+        </Button>
       </div>
 
       <div className="stats-grid">

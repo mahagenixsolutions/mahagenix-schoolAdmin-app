@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { Button } from '../../components/ui/Button';
 import { setSelectedStudent, logout } from '../../store/authSlice';
 import { useVerifyStudentIdMutation } from './parentApi';
 import { useNavigate } from 'react-router-dom';
@@ -124,17 +125,14 @@ export default function StudentIdVerificationModal({ onVerified }: Props) {
                 </p>
               </div>
 
-              <button
+              <Button
                 type="submit"
-                className="sid-submit-btn"
+                variant="primary"
+                fullWidth
                 disabled={isLoading || !studentCode.trim()}
+                loading={isLoading}
               >
-                {isLoading ? (
-                  <span className="sid-spinner-wrap">
-                    <span className="sid-spinner" />
-                    Verifying...
-                  </span>
-                ) : (
+                {!isLoading && (
                   <span style={{ display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center' }}>
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
@@ -142,18 +140,23 @@ export default function StudentIdVerificationModal({ onVerified }: Props) {
                     Verify & Continue
                   </span>
                 )}
-              </button>
+              </Button>
             </form>
 
-            <button
-              onClick={handleLogout}
-              className="sid-logout-btn"
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
-              </svg>
-              Sign out & use different account
-            </button>
+            <div style={{ marginTop: 16 }}>
+              <Button
+                onClick={handleLogout}
+                variant="ghost"
+                fullWidth
+              >
+                <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+                  </svg>
+                  Sign out & use different account
+                </span>
+              </Button>
+            </div>
           </>
         )}
       </div>

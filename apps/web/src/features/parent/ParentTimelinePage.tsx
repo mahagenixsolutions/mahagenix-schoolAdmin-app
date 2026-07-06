@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { Button } from '../../components/ui/Button';
 import type { RootState } from '../../store';
 import { useGetParentTimelineQuery, useGetParentMarksQuery, useGetParentAchievementsQuery } from './parentApi';
 
@@ -120,24 +121,14 @@ export default function ParentTimelinePage() {
       {/* Filters (Horizontal Scroll) */}
       <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 16, marginBottom: 16, msOverflowStyle: 'none', scrollbarWidth: 'none' }}>
         {FILTERS.map(f => (
-          <button
+          <Button
             key={f}
+            variant={activeFilter === f ? 'primary' : 'secondary'}
             onClick={() => setActiveFilter(f)}
-            style={{
-              padding: '8px 16px',
-              borderRadius: 20,
-              border: 'none',
-              background: activeFilter === f ? 'var(--text-primary)' : 'var(--bg-secondary)',
-              color: activeFilter === f ? 'var(--bg-primary)' : 'var(--text-secondary)',
-              fontWeight: 600,
-              fontSize: 13,
-              cursor: 'pointer',
-              whiteSpace: 'nowrap',
-              transition: 'all 0.2s'
-            }}
+            style={{ borderRadius: 20, whiteSpace: 'nowrap' }}
           >
             {f}
-          </button>
+          </Button>
         ))}
       </div>
 

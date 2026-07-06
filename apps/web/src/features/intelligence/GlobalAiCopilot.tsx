@@ -1,4 +1,5 @@
 import { X, Sparkles } from 'lucide-react';
+import { Button } from '../../components/ui/Button';
 import AiQuickPrompts from './AiQuickPrompts';
 import AiChatWorkspace from './AiChatWorkspace';
 
@@ -66,9 +67,9 @@ export default function GlobalAiCopilot({
             <Sparkles size={18} />
             <span style={{ fontSize: '15px', fontWeight: 700 }}>EduTrack Copilot</span>
           </div>
-          <button onClick={onClose} className="btn btn-ghost btn-sm" style={{ padding: '6px' }}>
+          <Button variant="ghost" size="icon" onClick={onClose} style={{ padding: '6px' }}>
             <X size={18} className="text-muted" />
-          </button>
+          </Button>
         </div>
 
         {/* Drawer Content */}

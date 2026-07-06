@@ -1,4 +1,5 @@
 import { Zap, Search, ChevronDown } from 'lucide-react';
+import { Button } from '../../components/ui/Button';
 import CommandCenterLeftSidebar from './CommandCenterLeftSidebar';
 import CommandCenterRightSidebar from './CommandCenterRightSidebar';
 import BulkActionSpreadsheet from './BulkActionSpreadsheet';
@@ -33,13 +34,9 @@ export default function QuickActionsPage() {
           </div>
 
           {/* Context Selector */}
-          <button style={{ 
-            display: 'flex', alignItems: 'center', gap: '12px', 
-            background: 'var(--color-primary)', color: '#fff', border: 'none', 
-            borderRadius: '8px', padding: '8px 16px', fontSize: '14px', fontWeight: 600, cursor: 'pointer' 
-          }}>
-            Class 8 - Section A - Science <ChevronDown size={16} />
-          </button>
+          <Button variant="primary" endIcon={<ChevronDown size={16} />}>
+            Class 8 - Section A - Science
+          </Button>
         </div>
       </div>
 

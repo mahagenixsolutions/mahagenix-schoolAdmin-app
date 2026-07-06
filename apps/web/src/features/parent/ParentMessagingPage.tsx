@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { Button } from '../../components/ui/Button';
 import type { RootState } from '../../store';
 import { useGetParentMessagesQuery, useSendParentMessageMutation } from './parentApi';
 
@@ -116,21 +117,21 @@ export default function ParentMessagingPage() {
       <div style={{ width: 340, borderRight: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', background: 'var(--bg-secondary)' }}>
         <div style={{ padding: '20px 24px', background: 'var(--bg-secondary)', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h2 style={{ fontSize: 18, fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>Messages</h2>
-          <button style={{ width: 36, height: 36, borderRadius: '50%', border: 'none', background: 'var(--bg-secondary)', cursor: 'pointer', fontSize: 16 }}>✍️</button>
+          <Button variant="ghost" size="icon">✍️</Button>
         </div>
 
         <div style={{ flex: 1, overflowY: 'auto', padding: 12 }}>
           {threads.map((t) => {
             const isActive = activeThreadId === t.id;
             return (
-              <button
+              <Button
                 key={t.id}
+                variant={isActive ? 'primary' : 'ghost'}
                 onClick={() => setActiveThreadId(t.id)}
                 style={{
                   display: 'flex', alignItems: 'center', gap: 12, width: '100%', padding: 12,
-                  border: 'none', borderRadius: 16, cursor: 'pointer', textAlign: 'left',
+                  borderRadius: 16, textAlign: 'left',
                   background: isActive ? 'var(--color-primary-surface)' : 'transparent',
-                  transition: 'background 0.2s'
                 }}
               >
                 <div style={{ position: 'relative' }}>
@@ -141,12 +142,12 @@ export default function ParentMessagingPage() {
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
-                    <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-primary)', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>{t.name}</div>
+                    <div style={{ fontSize: 14, fontWeight: 700, color: isActive ? 'var(--color-primary-dark)' : 'var(--text-primary)', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>{t.name}</div>
                     <div style={{ fontSize: 11, color: isActive ? 'var(--color-primary)' : 'var(--text-muted)', fontWeight: isActive ? 600 : 500 }}>12:30 PM</div>
                   </div>
                   <div style={{ fontSize: 12, color: isActive ? 'var(--color-primary)' : 'var(--text-secondary)', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>{t.lastMessage}</div>
                 </div>
-              </button>
+              </Button>
             );
           })}
         </div>
@@ -169,8 +170,8 @@ export default function ParentMessagingPage() {
                 <p style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>{activeThread.role} • {activeThread.online ? <span style={{color: '#22c55e', fontWeight: 600}}>Online</span> : 'Offline'}</p>
               </div>
               <div style={{ marginLeft: 'auto', display: 'flex', gap: 12 }}>
-                <button style={{ width: 40, height: 40, borderRadius: '50%', border: 'none', background: 'var(--bg-secondary)', cursor: 'pointer', fontSize: 16, color: 'var(--text-primary)' }}>📞</button>
-                <button style={{ width: 40, height: 40, borderRadius: '50%', border: 'none', background: 'var(--bg-secondary)', cursor: 'pointer', fontSize: 16, color: 'var(--text-primary)' }}>📹</button>
+                <Button variant="ghost" size="icon">📞</Button>
+                <Button variant="ghost" size="icon">📹</Button>
               </div>
             </div>
 
@@ -210,8 +211,8 @@ export default function ParentMessagingPage() {
 
             {/* Input Form */}
             <form onSubmit={handleSend} style={{ padding: '16px 24px', background: 'var(--bg-secondary)', display: 'flex', alignItems: 'center', gap: 12, zIndex: 1, borderTop: '1px solid var(--border-color)' }}>
-              <button type="button" style={{ width: 44, height: 44, borderRadius: '50%', border: 'none', background: 'transparent', cursor: 'pointer', fontSize: 20, color: 'var(--text-muted)' }}>😀</button>
-              <button type="button" style={{ width: 44, height: 44, borderRadius: '50%', border: 'none', background: 'transparent', cursor: 'pointer', fontSize: 20, color: 'var(--text-muted)', transform: 'rotate(45deg)' }}>📎</button>
+              <Button type="button" variant="ghost" size="icon" style={{ fontSize: 20 }}>😀</Button>
+              <Button type="button" variant="ghost" size="icon" style={{ fontSize: 20, transform: 'rotate(45deg)' }}>📎</Button>
               
               <input
                 type="text"
@@ -223,11 +224,11 @@ export default function ParentMessagingPage() {
               />
               
               {messageText.trim() ? (
-                <button type="submit" style={{ width: 44, height: 44, borderRadius: '50%', border: 'none', background: 'var(--color-primary)', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 6px rgba(79, 70, 229, 0.3)' }}>
+                <Button type="submit" variant="primary" size="icon" style={{ borderRadius: '50%' }}>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" /></svg>
-                </button>
+                </Button>
               ) : (
-                <button type="button" style={{ width: 44, height: 44, borderRadius: '50%', border: 'none', background: 'transparent', cursor: 'pointer', fontSize: 20, color: 'var(--text-muted)' }}>🎤</button>
+                <Button type="button" variant="ghost" size="icon" style={{ fontSize: 20 }}>🎤</Button>
               )}
             </form>
           </>

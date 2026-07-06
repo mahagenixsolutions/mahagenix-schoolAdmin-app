@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useGetClassPerformanceQuery } from '../dashboardApi';
 import BaseModal from '../../../components/modals/BaseModal';
+import { Button } from '../../../components/ui/Button';
 
 export default function ClassPerformanceTable({ academicYearId }: { academicYearId: string }) {
   const { data, isLoading } = useGetClassPerformanceQuery(
@@ -265,21 +266,13 @@ export default function ClassPerformanceTable({ academicYearId }: { academicYear
                     )}
                     <td style={{ padding: isMobile ? '12px 10px' : '16px 20px', textAlign: 'right' }}>
                       {isMobile ? (
-                        <button
+                        <Button
+                          variant="secondary"
+                          size="sm"
                           onClick={() => setSelectedClass(cls)}
-                          style={{
-                            color: 'var(--text-secondary)',
-                            fontWeight: 600,
-                            fontSize: 12,
-                            padding: '6px 12px',
-                            borderRadius: 'var(--radius-sm)',
-                            background: 'var(--bg-tertiary)',
-                            border: '1px solid var(--border-subtle)',
-                            cursor: 'pointer',
-                          }}
                         >
                           View
-                        </button>
+                        </Button>
                       ) : (
                         <Link
                           to={`/classes/${cls.classId}`}
@@ -379,12 +372,13 @@ export default function ClassPerformanceTable({ academicYearId }: { academicYear
               >
                 Go to Class Workspace &rarr;
               </Link>
-              <button
-                className="btn btn-secondary btn-sm"
+              <Button
+                variant="secondary"
+                size="sm"
                 onClick={() => setSelectedClass(null)}
               >
                 Close
-              </button>
+              </Button>
             </div>
           </div>
         )}
