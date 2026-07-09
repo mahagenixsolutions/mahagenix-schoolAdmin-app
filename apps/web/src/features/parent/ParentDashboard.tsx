@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from '../../components/ui/Button';
 import { useNavigate } from 'react-router-dom';
@@ -164,7 +164,7 @@ export default function ParentDashboard() {
                 <div style={{ fontSize: 15, fontWeight: 800, color: 'var(--alert-warning-text)' }}>{hw.homework?.subject?.name} Homework</div>
                 <div style={{ fontSize: 13, color: 'var(--alert-warning-text)', opacity: 0.9 }}>Due tomorrow.</div>
               </div>
-              <Button variant="warning" size="sm" onClick={() => setShowHomeworkModal(hw)}>View</Button>
+              <Button variant="secondary" size="sm" onClick={() => setShowHomeworkModal(hw)}>View</Button>
             </div>
           ))}
         </div>

@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '../../components/ui/Button';
 import { useGetMarksClassesQuery, useGetMarksAcademicYearsQuery } from '../marks/marksApi';
 import { useGetClassAttendanceQuery, useBulkMarkAttendanceMutation } from './attendanceApi';
