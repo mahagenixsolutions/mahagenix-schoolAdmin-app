@@ -5,6 +5,7 @@ import {
   useUpdateStaffMutation,
   useSetStaffStatusMutation,
 } from './usersApi';
+import { PageSkeleton } from '../../components/ui/Skeleton';
 
 export default function UsersPage() {
   const { data: staffList, isLoading, refetch } = useGetStaffQuery();
@@ -30,19 +31,7 @@ export default function UsersPage() {
   const [editStatus, setEditStatus] = useState('ACTIVE');
 
   if (isLoading) {
-    return (
-      <div className="flex-center" style={{ height: '70vh', flexDirection: 'column', gap: 12 }}>
-        <div style={{
-          width: 40, height: 40,
-          border: '3px solid var(--border-color)',
-          borderTopColor: 'var(--color-primary)',
-          borderRadius: '50%',
-          animation: 'spin 0.8s linear infinite',
-        }}/>
-        <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Loading staff accounts...</span>
-        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-      </div>
-    );
+    return <PageSkeleton />;
   }
 
   const handleAddSubmit = async (e: React.FormEvent) => {

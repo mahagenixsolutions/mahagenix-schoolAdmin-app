@@ -50,7 +50,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, label }) => {
         alignItems: 'center',
         padding: '3px 8px',
         borderRadius: 'var(--radius-sm)',
-        fontSize: '11px',
+        fontSize: '13px',
         fontWeight: 600,
         textTransform: 'uppercase',
         letterSpacing: '0.04em',

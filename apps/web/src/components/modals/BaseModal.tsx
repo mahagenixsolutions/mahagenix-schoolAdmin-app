@@ -252,7 +252,7 @@ export default function BaseModal({
         }
 
         .modal-table th {
-          font-size: 11px;
+          font-size: 13px;
           font-weight: 700;
           text-transform: uppercase;
           letter-spacing: 0.1em;
@@ -283,7 +283,7 @@ export default function BaseModal({
           align-items: center;
           padding: 4px 10px;
           border-radius: 9999px;
-          font-size: 11px;
+          font-size: 13px;
           font-weight: 600;
         }
 

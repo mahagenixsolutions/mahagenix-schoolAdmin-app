@@ -39,7 +39,7 @@ export default function AiQuickPrompts() {
 
   return (
     <div style={{ marginBottom: '24px' }}>
-      <div style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', fontWeight: 700, marginBottom: '8px' }}>
+      <div style={{ fontSize: '13px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', fontWeight: 700, marginBottom: '8px' }}>
         Current Context: {contextTitle}
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
@@ -55,7 +55,7 @@ export default function AiQuickPrompts() {
                   <Icon size={14} />
                 </div>
                 <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '4px', lineHeight: 1.2 }}>{p.title}</div>
-                <div style={{ fontSize: '11px', color: 'var(--text-muted)', lineHeight: 1.3 }}>{p.desc}</div>
+                <div style={{ fontSize: '13px', color: 'var(--text-muted)', lineHeight: 1.3 }}>{p.desc}</div>
               </div>
             </div>
           );

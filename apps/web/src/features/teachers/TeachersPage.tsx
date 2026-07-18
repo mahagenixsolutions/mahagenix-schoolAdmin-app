@@ -169,7 +169,7 @@ const TeachersPage: React.FC = () => {
           </div>
           <div>
             <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{row.name}</div>
-            <div style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>{row.email}</div>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>{row.email}</div>
           </div>
         </div>
       )
@@ -185,7 +185,7 @@ const TeachersPage: React.FC = () => {
       render: (row) => (
         <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
           {row.subjects.map((sub, idx) => (
-            <span key={idx} style={{ background: 'var(--bg-surface-raised)', padding: '2px 8px', borderRadius: '4px', fontSize: '11px', border: '1px solid var(--border-subtle)', color: 'var(--text-secondary)' }}>
+            <span key={idx} style={{ background: 'var(--bg-surface-raised)', padding: '2px 8px', borderRadius: '4px', fontSize: '13px', border: '1px solid var(--border-subtle)', color: 'var(--text-secondary)' }}>
               {sub}
             </span>
           ))}
@@ -385,7 +385,7 @@ const TeachersPage: React.FC = () => {
                           <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-muted)' }}>{slot.day} · {slot.period}</div>
                           <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-primary)' }}>{slot.class}</div>
                         </div>
-                        <span style={{ background: 'var(--accent-primary-surface)', color: 'var(--accent-primary)', padding: '2px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: 600 }}>
+                        <span style={{ background: 'var(--accent-primary-surface)', color: 'var(--accent-primary)', padding: '2px 8px', borderRadius: '4px', fontSize: '13px', fontWeight: 600 }}>
                           {slot.subject}
                         </span>
                       </div>
@@ -399,11 +399,11 @@ const TeachersPage: React.FC = () => {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                     <div style={{ background: 'var(--bg-surface-raised)', padding: '12px', borderRadius: '8px', textAlign: 'center', border: '1px solid var(--border-subtle)' }}>
-                      <div style={{ fontSize: '11px', color: 'var(--text-secondary)', fontWeight: 600 }}>Leaves Taken</div>
+                      <div style={{ fontSize: '13px', color: 'var(--text-secondary)', fontWeight: 600 }}>Leaves Taken</div>
                       <div style={{ fontSize: '22px', fontWeight: 800, color: 'var(--accent-danger)', margin: '4px 0' }}>{selectedTeacher.leavesTaken} days</div>
                     </div>
                     <div style={{ background: 'var(--bg-surface-raised)', padding: '12px', borderRadius: '8px', textAlign: 'center', border: '1px solid var(--border-subtle)' }}>
-                      <div style={{ fontSize: '11px', color: 'var(--text-secondary)', fontWeight: 600 }}>Available Balance</div>
+                      <div style={{ fontSize: '13px', color: 'var(--text-secondary)', fontWeight: 600 }}>Available Balance</div>
                       <div style={{ fontSize: '22px', fontWeight: 800, color: 'var(--accent-success)', margin: '4px 0' }}>{selectedTeacher.leaveBalance} days</div>
                     </div>
                   </div>

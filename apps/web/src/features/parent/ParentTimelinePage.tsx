@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../store';
+import { TimelineSkeleton } from '../../components/ui/Skeleton';
 import { useGetParentTimelineQuery, useGetParentMarksQuery, useGetParentAchievementsQuery } from './parentApi';
 
 const FILTERS = ['All', 'Attendance', 'Homework', 'Exams', 'Activities', 'Sports', 'Certificates', 'Teacher Notes'];
@@ -72,13 +73,7 @@ export default function ParentTimelinePage() {
   }
 
   if (isLoading) {
-    return (
-      <div className="flex-center" style={{ height: '70vh', flexDirection: 'column', gap: 12 }}>
-        <div style={{ width: 40, height: 40, border: '3px solid var(--border-color)', borderTopColor: '#3b82f6', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }}/>
-        <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Loading activity feed...</span>
-        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-      </div>
-    );
+    return <TimelineSkeleton />;
   }
 
   const getEventIcon = (type: string) => {

@@ -399,7 +399,7 @@ export default function FeeCollectionModal({ isOpen, onClose, data }: FeeCollect
               {/* Card A: Collected */}
               <div className="modal-mini-card">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                  <span style={{ fontSize: '11px', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  <span style={{ fontSize: '13px', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                     Collected This Month
                   </span>
                   <span style={{ color: '#10B981', fontSize: '18px' }}>
@@ -414,7 +414,7 @@ export default function FeeCollectionModal({ isOpen, onClose, data }: FeeCollect
               {/* Card B: Pending */}
               <div className="modal-mini-card">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                  <span style={{ fontSize: '11px', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  <span style={{ fontSize: '13px', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                     Outstanding Amount
                   </span>
                   <div 
@@ -441,7 +441,7 @@ export default function FeeCollectionModal({ isOpen, onClose, data }: FeeCollect
               {/* Card C: Collection Rate */}
               <div className="modal-mini-card" style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  <span style={{ fontSize: '11px', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  <span style={{ fontSize: '13px', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                     Collection Rate
                   </span>
                   <span style={{ fontSize: '24px', fontWeight: 800, color: '#4F8EF7', marginTop: '8px' }}>
@@ -620,7 +620,7 @@ export default function FeeCollectionModal({ isOpen, onClose, data }: FeeCollect
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          fontSize: '11px',
+                          fontSize: '13px',
                           fontWeight: 700,
                           border: '1px solid rgba(79, 142, 247, 0.3)',
                         }}>
@@ -630,7 +630,7 @@ export default function FeeCollectionModal({ isOpen, onClose, data }: FeeCollect
                           <div style={{ fontSize: '13px', fontWeight: 600, color: '#f8fafc' }}>
                             {payment.studentName}
                           </div>
-                          <div style={{ fontSize: '11px', color: '#9ca3af', marginTop: '2px' }}>
+                          <div style={{ fontSize: '13px', color: '#9ca3af', marginTop: '2px' }}>
                             {payment.className}
                           </div>
                         </div>
@@ -655,7 +655,7 @@ export default function FeeCollectionModal({ isOpen, onClose, data }: FeeCollect
                         <div style={{ fontSize: '13px', fontWeight: 700, color: '#f8fafc' }}>
                           ₹{formatCurrency(payment.amount)}
                         </div>
-                        <div style={{ fontSize: '11px', color: '#9ca3af', marginTop: '2px' }}>
+                        <div style={{ fontSize: '13px', color: '#9ca3af', marginTop: '2px' }}>
                           {payment.date}
                         </div>
                       </div>

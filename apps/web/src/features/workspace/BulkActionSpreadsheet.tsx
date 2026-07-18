@@ -145,7 +145,7 @@ export default function BulkActionSpreadsheet() {
                 <td style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '13px', fontWeight: 600 }}>{student.roll}</td>
                 <td style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '14px' }}>
                   {student.name}
-                  <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 400 }}>{student.id}</div>
+                  <div style={{ fontSize: '13px', color: 'var(--text-muted)', fontWeight: 400 }}>{student.id}</div>
                 </td>
 
                 {/* Attendance Inputs */}

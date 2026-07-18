@@ -469,7 +469,7 @@ const InventoryPage: React.FC = () => {
         <span style={{
           fontWeight: 700,
           color: row.priority === 'High' ? 'var(--accent-danger)' : row.priority === 'Medium' ? 'var(--accent-warning)' : 'var(--accent-primary)',
-          fontSize: '11px',
+          fontSize: '13px',
           textTransform: 'uppercase'
         }}>
           {row.priority}
@@ -727,7 +727,7 @@ const InventoryPage: React.FC = () => {
               {row.status === 'Pending Approval' && (
                 <button
                   onClick={() => handlePOAction(row.id, 'Approve')}
-                  style={{ border: 'none', background: 'rgba(79, 142, 247, 0.1)', color: 'var(--accent-primary)', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '11px', fontWeight: 600 }}
+                  style={{ border: 'none', background: 'rgba(79, 142, 247, 0.1)', color: 'var(--accent-primary)', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '13px', fontWeight: 600 }}
                 >
                   Approve Order
                 </button>
@@ -735,7 +735,7 @@ const InventoryPage: React.FC = () => {
               {row.status === 'Ordered' && (
                 <button
                   onClick={() => handlePOAction(row.id, 'Receive')}
-                  style={{ border: 'none', background: 'rgba(34, 197, 94, 0.1)', color: 'var(--accent-success)', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '11px', fontWeight: 600 }}
+                  style={{ border: 'none', background: 'rgba(34, 197, 94, 0.1)', color: 'var(--accent-success)', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '13px', fontWeight: 600 }}
                   title="Mark items received, automatically update stock"
                 >
                   Mark Received
@@ -744,7 +744,7 @@ const InventoryPage: React.FC = () => {
               {row.status !== 'Received' && row.status !== 'Cancelled' && (
                 <button
                   onClick={() => handlePOAction(row.id, 'Cancel')}
-                  style={{ border: 'none', background: 'rgba(239, 68, 68, 0.1)', color: 'var(--accent-danger)', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '11px', fontWeight: 600 }}
+                  style={{ border: 'none', background: 'rgba(239, 68, 68, 0.1)', color: 'var(--accent-danger)', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '13px', fontWeight: 600 }}
                 >
                   Cancel
                 </button>
@@ -811,7 +811,7 @@ const InventoryPage: React.FC = () => {
               {row.status === 'Reported' && (
                 <button
                   onClick={() => handleMaintenanceAction(row.id, 'In Progress')}
-                  style={{ border: 'none', background: 'rgba(245, 158, 11, 0.1)', color: 'var(--accent-warning)', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '11px', fontWeight: 600 }}
+                  style={{ border: 'none', background: 'rgba(245, 158, 11, 0.1)', color: 'var(--accent-warning)', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '13px', fontWeight: 600 }}
                 >
                   Start Repair
                 </button>
@@ -819,7 +819,7 @@ const InventoryPage: React.FC = () => {
               {row.status === 'In Progress' && (
                 <button
                   onClick={() => handleMaintenanceAction(row.id, 'Resolved')}
-                  style={{ border: 'none', background: 'rgba(34, 197, 94, 0.1)', color: 'var(--accent-success)', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '11px', fontWeight: 600 }}
+                  style={{ border: 'none', background: 'rgba(34, 197, 94, 0.1)', color: 'var(--accent-success)', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '13px', fontWeight: 600 }}
                 >
                   Resolve
                 </button>
@@ -985,7 +985,7 @@ const InventoryPage: React.FC = () => {
             background: 'var(--bg-surface)'
           }}
         >
-          <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', padding: '0 8px 8px 8px', borderBottom: '1px solid var(--border-subtle)', marginBottom: '8px' }}>
+          <span style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', padding: '0 8px 8px 8px', borderBottom: '1px solid var(--border-subtle)', marginBottom: '8px' }}>
             INVENTORY INDEX
           </span>
           {navigationTabs.map((tab) => {
@@ -1018,7 +1018,7 @@ const InventoryPage: React.FC = () => {
                 </div>
                 {'count' in tab && tab.count !== undefined && tab.count > 0 && (
                   <span style={{
-                    fontSize: '11px',
+                    fontSize: '13px',
                     padding: '2px 6px',
                     borderRadius: 'var(--radius-full)',
                     background: 'alert' in tab && tab.alert ? 'rgba(239, 68, 68, 0.1)' : 'var(--bg-surface-raised)',

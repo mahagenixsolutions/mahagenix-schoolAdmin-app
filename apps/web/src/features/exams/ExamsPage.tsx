@@ -189,7 +189,7 @@ const ExamsPage: React.FC = () => {
                   <div key={idx} style={{ padding: '16px', background: 'var(--bg-surface-raised)', border: '1px solid var(--border-subtle)', borderRadius: '8px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
                       <strong style={{ fontSize: '14px', color: 'var(--text-primary)' }}>{item.name}</strong>
-                      <span style={{ fontSize: '11px', background: 'var(--accent-primary-surface)', color: 'var(--accent-primary)', padding: '2px 8px', borderRadius: '4px', fontWeight: 600 }}>Weight: {item.weightage}</span>
+                      <span style={{ fontSize: '13px', background: 'var(--accent-primary-surface)', color: 'var(--accent-primary)', padding: '2px 8px', borderRadius: '4px', fontWeight: 600 }}>Weight: {item.weightage}</span>
                     </div>
                     <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: 0 }}>{item.description}</p>
                   </div>
@@ -253,14 +253,14 @@ const ExamsPage: React.FC = () => {
             <form onSubmit={handleSaveMarks} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  <label style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Target Class Room</label>
+                  <label style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Target Class Room</label>
                   <select value={selectedClass} onChange={e => setSelectedClass(e.target.value)} style={{ padding: '10px 12px', border: '1px solid var(--border-subtle)', borderRadius: '8px', background: 'var(--bg-surface-raised)', color: 'var(--text-primary)', height: '40px' }}>
                     <option value="Class 10 A">Class 10 A</option>
                     <option value="Class 9 A">Class 9 A</option>
                   </select>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  <label style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Subject</label>
+                  <label style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Subject</label>
                   <select value={selectedSubject} onChange={e => setSelectedSubject(e.target.value)} style={{ padding: '10px 12px', border: '1px solid var(--border-subtle)', borderRadius: '8px', background: 'var(--bg-surface-raised)', color: 'var(--text-primary)', height: '40px' }}>
                     <option value="Mathematics">Mathematics</option>
                     <option value="Physics">Physics</option>

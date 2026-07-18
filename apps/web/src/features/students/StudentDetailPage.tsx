@@ -360,7 +360,7 @@ export default function StudentDetailPage() {
                       <div key={idx} style={{ background: 'var(--bg-surface-raised)', padding: '12px', borderRadius: 'var(--radius-md)', textAlign: 'center' }}>
                         <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)' }}>{item.month}</div>
                         <div style={{ fontSize: '20px', fontWeight: 800, color: 'var(--accent-success)', margin: '4px 0' }}>{item.rate}</div>
-                        <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{item.days} Present</div>
+                        <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>{item.days} Present</div>
                       </div>
                     ))}
                   </div>
@@ -406,13 +406,13 @@ export default function StudentDetailPage() {
                   </h3>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                     <div style={{ background: 'var(--bg-surface-raised)', padding: '16px', borderRadius: 'var(--radius-md)' }}>
-                      <div style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-muted)' }}>Father / Guardian 1</div>
+                      <div style={{ fontSize: '13px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-muted)' }}>Father / Guardian 1</div>
                       <div style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-primary)', margin: '4px 0' }}>Robert Doe</div>
                       <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>Phone: +91 98765 43210</div>
                       <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>Email: robert.doe@gmail.com</div>
                     </div>
                     <div style={{ background: 'var(--bg-surface-raised)', padding: '16px', borderRadius: 'var(--radius-md)' }}>
-                      <div style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-muted)' }}>Mother / Guardian 2</div>
+                      <div style={{ fontSize: '13px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-muted)' }}>Mother / Guardian 2</div>
                       <div style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-primary)', margin: '4px 0' }}>Sarah Doe</div>
                       <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>Phone: +91 98765 43211</div>
                       <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>Email: sarah.doe@gmail.com</div>
@@ -438,7 +438,7 @@ export default function StudentDetailPage() {
                       <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)', background: 'var(--bg-surface-raised)' }}>
                         <div>
                           <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)' }}>{doc.name}</div>
-                          <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{doc.type} · {doc.size}</div>
+                          <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>{doc.type} · {doc.size}</div>
                         </div>
                         <button className="btn btn-ghost btn-sm" style={{ border: '1px solid var(--border-subtle)' }}>Download</button>
                       </div>

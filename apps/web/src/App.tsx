@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { PageSkeleton } from './components/ui/Skeleton';
 import type { RootState } from './store';
 import AppLayout from './components/layout/AppLayout';
 import ProtectedRoute from './components/auth/ProtectedRoute';
@@ -58,17 +59,19 @@ const InventoryPage = lazy(() => import('./features/inventory/InventoryPage'));
 const CommunicationPage = lazy(() => import('./features/communication/CommunicationPage'));
 const SettingsPage = lazy(() => import('./features/settings/SettingsPage'));
 
+// Organization Admin workspace pages
+const OrgBranches = lazy(() => import('./features/organization/pages/OrgBranches'));
+const BranchDetails = lazy(() => import('./features/organization/pages/BranchDetails'));
+const PrincipalsDirectory = lazy(() => import('./features/organization/pages/PrincipalsDirectory'));
+const OrgAnalytics = lazy(() => import('./features/organization/pages/OrgAnalytics'));
+const OrgAnnouncements = lazy(() => import('./features/organization/pages/OrgAnnouncements'));
+const OrgBranding = lazy(() => import('./features/organization/pages/OrgBranding'));
+const OrgMiscPages = lazy(() => import('./features/organization/pages/OrgMiscPages'));
+
 
 const PageLoader = () => (
-  <div className="flex-center" style={{ height: 400 }}>
-    <div style={{
-      width: 40, height: 40,
-      border: '3px solid var(--border-color)',
-      borderTopColor: 'var(--color-primary)',
-      borderRadius: '50%',
-      animation: 'spin 0.8s linear infinite',
-    }}/>
-    <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+  <div style={{ padding: '24px 0', width: '100%' }}>
+    <PageSkeleton />
   </div>
 );
 
@@ -192,6 +195,44 @@ export default function App() {
             } />
             <Route path="settings" element={
               <Suspense fallback={<PageLoader />}><SettingsPage /></Suspense>
+            } />
+
+            {/* Organization Admin Workspace Routes */}
+            <Route path="org/branches" element={
+              <Suspense fallback={<PageLoader />}><OrgBranches /></Suspense>
+            } />
+            <Route path="org/branches/:id" element={
+              <Suspense fallback={<PageLoader />}><BranchDetails /></Suspense>
+            } />
+            <Route path="org/principals" element={
+              <Suspense fallback={<PageLoader />}><PrincipalsDirectory /></Suspense>
+            } />
+            <Route path="org/analytics/:type" element={
+              <Suspense fallback={<PageLoader />}><OrgAnalytics /></Suspense>
+            } />
+            <Route path="org/announcements" element={
+              <Suspense fallback={<PageLoader />}><OrgAnnouncements /></Suspense>
+            } />
+            <Route path="org/communication" element={
+              <Suspense fallback={<PageLoader />}><OrgAnnouncements defaultTab="messages" /></Suspense>
+            } />
+            <Route path="org/branding" element={
+              <Suspense fallback={<PageLoader />}><OrgBranding /></Suspense>
+            } />
+            <Route path="org/documents" element={
+              <Suspense fallback={<PageLoader />}><OrgMiscPages page="documents" /></Suspense>
+            } />
+            <Route path="org/reports" element={
+              <Suspense fallback={<PageLoader />}><OrgMiscPages page="reports" /></Suspense>
+            } />
+            <Route path="org/audit-logs" element={
+              <Suspense fallback={<PageLoader />}><OrgMiscPages page="audit-logs" /></Suspense>
+            } />
+            <Route path="org/subscription" element={
+              <Suspense fallback={<PageLoader />}><OrgMiscPages page="subscription" /></Suspense>
+            } />
+            <Route path="org/settings" element={
+              <Suspense fallback={<PageLoader />}><OrgMiscPages page="settings" /></Suspense>
             } />
             
             {/* Parent-Only Routes */}

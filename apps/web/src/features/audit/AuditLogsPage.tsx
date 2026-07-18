@@ -297,7 +297,7 @@ export default function AuditLogsPage() {
         .event-dot { width: 10px; height: 10px; border-radius: 999px; margin-top: 5px; box-shadow: 0 0 0 4px rgba(79,70,229,.10); }
         .row-title { display: flex; justify-content: space-between; gap: 10px; align-items: center; }
         .row-title strong { color: var(--text-primary); font-size: 14px; }
-        .row-title span { border: 1px solid transparent; border-radius: 999px; padding: 4px 8px; font-size: 11px; font-weight: 800; }
+        .row-title span { border: 1px solid transparent; border-radius: 999px; padding: 4px 8px; font-size: 13px; font-weight: 800; }
         .activity-row p { margin: 6px 0; color: var(--text-secondary); font-size: 13px; }
         .activity-row small { color: var(--text-muted); line-height: 1.4; }
         .detail-panel, .security-panel { padding: 18px; }
@@ -307,13 +307,13 @@ export default function AuditLogsPage() {
         .detail-panel p { color: var(--text-secondary); line-height: 1.5; font-size: 14px; }
         .detail-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 18px; }
         .info-tile { padding: 12px; border-radius: 10px; background: var(--bg-body); border: 1px solid var(--border-color); display: flex; gap: 10px; align-items: flex-start; }
-        .info-tile span { display: block; color: var(--text-muted); font-size: 11px; text-transform: uppercase; font-weight: 800; }
+        .info-tile span { display: block; color: var(--text-muted); font-size: 13px; text-transform: uppercase; font-weight: 800; }
         .info-tile strong { display: block; margin-top: 4px; color: var(--text-primary); font-size: 13px; word-break: break-word; }
         .ai-callout { margin-top: 18px; display: flex; gap: 12px; padding: 14px; border-radius: 12px; background: rgba(79,70,229,.10); color: var(--text-primary); }
         .ai-callout strong { display: block; font-size: 13px; }
         .ai-callout p { margin: 4px 0 0; font-size: 13px; }
         .security-card { padding: 12px; border-radius: 10px; background: var(--bg-body); border: 1px solid var(--border-color); }
-        .security-card span { display: inline-block; border-radius: 999px; padding: 4px 8px; font-size: 11px; font-weight: 800; }
+        .security-card span { display: inline-block; border-radius: 999px; padding: 4px 8px; font-size: 13px; font-weight: 800; }
         .security-card strong { display: block; margin-top: 8px; color: var(--text-primary); font-size: 13px; }
         .security-card p { margin: 4px 0 0; color: var(--text-muted); font-size: 12px; }
         .analytics-row { display: flex; flex-direction: column; gap: 8px; }
@@ -323,7 +323,7 @@ export default function AuditLogsPage() {
         .track div { height: 100%; border-radius: inherit; }
         .heatmap-table { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 8px; }
         .heatmap-head, .heatmap-row { display: grid; grid-template-columns: 1.4fr repeat(5, .55fr); gap: 8px; align-items: center; }
-        .heatmap-head span { color: var(--text-muted); font-size: 11px; text-transform: uppercase; font-weight: 800; }
+        .heatmap-head span { color: var(--text-muted); font-size: 13px; text-transform: uppercase; font-weight: 800; }
         .heatmap-row strong { color: var(--text-primary); font-size: 13px; }
         .heatmap-row span { text-align: center; padding: 10px 4px; border-radius: 8px; background: #4F46E5; color: #fff; font-size: 12px; font-weight: 800; }
         @media (max-width: 1180px) {

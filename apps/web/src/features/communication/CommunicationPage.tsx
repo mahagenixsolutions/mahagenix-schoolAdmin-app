@@ -546,7 +546,7 @@ const CommunicationPage: React.FC = () => {
             <p style={{ fontSize: '12px', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
               {ann.content}
             </p>
-            <div style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'flex', flexDirection: 'column', gap: '4px', borderTop: '1px solid var(--border-subtle)', paddingTop: '10px' }}>
+            <div style={{ fontSize: '13px', color: 'var(--text-muted)', display: 'flex', flexDirection: 'column', gap: '4px', borderTop: '1px solid var(--border-subtle)', paddingTop: '10px' }}>
               <div>Published: <span style={{ fontWeight: 600 }}>{ann.date}</span> by <span style={{ fontWeight: 600 }}>{ann.createdBy}</span></div>
               <div>Expiry Alert: <span style={{ color: 'var(--accent-danger)' }}>{ann.expiryDate}</span></div>
             </div>
@@ -559,7 +559,7 @@ const CommunicationPage: React.FC = () => {
                 color: 'var(--text-primary)',
                 padding: '6px 12px',
                 borderRadius: 'var(--radius-sm)',
-                fontSize: '11px',
+                fontSize: '13px',
                 cursor: 'pointer',
                 fontWeight: 600,
                 alignSelf: 'flex-end'
@@ -738,7 +738,7 @@ const CommunicationPage: React.FC = () => {
             background: 'var(--bg-surface)'
           }}
         >
-          <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', padding: '0 8px 8px 8px', borderBottom: '1px solid var(--border-subtle)', marginBottom: '8px' }}>
+          <span style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', padding: '0 8px 8px 8px', borderBottom: '1px solid var(--border-subtle)', marginBottom: '8px' }}>
             COMMUNICATIONS
           </span>
           {navigationTabs.map((tab) => {
@@ -771,7 +771,7 @@ const CommunicationPage: React.FC = () => {
                 </div>
                 {'count' in tab && tab.count !== undefined && tab.count > 0 && (
                   <span style={{
-                    fontSize: '11px',
+                    fontSize: '13px',
                     padding: '2px 6px',
                     borderRadius: 'var(--radius-full)',
                     background: 'var(--bg-surface-raised)',
@@ -867,7 +867,7 @@ const CommunicationPage: React.FC = () => {
               <div className="modal-form-group">
                 <label>SMS Text Message</label>
                 <textarea rows={3} maxLength={160} required placeholder="Enter SMS message (max 160 characters)..." value={newSMS.message} onChange={e => setNewSMS({ ...newSMS, message: e.target.value })} />
-                <span style={{ fontSize: '11px', color: 'var(--text-muted)', textAlign: 'right' }}>{newSMS.message.length}/160 characters</span>
+                <span style={{ fontSize: '13px', color: 'var(--text-muted)', textAlign: 'right' }}>{newSMS.message.length}/160 characters</span>
               </div>
               <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end', marginTop: '8px' }}>
                 <button type="button" onClick={() => setShowAddSMSModal(false)} className="btn btn-secondary" style={{ padding: '8px 16px', background: 'var(--bg-canvas)', border: '1px solid var(--border-subtle)', color: 'var(--text-secondary)', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontSize: '13px' }}>Cancel</button>

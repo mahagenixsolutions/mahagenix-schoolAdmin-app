@@ -55,14 +55,14 @@ export default function AiChatWorkspace() {
                 {msg.richContent && msg.richContent.type === 'actionable' && (
                   <div style={{ display: 'flex', gap: '8px', marginTop: '4px', flexWrap: 'wrap' }}>
                     {msg.richContent.actions.map((act: string, i: number) => (
-                      <button key={i} className="btn btn-outline btn-sm" style={{ fontSize: '11px', padding: '4px 8px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      <button key={i} className="btn btn-outline btn-sm" style={{ fontSize: '13px', padding: '4px 8px', display: 'flex', alignItems: 'center', gap: '4px' }}>
                         {act.includes('Copy') ? <Copy size={12}/> : <CheckCircle2 size={12}/>} {act}
                       </button>
                     ))}
                   </div>
                 )}
 
-                <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '4px' }}>{msg.timestamp}</div>
+                <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '4px' }}>{msg.timestamp}</div>
               </div>
 
             </div>
@@ -92,7 +92,7 @@ export default function AiChatWorkspace() {
             <Send size={16} />
           </button>
         </div>
-        <div style={{ textAlign: 'center', marginTop: '12px', fontSize: '11px', color: 'var(--text-muted)' }}>
+        <div style={{ textAlign: 'center', marginTop: '12px', fontSize: '13px', color: 'var(--text-muted)' }}>
           <Sparkles size={10} style={{ marginRight: '4px', display: 'inline-block', verticalAlign: 'middle' }} />
           AI Copilot can make mistakes.
         </div>

@@ -228,7 +228,7 @@ export default function ReportsPage() {
         .row-title { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
         .row-title strong { color: var(--text-primary); font-size: 14px; }
         
-        .status-badge { border-radius: 999px; padding: 4px 8px; font-size: 11px; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; }
+        .status-badge { border-radius: 999px; padding: 4px 8px; font-size: 13px; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; }
         .status-ready { background: rgba(16,185,129,.12); color: #10B981; }
         .status-draft { background: rgba(245,158,11,.12); color: #F59E0B; border: 1px solid rgba(245,158,11,0.3); }
         .status-review { background: rgba(79,142,247,.12); color: #4F8EF7; }
@@ -262,8 +262,8 @@ export default function ReportsPage() {
         .table-fade { position: absolute; bottom: 0; left: 0; right: 0; height: 48px; background: linear-gradient(transparent, #111827); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px; font-size: 12px; color: var(--text-muted); pointer-events: none; z-index: 10; }
         
         .preview-table { width: 100%; border-collapse: collapse; }
-        .preview-table th, .preview-table td { padding: 11px 10px; border-bottom: 1px solid var(--border-color); text-align: left; font-size: 13px; }
-        .preview-table th { color: var(--text-muted); font-size: 11px; text-transform: uppercase; background: rgba(255,255,255,0.02); }
+        .preview-table th, .preview-table td { padding: 13px 10px; border-bottom: 1px solid var(--border-color); text-align: left; font-size: 13px; }
+        .preview-table th { color: var(--text-muted); font-size: 13px; text-transform: uppercase; background: rgba(255,255,255,0.02); }
 
         .summary-box { margin: 16px 0; display: flex; gap: 12px; padding: 14px; border-radius: 12px; background: rgba(79,142,247,.10); color: var(--text-primary); border: 1px solid rgba(79,142,247,0.2); }
         .summary-box strong { display: block; font-size: 13px; color: #4F8EF7; }
@@ -277,12 +277,12 @@ export default function ReportsPage() {
         .schedule-row { display: flex; flex-direction: column; gap: 8px; padding: 12px; border-radius: 10px; background: var(--bg-body); border: 1px solid var(--border-color); }
         .sch-top { display: flex; justify-content: space-between; align-items: flex-start; }
         .sch-title { display: flex; gap: 10px; color: var(--text-primary); font-size: 14px; font-weight: 600; }
-        .sch-badge { font-size: 11px; padding: 2px 8px; border-radius: 6px; background: rgba(255,255,255,0.04); color: var(--text-secondary); }
+        .sch-badge { font-size: 13px; padding: 2px 8px; border-radius: 6px; background: rgba(255,255,255,0.04); color: var(--text-secondary); }
         .sch-bot { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); align-items: flex-end; }
         .del-success { color: #10B981; }
         .del-failed { color: #EF4444; }
         .del-pending { color: #F59E0B; }
-        .retry-link { color: #EF4444; text-decoration: underline; cursor: pointer; font-size: 11px; margin-left: 6px; }
+        .retry-link { color: #EF4444; text-decoration: underline; cursor: pointer; font-size: 13px; margin-left: 6px; }
         
         /* FIX 11: Board Pack Template */
         .template-grid { padding: 12px; display: grid; grid-template-columns: 1fr; gap: 10px; }
@@ -290,7 +290,7 @@ export default function ReportsPage() {
         .board-pack-badge { position: absolute; top: 16px; right: 16px; background: #8B5CF618; color: #8B5CF6; font-size: 10px; font-weight: 800; padding: 4px 8px; border-radius: 6px; letter-spacing: 0.05em; }
         .bp-title { font-size: 16px; font-weight: 700; color: var(--text-primary); margin: 12px 0 4px; }
         .bp-desc { font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; line-height: 1.4; }
-        .bp-stats { font-size: 11px; color: var(--text-muted); margin-bottom: 16px; }
+        .bp-stats { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
         .bp-btn { width: 100%; background: linear-gradient(135deg, #8B5CF6, #4F8EF7); color: #fff; font-weight: 600; border-radius: 10px; height: 40px; border: none; cursor: pointer; transition: all 0.2s; }
         .bp-btn:hover { filter: brightness(1.1); }
         .bp-btn:active { transform: scale(0.97); }

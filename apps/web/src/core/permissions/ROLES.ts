@@ -2,6 +2,7 @@ import { UserRole } from '@edutrack/shared-types';
 
 export const ROLES = {
   SUPER_ADMIN: UserRole.SUPER_ADMIN,
+  ORGANIZATION_ADMIN: UserRole.ORGANIZATION_ADMIN,
   SCHOOL_ADMIN: UserRole.SCHOOL_ADMIN,
   PRINCIPAL: UserRole.PRINCIPAL,
   VICE_PRINCIPAL: UserRole.VICE_PRINCIPAL,
@@ -20,9 +21,9 @@ export const ROLES = {
 } as const;
 
 export const isAdminRole = (role: UserRole) => {
-  return [ROLES.SUPER_ADMIN, ROLES.SCHOOL_ADMIN].includes(role);
+  return role === ROLES.SUPER_ADMIN || role === ROLES.ORGANIZATION_ADMIN || role === ROLES.SCHOOL_ADMIN;
 };
 
 export const isStaffRole = (role: UserRole) => {
-  return ![ROLES.STUDENT, ROLES.PARENT].includes(role);
+  return role !== ROLES.STUDENT && role !== ROLES.PARENT;
 };

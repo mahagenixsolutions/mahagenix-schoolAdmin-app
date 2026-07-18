@@ -695,7 +695,7 @@ function ProgressPageContent() {
           </div>
 
           {/* At-Risk and Quick Actions Footer */}
-          <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: 20 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20 }}>
             {/* Risk Warnings */}
             <div className="card">
               <div className="card-header" style={{ padding: '14px 16px', display: 'flex', alignItems: 'center', gap: 8 }}>

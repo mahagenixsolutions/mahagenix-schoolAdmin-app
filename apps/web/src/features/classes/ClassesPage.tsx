@@ -210,7 +210,7 @@ export default function ClassesPage() {
         .tooltip-text {
           visibility: hidden; position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%);
           background: #1e293b; color: #f8fafc; text-align: center; padding: 6px 12px; border-radius: 8px;
-          font-size: 11px; white-space: nowrap; opacity: 0; transition: opacity 0.2s; z-index: 50;
+          font-size: 13px; white-space: nowrap; opacity: 0; transition: opacity 0.2s; z-index: 50;
           border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 4px 12px rgba(0,0,0,0.3); pointer-events: none;
         }
         .tooltip-container:hover .tooltip-text { visibility: visible; opacity: 1; }
@@ -485,7 +485,7 @@ export default function ClassesPage() {
           </div>
           <div
             style={{
-              fontSize: '11px',
+              fontSize: '13px',
               color: 'var(--text-muted)',
               textTransform: 'uppercase',
               letterSpacing: '0.05em',
@@ -506,7 +506,7 @@ export default function ClassesPage() {
           </div>
           <div
             style={{
-              fontSize: '11px',
+              fontSize: '13px',
               color: 'var(--text-muted)',
               textTransform: 'uppercase',
               letterSpacing: '0.05em',
@@ -527,7 +527,7 @@ export default function ClassesPage() {
           </div>
           <div
             style={{
-              fontSize: '11px',
+              fontSize: '13px',
               color: 'var(--text-muted)',
               textTransform: 'uppercase',
               letterSpacing: '0.05em',
@@ -548,7 +548,7 @@ export default function ClassesPage() {
           </div>
           <div
             style={{
-              fontSize: '11px',
+              fontSize: '13px',
               color: 'var(--text-muted)',
               textTransform: 'uppercase',
               letterSpacing: '0.05em',
@@ -569,7 +569,7 @@ export default function ClassesPage() {
           </div>
           <div
             style={{
-              fontSize: '11px',
+              fontSize: '13px',
               color: 'var(--text-muted)',
               textTransform: 'uppercase',
               letterSpacing: '0.05em',
@@ -669,7 +669,7 @@ export default function ClassesPage() {
                         borderRadius: '6px',
                         background: statusBg,
                         color: statusColor,
-                        fontSize: '11px',
+                        fontSize: '13px',
                         fontWeight: 600,
                         border: `1px solid ${statusColor}18`,
                       }}
@@ -683,7 +683,7 @@ export default function ClassesPage() {
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                     <span
                       style={{
-                        fontSize: '11px',
+                        fontSize: '13px',
                         color: 'var(--text-muted)',
                         textTransform: 'uppercase',
                         letterSpacing: '0.05em',
@@ -1065,7 +1065,7 @@ export default function ClassesPage() {
                           borderRadius: '20px',
                           background: statusBg,
                           color: statusColor,
-                          fontSize: '11px',
+                          fontSize: '13px',
                           fontWeight: 600,
                         }}
                       >

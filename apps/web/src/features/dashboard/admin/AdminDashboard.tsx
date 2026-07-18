@@ -247,13 +247,13 @@ function AdminDashboardInner({
         </h2>
         
         {/* KPI Cards representing Active Students, Active Teachers, Today's Attendance, Fee Collection Rate */}
-        <KpiRow kpis={kpis} isLoading={false} />
+        <KpiRow academicYearId={activeYearId} onFeeClick={() => setFeeModalOpen(true)} />
         
         {/* Secondary KPI Row representing Pending Fees, Upcoming Exams, Syllabus, New Admissions */}
         <div style={{ marginTop: '12px' }}>
           <KpiRowSecondary 
-            onOpenFeeModal={() => setFeeModalOpen(true)} 
-            onOpenAdmissionsModal={() => setAdmissionsModalOpen(true)}
+            academicYearId={activeYearId}
+            onAdmissionsClick={() => setAdmissionsModalOpen(true)}
           />
         </div>
       </div>

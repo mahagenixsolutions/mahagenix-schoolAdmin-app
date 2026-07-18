@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGetSubjectsListQuery } from './subjectsApi';
+import { PageSkeleton } from '../../components/ui/Skeleton';
 
 export default function SubjectsPage() {
   const { data: serverSubjects = [], isLoading } = useGetSubjectsListQuery();
@@ -62,12 +63,7 @@ export default function SubjectsPage() {
   };
 
   if (isLoading) {
-    return (
-      <div className="flex-center" style={{ height: 400 }}>
-        <div className="spinner" />
-        <style>{`.spinner { width: 40px; height: 40px; border: 3px solid var(--border-color); border-top-color: var(--color-primary); border-radius: 50%; animation: spin 0.8s linear infinite; } @keyframes spin { to { transform: rotate(360deg); } }`}</style>
-      </div>
-    );
+    return <PageSkeleton />;
   }
 
   return (

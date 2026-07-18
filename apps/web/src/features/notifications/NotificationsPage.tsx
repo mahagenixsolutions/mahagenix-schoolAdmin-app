@@ -501,13 +501,13 @@ export default function NotificationsPage() {
         .search-box { display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: var(--bg-body); border-radius: 10px; border: 1px solid var(--border-color); }
         .search-box input { width: 100%; border: 0; outline: 0; background: transparent; color: var(--text-primary); font-size: 14px; }
         .priority-tabs { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-        .priority-tabs button, .channel-row button { border: 1px solid var(--border-color); background: var(--bg-body); color: var(--text-secondary); border-radius: 999px; padding: 7px 11px; cursor: pointer; font-size: 12px; font-weight: 700; }
+        .priority-tabs button, .channel-row button { border: 1px solid var(--border-color); background: var(--bg-body); color: var(--text-secondary); border-radius: 999px; padding: 7px 13px; cursor: pointer; font-size: 12px; font-weight: 700; }
         .priority-tabs button.active, .channel-row button.active { background: var(--color-primary); border-color: var(--color-primary); color: #fff; }
         .feed-list { padding: 10px; display: flex; flex-direction: column; gap: 10px; max-height: 560px; overflow: auto; }
         .feed-item { width: 100%; text-align: left; border: 1px solid var(--border-color); background: var(--bg-body); border-radius: 12px; padding: 13px; color: inherit; cursor: pointer; }
         .feed-item.selected { border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(79,70,229,.12); }
         .feed-topline, .feed-meta, .detail-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
-        .priority-chip, .category-pill, .status-pill { border: 1px solid transparent; border-radius: 999px; padding: 5px 8px; font-size: 11px; font-weight: 800; }
+        .priority-chip, .category-pill, .status-pill { border: 1px solid transparent; border-radius: 999px; padding: 5px 8px; font-size: 13px; font-weight: 800; }
         .feed-time { color: var(--text-muted); font-size: 12px; }
         .feed-item strong { display: block; margin-top: 10px; color: var(--text-primary); font-size: 14px; }
         .feed-item p { margin: 6px 0 10px; color: var(--text-secondary); font-size: 13px; line-height: 1.45; }
@@ -520,7 +520,7 @@ export default function NotificationsPage() {
         .detail-panel p { color: var(--text-secondary); line-height: 1.5; font-size: 14px; }
         .delivery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 18px 0; }
         .delivery-stat { padding: 12px; border-radius: 10px; background: var(--bg-body); border: 1px solid var(--border-color); }
-        .delivery-stat span { display: block; color: var(--text-muted); font-size: 11px; text-transform: uppercase; font-weight: 800; }
+        .delivery-stat span { display: block; color: var(--text-muted); font-size: 13px; text-transform: uppercase; font-weight: 800; }
         .delivery-stat strong { display: block; margin-top: 5px; color: var(--text-primary); font-size: 21px; }
         .read-track > div:first-child { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; }
         .track, .analytics-track { height: 9px; border-radius: 999px; background: var(--bg-body); overflow: hidden; }

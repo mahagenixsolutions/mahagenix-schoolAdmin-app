@@ -127,7 +127,12 @@ const SettingsPage: React.FC = () => {
   const [showInviteUserModal, setShowInviteUserModal] = useState(false);
 
   // --- Form Inputs ---
-  const [newYear, setNewYear] = useState({ name: '', startDate: '', endDate: '', status: 'Upcoming' as const });
+  const [newYear, setNewYear] = useState<{
+    name: string;
+    startDate: string;
+    endDate: string;
+    status: 'Active' | 'Upcoming' | 'Archived';
+  }>({ name: '', startDate: '', endDate: '', status: 'Upcoming' });
   const [newClass, setNewClass] = useState({ name: '', section: '', capacity: '', room: '' });
   const [newSubject, setNewSubject] = useState({ name: '', code: '', category: 'Mathematics' as const, hours: '' });
   const [newDept, setNewDept] = useState({ name: '', hod: '' });
@@ -538,7 +543,7 @@ const SettingsPage: React.FC = () => {
             {year.status !== 'Active' && (
               <button
                 onClick={() => handleSetActiveYear(year.id)}
-                style={{ alignSelf: 'flex-end', border: '1px solid var(--border-subtle)', background: 'none', color: 'var(--text-primary)', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '11px', fontWeight: 600 }}
+                style={{ alignSelf: 'flex-end', border: '1px solid var(--border-subtle)', background: 'none', color: 'var(--text-primary)', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '13px', fontWeight: 600 }}
               >
                 Set Active
               </button>
@@ -677,7 +682,7 @@ const SettingsPage: React.FC = () => {
             </div>
             <button
               onClick={() => handleToggleDeptStatus(dept.id)}
-              style={{ alignSelf: 'flex-end', border: '1px solid var(--border-subtle)', background: 'none', color: 'var(--text-primary)', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '11px', fontWeight: 600 }}
+              style={{ alignSelf: 'flex-end', border: '1px solid var(--border-subtle)', background: 'none', color: 'var(--text-primary)', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '13px', fontWeight: 600 }}
             >
               Toggle Status
             </button>
@@ -754,7 +759,7 @@ const SettingsPage: React.FC = () => {
                 <tr key={cap.key} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
                   <td style={{ padding: '12px 16px', fontSize: '13px', color: 'var(--text-primary)', fontWeight: 500 }}>
                     {cap.name}
-                    <div style={{ fontSize: '11px', color: 'var(--text-secondary)', fontFamily: 'monospace', marginTop: '2px' }}>{cap.key}</div>
+                    <div style={{ fontSize: '13px', color: 'var(--text-secondary)', fontFamily: 'monospace', marginTop: '2px' }}>{cap.key}</div>
                   </td>
                   {targetRoles.map(role => {
                     const hasPerm = (permissionsMatrix[role] || []).includes(cap.key);
@@ -826,7 +831,7 @@ const SettingsPage: React.FC = () => {
               cursor: 'pointer',
               padding: '4px 8px',
               borderRadius: '4px',
-              fontSize: '11px',
+              fontSize: '13px',
               fontWeight: 600
             }}
           >
@@ -862,7 +867,7 @@ const SettingsPage: React.FC = () => {
                 color: item.connected ? 'var(--accent-danger)' : 'var(--accent-success)',
                 padding: '6px 12px',
                 borderRadius: 'var(--radius-sm)',
-                fontSize: '11px',
+                fontSize: '13px',
                 fontWeight: 700,
                 cursor: 'pointer',
                 transition: '0.2s'
@@ -1104,7 +1109,7 @@ const SettingsPage: React.FC = () => {
             background: 'var(--bg-surface)'
           }}
         >
-          <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', padding: '0 8px 8px 8px', borderBottom: '1px solid var(--border-subtle)', marginBottom: '8px' }}>
+          <span style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', padding: '0 8px 8px 8px', borderBottom: '1px solid var(--border-subtle)', marginBottom: '8px' }}>
             SETTINGS CONSOLE
           </span>
           {navItems.map((tab) => {

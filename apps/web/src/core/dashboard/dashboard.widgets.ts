@@ -1,4 +1,3 @@
-import React from 'react';
 import { PERMISSIONS } from '../permissions/PERMISSIONS';
 import type { Permission } from '../permissions/PERMISSIONS';
 

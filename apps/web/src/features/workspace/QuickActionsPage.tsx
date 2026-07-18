@@ -44,7 +44,7 @@ export default function QuickActionsPage() {
       </div>
 
       {/* 3-Column Mission Control Layout */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(250px, 1.2fr) minmax(600px, 3fr) minmax(250px, 1fr)', gap: '24px', alignItems: 'start' }}>
+      <div className="quick-actions-grid">
         
         {/* Left Sidebar: Context & AI */}
         <div className="command-sidebar-left">

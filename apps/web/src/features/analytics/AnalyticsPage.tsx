@@ -1332,7 +1332,7 @@ export default function AnalyticsPage() {
           display: inline-flex;
           align-items: center;
           gap: 4px;
-          font-size: 11px;
+          font-size: 13px;
           font-weight: 700;
           color: var(--color-primary);
           background: var(--color-primary-surface);
@@ -1390,7 +1390,7 @@ export default function AnalyticsPage() {
           display: flex;
           align-items: center;
           gap: 4px;
-          font-size: 11px;
+          font-size: 13px;
           font-weight: 600;
           color: var(--text-secondary);
           text-transform: uppercase;
@@ -1433,7 +1433,7 @@ export default function AnalyticsPage() {
         .heatmap-legend {
           display: flex;
           gap: 14px;
-          font-size: 11px;
+          font-size: 13px;
           font-weight: 500;
           color: var(--text-secondary);
         }
@@ -1505,7 +1505,7 @@ export default function AnalyticsPage() {
         }
 
         .caption-text {
-          font-size: 11px;
+          font-size: 13px;
           color: var(--text-muted);
           margin-top: 8px;
         }
@@ -1622,7 +1622,7 @@ export default function AnalyticsPage() {
         }
 
         .rec-description {
-          font-size: 11px;
+          font-size: 13px;
           color: var(--text-secondary);
           margin-top: 4px;
           line-height: 1.4;
@@ -1715,7 +1715,7 @@ export default function AnalyticsPage() {
           gap: 16px;
           margin-top: 12px;
           flex-wrap: wrap;
-          font-size: 11px;
+          font-size: 13px;
           font-weight: 500;
         }
 
@@ -1890,12 +1890,12 @@ export default function AnalyticsPage() {
         }
 
         .timeline-detail {
-          font-size: 11px;
+          font-size: 13px;
           color: var(--text-secondary);
         }
 
         .timeline-time {
-          font-size: 11px;
+          font-size: 13px;
           color: var(--text-muted);
           flex-shrink: 0;
         }
@@ -1917,7 +1917,7 @@ export default function AnalyticsPage() {
         }
 
         .ai-system-insight-box .box-title {
-          font-size: 11px;
+          font-size: 13px;
           font-weight: 700;
           color: var(--text-secondary);
           text-transform: uppercase;
@@ -1934,7 +1934,7 @@ export default function AnalyticsPage() {
         }
 
         .ai-summary-bullets li {
-          font-size: 11px;
+          font-size: 13px;
           color: var(--text-primary);
           position: relative;
           padding-left: 10px;
@@ -1991,7 +1991,7 @@ export default function AnalyticsPage() {
         }
 
         .chat-bubble .bubble-text {
-          font-size: 11px;
+          font-size: 13px;
           color: var(--text-primary);
           line-height: 1.4;
         }

@@ -41,7 +41,7 @@ interface LessonPlan {
 interface CalendarEvent {
   date: string;
   title: string;
-  type: 'success' | 'warning' | 'info';
+  type: 'success' | 'warning' | 'info' | 'danger';
   typeLabel: string;
   description: string;
 }
@@ -130,7 +130,7 @@ const AcademicPage: React.FC = () => {
       render: (row) => (
         <div style={{ display: 'flex', gap: '6px' }}>
           {row.sections.map((sec, idx) => (
-            <span key={idx} style={{ background: 'var(--accent-primary-surface)', color: 'var(--accent-primary)', padding: '2px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: 600 }}>
+            <span key={idx} style={{ background: 'var(--accent-primary-surface)', color: 'var(--accent-primary)', padding: '2px 8px', borderRadius: '4px', fontSize: '13px', fontWeight: 600 }}>
               Section {sec}
             </span>
           ))}
@@ -240,7 +240,7 @@ const AcademicPage: React.FC = () => {
               <div key={idx} className="card" style={{ padding: '20px', background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)' }}>
                 <h3 style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span>{lp.subjectName} · {lp.className}</span>
-                  <span style={{ fontSize: '11px', background: 'var(--bg-surface-raised)', border: '1px solid var(--border-subtle)', padding: '4px 10px', borderRadius: '20px', color: 'var(--text-secondary)' }}>Curriculum progress</span>
+                  <span style={{ fontSize: '13px', background: 'var(--bg-surface-raised)', border: '1px solid var(--border-subtle)', padding: '4px 10px', borderRadius: '20px', color: 'var(--text-secondary)' }}>Curriculum progress</span>
                 </h3>
                 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -248,7 +248,7 @@ const AcademicPage: React.FC = () => {
                     <div key={cIdx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px', background: 'var(--bg-surface-raised)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)' }}>
                       <div>
                         <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)' }}>{chap.name}</div>
-                        <div style={{ fontSize: '11px', color: 'var(--text-secondary)', marginTop: '2px' }}>Completion Target: {chap.plannedDate}</div>
+                        <div style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '2px' }}>Completion Target: {chap.plannedDate}</div>
                       </div>
                       <StatusBadge status={chap.status} label={chap.statusLabel} />
                     </div>
@@ -299,7 +299,7 @@ const AcademicPage: React.FC = () => {
                 <div key={idx} style={{ display: 'flex', gap: '16px', padding: '12px', border: '1px solid var(--border-subtle)', borderRadius: '8px', background: 'var(--bg-surface-raised)' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', borderRadius: '6px', minWidth: '70px', padding: '6px 0' }}>
                     <strong style={{ fontSize: '16px', color: 'var(--accent-primary)' }}>{evt.date.split('-')[2]}</strong>
-                    <span style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>{evt.date.split('-')[1] === '07' ? 'JUL' : 'AUG'}</span>
+                    <span style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>{evt.date.split('-')[1] === '07' ? 'JUL' : 'AUG'}</span>
                   </div>
                   <div>
                     <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
@@ -324,7 +324,7 @@ const AcademicPage: React.FC = () => {
         {selectedClass && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <div style={{ background: 'var(--bg-surface-raised)', padding: '16px', borderRadius: '12px' }}>
-              <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase' }}>Class Teacher</div>
+              <div style={{ fontSize: '13px', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase' }}>Class Teacher</div>
               <div style={{ fontSize: '16px', fontWeight: 800, color: 'var(--text-primary)', marginTop: '4px' }}>{selectedClass.classTeacher}</div>
             </div>
 
@@ -334,7 +334,7 @@ const AcademicPage: React.FC = () => {
                 <div key={idx} style={{ padding: '12px', background: 'var(--bg-surface-raised)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <strong style={{ fontSize: '14px', color: 'var(--text-primary)' }}>{sub.name}</strong>
-                    <span style={{ fontSize: '11px', color: 'var(--text-secondary)', background: 'var(--bg-surface)', padding: '2px 8px', borderRadius: '4px', border: '1px solid var(--border-subtle)' }}>{sub.code}</span>
+                    <span style={{ fontSize: '13px', color: 'var(--text-secondary)', background: 'var(--bg-surface)', padding: '2px 8px', borderRadius: '4px', border: '1px solid var(--border-subtle)' }}>{sub.code}</span>
                   </div>
                   <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '6px' }}>Instructor: <strong>{sub.teacher}</strong></div>
                 </div>

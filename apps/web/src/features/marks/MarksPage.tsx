@@ -1222,7 +1222,7 @@ export default function MarksPage() {
           display: inline-flex;
           align-items: center;
           gap: 4px;
-          font-size: 11px;
+          font-size: 13px;
           font-weight: 700;
           color: var(--color-primary);
           background: var(--color-primary-surface);
@@ -1283,7 +1283,7 @@ export default function MarksPage() {
         }
 
         .step-badge {
-          font-size: 11px;
+          font-size: 13px;
           font-weight: 600;
           background-color: var(--bg-tertiary);
           color: var(--text-muted);
@@ -1327,7 +1327,7 @@ export default function MarksPage() {
           display: flex;
           align-items: center;
           gap: 4px;
-          font-size: 11px;
+          font-size: 13px;
           font-weight: 600;
           color: var(--text-secondary);
           text-transform: uppercase;
@@ -1390,7 +1390,7 @@ export default function MarksPage() {
           height: 20px;
           border-radius: 4px;
           color: #fff;
-          font-size: 11px;
+          font-size: 13px;
           font-weight: 700;
         }
 
@@ -1525,7 +1525,7 @@ export default function MarksPage() {
         .legend-row {
           display: flex;
           align-items: center;
-          font-size: 11px;
+          font-size: 13px;
           gap: 6px;
         }
 

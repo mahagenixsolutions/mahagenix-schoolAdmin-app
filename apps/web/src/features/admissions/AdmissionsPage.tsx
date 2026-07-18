@@ -199,7 +199,7 @@ const AdmissionsPage: React.FC = () => {
       render: (row) => (
         <div>
           <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{row.name}</div>
-          <div style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>Parent: {row.parentName}</div>
+          <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>Parent: {row.parentName}</div>
         </div>
       )
     },
@@ -462,7 +462,7 @@ const AdmissionsPage: React.FC = () => {
                       <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)', background: 'var(--bg-surface-raised)' }}>
                         <div>
                           <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)' }}>{doc.name}</div>
-                          <div style={{ fontSize: '11px', color: 'var(--text-secondary)', marginTop: '2px' }}>Check status: <StatusBadge status={doc.status} label={doc.statusLabel} /></div>
+                          <div style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '2px' }}>Check status: <StatusBadge status={doc.status} label={doc.statusLabel} /></div>
                         </div>
                         {doc.statusLabel !== 'Verified' && (
                           <button 

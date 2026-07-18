@@ -120,7 +120,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             <button
               onClick={onClearAllChips}
               className="btn btn-secondary"
-              style={{ fontSize: '11px', height: '24px', padding: '0 8px' }}
+              style={{ fontSize: '13px', height: '24px', padding: '0 8px' }}
             >
               Clear All
             </button>

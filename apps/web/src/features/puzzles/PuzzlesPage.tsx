@@ -350,7 +350,7 @@ export default function PuzzlesPage() {
                     color: 'white',
                     padding: '4px 12px',
                     borderRadius: '12px',
-                    fontSize: '11px',
+                    fontSize: '13px',
                     fontWeight: 800,
                     textTransform: 'uppercase',
                     letterSpacing: '0.05em',
@@ -404,7 +404,7 @@ export default function PuzzlesPage() {
             >
               <span
                 style={{
-                  fontSize: '11px',
+                  fontSize: '13px',
                   color: '#7C2D12',
                   fontWeight: 700,
                   textTransform: 'uppercase',
@@ -470,7 +470,7 @@ export default function PuzzlesPage() {
                 🔥
               </div>
               <div>
-                <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 600 }}>
+                <div style={{ fontSize: '13px', color: 'var(--text-muted)', fontWeight: 600 }}>
                   STREAK
                 </div>
                 <div style={{ fontSize: '16px', fontWeight: 800, color: 'var(--text-primary)' }}>
@@ -497,7 +497,7 @@ export default function PuzzlesPage() {
                 ⭐
               </div>
               <div>
-                <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 600 }}>
+                <div style={{ fontSize: '13px', color: 'var(--text-muted)', fontWeight: 600 }}>
                   STARS COLLECTED
                 </div>
                 <div style={{ fontSize: '16px', fontWeight: 800, color: 'var(--text-primary)' }}>
@@ -523,7 +523,7 @@ export default function PuzzlesPage() {
                 🧩
               </div>
               <div>
-                <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 600 }}>
+                <div style={{ fontSize: '13px', color: 'var(--text-muted)', fontWeight: 600 }}>
                   TODAY'S MISSION
                 </div>
                 <div style={{ fontSize: '16px', fontWeight: 800, color: 'var(--text-primary)' }}>
@@ -548,7 +548,7 @@ export default function PuzzlesPage() {
                 border: '1px solid var(--border-subtle)',
                 borderRadius: '12px',
                 padding: '6px 12px',
-                fontSize: '11px',
+                fontSize: '13px',
                 fontWeight: 700,
                 color: 'var(--text-secondary)',
                 cursor: 'pointer',
@@ -655,7 +655,7 @@ export default function PuzzlesPage() {
                   >
                     <span
                       style={{
-                        fontSize: '11px',
+                        fontSize: '13px',
                         fontWeight: 700,
                         padding: '4px 10px',
                         borderRadius: '20px',
@@ -733,7 +733,7 @@ export default function PuzzlesPage() {
                   <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-primary)' }}>
                     Solve 1 Puzzle
                   </div>
-                  <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+                  <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>
                     Reward: +20 Stars
                   </div>
                 </div>
@@ -756,7 +756,7 @@ export default function PuzzlesPage() {
                   <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-primary)' }}>
                     Level up Logic Level
                   </div>
-                  <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+                  <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>
                     Reward: +1 Streak Day
                   </div>
                 </div>

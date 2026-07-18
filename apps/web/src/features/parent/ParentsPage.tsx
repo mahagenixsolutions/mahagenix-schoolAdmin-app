@@ -138,7 +138,7 @@ const ParentsPage: React.FC = () => {
       render: (row) => (
         <div>
           <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{row.fatherName} & {row.motherName}</div>
-          <div style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>{row.email}</div>
+          <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>{row.email}</div>
         </div>
       )
     },
@@ -152,7 +152,7 @@ const ParentsPage: React.FC = () => {
       render: (row) => (
         <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
           {row.students.map((st, idx) => (
-            <span key={idx} style={{ background: 'var(--bg-surface-raised)', padding: '2px 8px', borderRadius: '4px', fontSize: '11px', border: '1px solid var(--border-subtle)', color: 'var(--text-secondary)' }}>
+            <span key={idx} style={{ background: 'var(--bg-surface-raised)', padding: '2px 8px', borderRadius: '4px', fontSize: '13px', border: '1px solid var(--border-subtle)', color: 'var(--text-secondary)' }}>
               {st.name} ({st.class})
             </span>
           ))}
@@ -331,7 +331,7 @@ const ParentsPage: React.FC = () => {
                           <div style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text-primary)' }}>{st.name}</div>
                           <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>{st.class}</div>
                         </div>
-                        <span style={{ background: 'var(--accent-primary-surface)', color: 'var(--accent-primary)', padding: '2px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: 600 }}>
+                        <span style={{ background: 'var(--accent-primary-surface)', color: 'var(--accent-primary)', padding: '2px 8px', borderRadius: '4px', fontSize: '13px', fontWeight: 600 }}>
                           {st.gender}
                         </span>
                       </div>
@@ -351,7 +351,7 @@ const ParentsPage: React.FC = () => {
                       <div key={idx} style={{ padding: '12px', background: 'var(--bg-surface-raised)', border: '1px solid var(--border-subtle)', borderRadius: '8px', borderLeft: '4px solid var(--accent-primary)' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
                           <strong style={{ fontSize: '13px', color: 'var(--text-primary)' }}>{comm.subject}</strong>
-                          <span style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>{comm.date} · {comm.channel}</span>
+                          <span style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>{comm.date} · {comm.channel}</span>
                         </div>
                         <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.4 }}>{comm.summary}</p>
                       </div>

@@ -48,7 +48,7 @@ export default function ActivityFeedItem({ activity }: { activity: any }) {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4px' }}>
             <div style={{ fontSize: '12px', color: 'var(--text-muted)', fontWeight: 500 }}>{activity.timestamp}</div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: bgClass, padding: '2px 8px', borderRadius: '12px', fontSize: '11px', fontWeight: 600 }} className={accentClass}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: bgClass, padding: '2px 8px', borderRadius: '12px', fontSize: '13px', fontWeight: 600 }} className={accentClass}>
               <TypeIcon size={12} /> {activity.type}
             </div>
           </div>

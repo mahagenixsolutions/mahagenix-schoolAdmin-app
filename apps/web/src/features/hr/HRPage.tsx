@@ -393,7 +393,7 @@ const HRPage: React.FC = () => {
           </div>
           <div>
             <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{row.name}</div>
-            <div style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>{row.email}</div>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>{row.email}</div>
           </div>
         </div>
       )
@@ -773,19 +773,19 @@ const HRPage: React.FC = () => {
                   <>
                     <button
                       onClick={() => handleCandidateAction(row.id, 'Offer')}
-                      style={{ border: 'none', background: 'rgba(34, 197, 94, 0.1)', color: 'var(--accent-success)', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '11px', fontWeight: 600 }}
+                      style={{ border: 'none', background: 'rgba(34, 197, 94, 0.1)', color: 'var(--accent-success)', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '13px', fontWeight: 600 }}
                     >
                       Offer
                     </button>
                     <button
                       onClick={() => handleCandidateAction(row.id, 'Reject')}
-                      style={{ border: 'none', background: 'rgba(239, 68, 68, 0.1)', color: 'var(--accent-danger)', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '11px', fontWeight: 600 }}
+                      style={{ border: 'none', background: 'rgba(239, 68, 68, 0.1)', color: 'var(--accent-danger)', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '13px', fontWeight: 600 }}
                     >
                       Reject
                     </button>
                   </>
                 ) : (
-                  <span style={{ fontSize: '11px', color: 'var(--text-secondary)', paddingRight: '8px' }}>Action Taken</span>
+                  <span style={{ fontSize: '13px', color: 'var(--text-secondary)', paddingRight: '8px' }}>Action Taken</span>
                 )}
               </div>
             )}
@@ -875,7 +875,7 @@ const HRPage: React.FC = () => {
                   </button>
                 </>
               ) : (
-                <span style={{ fontSize: '11px', color: 'var(--text-secondary)', paddingRight: '12px' }}>Locked</span>
+                <span style={{ fontSize: '13px', color: 'var(--text-secondary)', paddingRight: '12px' }}>Locked</span>
               )}
             </div>
           )}
@@ -1144,7 +1144,7 @@ const HRPage: React.FC = () => {
             background: 'var(--bg-surface)'
           }}
         >
-          <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', padding: '0 8px 8px 8px', borderBottom: '1px solid var(--border-subtle)', marginBottom: '8px' }}>
+          <span style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', padding: '0 8px 8px 8px', borderBottom: '1px solid var(--border-subtle)', marginBottom: '8px' }}>
             HR HUB NAVIGATOR
           </span>
           {navigationTabs.map((tab) => {
@@ -1177,7 +1177,7 @@ const HRPage: React.FC = () => {
                 </div>
                 {'count' in tab && tab.count !== undefined && (
                   <span style={{
-                    fontSize: '11px',
+                    fontSize: '13px',
                     padding: '2px 6px',
                     borderRadius: 'var(--radius-full)',
                     background: 'alert' in tab && tab.alert && tab.count > 0 ? 'rgba(239, 68, 68, 0.1)' : 'var(--bg-surface-raised)',
@@ -1189,7 +1189,7 @@ const HRPage: React.FC = () => {
                 )}
                 {'badge' in tab && tab.badge !== undefined && tab.badge > 0 && (
                   <span style={{
-                    fontSize: '11px',
+                    fontSize: '13px',
                     padding: '2px 6px',
                     borderRadius: 'var(--radius-full)',
                     background: 'rgba(34, 197, 94, 0.1)',

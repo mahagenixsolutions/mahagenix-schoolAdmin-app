@@ -41,7 +41,7 @@ export default function CommandCenterRightSidebar() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {mockRecentUpdates.map(update => (
               <div key={update.id}>
-                <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '4px', fontWeight: 600 }}>{update.time}</div>
+                <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '4px', fontWeight: 600 }}>{update.time}</div>
                 <div style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: 1.4 }}>{update.text}</div>
               </div>
             ))}

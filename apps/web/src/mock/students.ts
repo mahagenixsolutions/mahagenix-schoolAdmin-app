@@ -1,8 +1,63 @@
 import { mockClasses } from './classes';
 
-const studentFirstNames = ["Emma","Liam","Olivia","Noah","Ava","Oliver","Isabella","Elijah","Sophia","William","Mia","James","Charlotte","Benjamin","Amelia","Lucas","Harper","Henry","Evelyn","Alexander"];
-const studentLastNames = ["Smith","Johnson","Williams","Brown","Jones","Garcia","Miller","Davis","Rodriguez","Martinez","Hernandez","Lopez","Gonzalez","Wilson","Anderson","Thomas","Taylor","Moore","Jackson","Martin"];
-const parentNames = [["Priya","Sharma"],["Rohan","Patel"],["Vikram","Nair"],["Sneha","Kapoor"],["Arjun","Reddy"],["Kavya","Menon"],["Sanjay","Gupta"],["Leena","Das"],["Manish","Verma"],["Pooja","Joshi"],["Dev","Malhotra"],["Isha","Bose"]];
+const studentFirstNames = [
+  'Emma',
+  'Liam',
+  'Olivia',
+  'Noah',
+  'Ava',
+  'Oliver',
+  'Isabella',
+  'Elijah',
+  'Sophia',
+  'William',
+  'Mia',
+  'James',
+  'Charlotte',
+  'Benjamin',
+  'Amelia',
+  'Lucas',
+  'Harper',
+  'Henry',
+  'Evelyn',
+  'Alexander',
+];
+const studentLastNames = [
+  'Smith',
+  'Johnson',
+  'Williams',
+  'Brown',
+  'Jones',
+  'Garcia',
+  'Miller',
+  'Davis',
+  'Rodriguez',
+  'Martinez',
+  'Hernandez',
+  'Lopez',
+  'Gonzalez',
+  'Wilson',
+  'Anderson',
+  'Thomas',
+  'Taylor',
+  'Moore',
+  'Jackson',
+  'Martin',
+];
+const parentNames = [
+  ['Priya', 'Sharma'],
+  ['Rohan', 'Patel'],
+  ['Vikram', 'Nair'],
+  ['Sneha', 'Kapoor'],
+  ['Arjun', 'Reddy'],
+  ['Kavya', 'Menon'],
+  ['Sanjay', 'Gupta'],
+  ['Leena', 'Das'],
+  ['Manish', 'Verma'],
+  ['Pooja', 'Joshi'],
+  ['Dev', 'Malhotra'],
+  ['Isha', 'Bose'],
+];
 
 const randomItem = (arr: any[]) => arr[Math.floor(Math.random() * arr.length)];
 const randomInt = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
@@ -54,11 +109,36 @@ export const mockStudents = Array.from({ length: 500 }, (_, index) => {
     ],
     // Pulse for UI details if needed
     pulse: [
-      { name: 'Mon', attendance: 100, marks: randomInt(70, 100), participation: randomInt(70, 100) },
-      { name: 'Tue', attendance: 100, marks: randomInt(70, 100), participation: randomInt(70, 100) },
-      { name: 'Wed', attendance: randomInt(0, 1) * 100, marks: randomInt(70, 100), participation: randomInt(70, 100) },
-      { name: 'Thu', attendance: 100, marks: randomInt(70, 100), participation: randomInt(70, 100) },
-      { name: 'Fri', attendance: 100, marks: randomInt(70, 100), participation: randomInt(70, 100) },
-    ]
+      {
+        name: 'Mon',
+        attendance: 100,
+        marks: randomInt(70, 100),
+        participation: randomInt(70, 100),
+      },
+      {
+        name: 'Tue',
+        attendance: 100,
+        marks: randomInt(70, 100),
+        participation: randomInt(70, 100),
+      },
+      {
+        name: 'Wed',
+        attendance: randomInt(0, 1) * 100,
+        marks: randomInt(70, 100),
+        participation: randomInt(70, 100),
+      },
+      {
+        name: 'Thu',
+        attendance: 100,
+        marks: randomInt(70, 100),
+        participation: randomInt(70, 100),
+      },
+      {
+        name: 'Fri',
+        attendance: 100,
+        marks: randomInt(70, 100),
+        participation: randomInt(70, 100),
+      },
+    ],
   };
 });

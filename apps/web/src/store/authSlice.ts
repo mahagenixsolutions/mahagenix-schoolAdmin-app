@@ -45,7 +45,10 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setCredentials(state, action: PayloadAction<{ user: User; access_token: string; refresh_token: string }>) {
+    setCredentials(
+      state,
+      action: PayloadAction<{ user: User; access_token: string; refresh_token: string }>,
+    ) {
       state.user = action.payload.user;
       state.access_token = action.payload.access_token;
       state.refresh_token = action.payload.refresh_token;
@@ -80,26 +83,27 @@ const authSlice = createSlice({
       localStorage.removeItem('edutrack_selected_student');
     },
     switchMockRole(state, action: PayloadAction<string>) {
-      let user: any;
-      if (action.payload === 'TEACHER') {
-        user = mockUsers.teacher;
-      } else if (action.payload === 'PARENT') {
-        user = mockUsers.parent;
-      } else if (action.payload === 'STUDENT') {
-        user = (mockUsers as any).student;
-      } else if (action.payload === 'SCHOOL_ADMIN') {
-        user = mockUsers.admin;
-      } else {
-        // Create a generic mock user for the selected role
-        user = {
-          ...mockUsers.admin,
-          role: action.payload,
-          first_name: 'Mock',
-          last_name: action.payload,
-          email: `${action.payload.toLowerCase()}@school.edu`,
-        };
-      }
-      
+      const roleUserMap: Record<string, any> = {
+        SCHOOL_ADMIN: mockUsers.admin,
+        ORGANIZATION_ADMIN: (mockUsers as any).orgAdmin,
+        SUPER_ADMIN: (mockUsers as any).superAdmin,
+        PRINCIPAL: (mockUsers as any).principal,
+        VICE_PRINCIPAL: (mockUsers as any).vicePrincipal,
+        TEACHER: mockUsers.teacher,
+        STUDENT: (mockUsers as any).student,
+        PARENT: mockUsers.parent,
+        ACCOUNTANT: (mockUsers as any).accountant,
+        HR: (mockUsers as any).hr,
+        LIBRARIAN: (mockUsers as any).librarian,
+        TRANSPORT_MANAGER: (mockUsers as any).transportManager,
+        HOSTEL_MANAGER: (mockUsers as any).hostelManager,
+        RECEPTIONIST: (mockUsers as any).receptionist,
+        SECURITY: (mockUsers as any).security,
+        NURSE: (mockUsers as any).nurse,
+        COUNSELOR: (mockUsers as any).counselor,
+      };
+      const user = roleUserMap[action.payload] || mockUsers.admin;
+
       state.user = user;
       state.access_token = 'mock-access-token';
       state.refresh_token = 'mock-refresh-token';
@@ -116,7 +120,7 @@ const authSlice = createSlice({
           blood_group: 'A+',
           medical_conditions: 'None',
           allergies: 'None',
-          emergency_contact: '+91 99887 66000'
+          emergency_contact: '+91 99887 66000',
         };
         localStorage.setItem('edutrack_selected_student', JSON.stringify(state.selected_student));
       } else {
@@ -130,5 +134,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { setCredentials, setSelectedStudent, updateTokens, logout, switchMockRole } = authSlice.actions;
+export const { setCredentials, setSelectedStudent, updateTokens, logout, switchMockRole } =
+  authSlice.actions;
 export default authSlice.reducer;

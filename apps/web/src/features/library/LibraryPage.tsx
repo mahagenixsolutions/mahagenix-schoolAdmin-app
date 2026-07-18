@@ -278,7 +278,7 @@ const LibraryPage: React.FC = () => {
               
               <form onSubmit={handleIssueBook} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  <label style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Book ID or Title</label>
+                  <label style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Book ID or Title</label>
                   <select value={selectedBookId} onChange={e => setSelectedBookId(e.target.value)} style={{ padding: '10px 12px', border: '1px solid var(--border-subtle)', borderRadius: '8px', background: 'var(--bg-surface-raised)', color: 'var(--text-primary)', height: '40px' }}>
                     <option value="">-- Select Available Book --</option>
                     {books.filter(b => b.statusLabel === 'Available').map(b => (
@@ -287,7 +287,7 @@ const LibraryPage: React.FC = () => {
                   </select>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  <label style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Borrower Student Name</label>
+                  <label style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Borrower Student Name</label>
                   <input type="text" required value={targetStudentName} onChange={e => setTargetStudentName(e.target.value)} placeholder="e.g. John Doe" style={{ padding: '10px 12px', border: '1px solid var(--border-subtle)', borderRadius: '8px', background: 'var(--bg-surface-raised)', color: 'var(--text-primary)' }} />
                 </div>
                 <button type="submit" disabled={isLoading} className="btn btn-primary" style={{ padding: '10px 16px', display: 'flex', gap: '8px', alignItems: 'center', justifyContent: 'center' }}>

@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../store';
 import { useGetParentGalleryQuery } from './parentApi';
+import { GallerySkeleton } from '../../components/ui/Skeleton';
 
 const CATEGORIES = ['All', 'Academic', 'Sports', 'Cultural', 'Dance', 'Events', 'Certificates', 'Trips', 'Classroom'];
 
@@ -49,13 +50,7 @@ export default function ParentGalleryPage() {
   }
 
   if (isLoading) {
-    return (
-      <div className="flex-center" style={{ height: '70vh', flexDirection: 'column', gap: 12 }}>
-        <div style={{ width: 44, height: 44, border: '3px solid var(--border-color)', borderTopColor: '#3b82f6', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
-        <span style={{ fontSize: 14, color: 'var(--text-secondary)', fontWeight: 500 }}>Loading media center...</span>
-        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-      </div>
-    );
+    return <GallerySkeleton />;
   }
 
   return (

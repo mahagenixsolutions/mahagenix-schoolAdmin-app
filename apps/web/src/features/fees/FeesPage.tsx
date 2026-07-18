@@ -201,7 +201,7 @@ const FeesPage: React.FC = () => {
                     <div key={idx} style={{ padding: '12px', background: 'var(--bg-surface-raised)', border: '1px solid var(--border-subtle)', borderRadius: '8px' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
                         <strong style={{ fontSize: '13px', color: 'var(--text-primary)' }}>{disc.name}</strong>
-                        <span style={{ fontSize: '11px', background: 'var(--accent-success-surface)', color: 'var(--accent-success)', padding: '2px 8px', borderRadius: '4px', fontWeight: 600 }}>{disc.rate}</span>
+                        <span style={{ fontSize: '13px', background: 'var(--accent-success-surface)', color: 'var(--accent-success)', padding: '2px 8px', borderRadius: '4px', fontWeight: 600 }}>{disc.rate}</span>
                       </div>
                       <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: 0 }}>{disc.desc}</p>
                     </div>

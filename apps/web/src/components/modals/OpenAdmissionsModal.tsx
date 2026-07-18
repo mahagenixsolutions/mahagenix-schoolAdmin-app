@@ -333,7 +333,7 @@ export default function OpenAdmissionsModal({ isOpen, onClose, data }: OpenAdmis
               {/* Card A: Pending */}
               <div className="modal-mini-card">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '11px', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  <span style={{ fontSize: '13px', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                     Pending Review
                   </span>
                   <span style={{ color: '#F59E0B', fontSize: '16px' }}>
@@ -348,7 +348,7 @@ export default function OpenAdmissionsModal({ isOpen, onClose, data }: OpenAdmis
               {/* Card B: Reviewed Today */}
               <div className="modal-mini-card">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '11px', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  <span style={{ fontSize: '13px', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                     Reviewed Today
                   </span>
                   <span style={{ color: '#4F8EF7', fontSize: '16px' }}>
@@ -363,7 +363,7 @@ export default function OpenAdmissionsModal({ isOpen, onClose, data }: OpenAdmis
               {/* Card C: Approved */}
               <div className="modal-mini-card">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '11px', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  <span style={{ fontSize: '13px', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                     Approved
                   </span>
                   <span style={{ color: '#10B981', fontSize: '16px' }}>
@@ -378,7 +378,7 @@ export default function OpenAdmissionsModal({ isOpen, onClose, data }: OpenAdmis
               {/* Card D: Rejected */}
               <div className="modal-mini-card">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '11px', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  <span style={{ fontSize: '13px', color: '#9ca3af', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                     Rejected
                   </span>
                   <span style={{ color: '#EF4444', fontSize: '16px' }}>

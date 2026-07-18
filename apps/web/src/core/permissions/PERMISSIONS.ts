@@ -60,6 +60,59 @@ export const PERMISSIONS = {
   PARENTS_CREATE: 'parents.create',
   PARENTS_EDIT: 'parents.edit',
   PARENTS_DELETE: 'parents.delete',
+
+  // Admissions
+  ADMISSIONS_VIEW: 'admissions.view',
+  ADMISSIONS_CREATE: 'admissions.create',
+  ADMISSIONS_EDIT: 'admissions.edit',
+
+  // Inventory
+  INVENTORY_VIEW: 'inventory.view',
+  INVENTORY_CREATE: 'inventory.create',
+  INVENTORY_EDIT: 'inventory.edit',
+
+  // Exams
+  EXAMS_VIEW: 'exams.view',
+  EXAMS_CREATE: 'exams.create',
+  EXAMS_EDIT: 'exams.edit',
+
+  // Communication
+  COMMUNICATION_VIEW: 'communication.view',
+  COMMUNICATION_CREATE: 'communication.create',
+
+  // Events
+  EVENTS_VIEW: 'events.view',
+  EVENTS_CREATE: 'events.create',
+
+  // Hostel
+  HOSTEL_VIEW: 'hostel.view',
+  HOSTEL_CREATE: 'hostel.create',
+  HOSTEL_EDIT: 'hostel.edit',
+
+  // Medical
+  MEDICAL_VIEW: 'medical.view',
+  MEDICAL_CREATE: 'medical.create',
+  MEDICAL_EDIT: 'medical.edit',
+
+  // Counseling
+  COUNSELING_VIEW: 'counseling.view',
+  COUNSELING_CREATE: 'counseling.create',
+
+  // Visitor Management
+  VISITOR_VIEW: 'visitor.view',
+  VISITOR_CREATE: 'visitor.create',
+
+  // Security
+  SECURITY_VIEW: 'security.view',
+  SECURITY_CREATE: 'security.create',
+
+  // Payroll
+  PAYROLL_VIEW: 'payroll.view',
+  PAYROLL_CREATE: 'payroll.create',
+
+  // Organization Admin
+  ORGANIZATION_VIEW: 'organization.view',
+  ORGANIZATION_EDIT: 'organization.edit',
 } as const;
 
 export type Permission = typeof PERMISSIONS[keyof typeof PERMISSIONS];
